@@ -9,5 +9,7 @@ urlpatterns = [
     path("menu/<int:pk>/", views.menu_detail, name="menu_detail"),
     path("book/", views.make_booking, name="make_booking"),
     path("booking-success/", views.booking_success, name="booking_success"),
+    path("cancel-booking/", views.cancel_booking, name="cancel_booking"),
+
 ]
 
