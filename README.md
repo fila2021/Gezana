@@ -409,42 +409,35 @@ http://127.0.0.1:8000/
 - Reviews/testimonials  
 
 
-## 12. Flowchart Mermaid Diagram
-# Flowchart – Booking & Cancellation System
+## 12. Flowchart – Booking & Cancellation
 
 ```mermaid
 flowchart TD
+    A[User opens booking page] --> B[User submits booking form]
+    B --> C{Valid form?}
+    C -- No --> D[Show error message]
+    C -- Yes --> E[Check table availability]
 
-A[User opens Booking Page] --> B[User submits booking form]
-B --> C{Valid form?}
-C -- No --> D[Show error message]
-C -- Yes --> E[Check table availability]
+    E --> F{Table available?}
+    F -- No --> G["Show fully booked message"]
+    F -- Yes --> H[Create booking]
 
-E --> F{Table available?}
-F -- No --> G[Show: "Fully booked"]
-F -- Yes --> H[Create booking]
+    H --> I[Generate reference code]
+    I --> J[Save booking]
+    J --> K[Show booking success page]
 
-H --> I[Generate reference code]
-I --> J[Save booking]
-J --> K[Show booking success page]
+    K --> L{User wants to cancel?}
+    L -- Yes --> M[User enters reference code]
+    M --> N{Valid code?}
+    N -- No --> O[Show invalid code error]
+    N -- Yes --> P[Delete booking]
+    P --> Q[Show cancellation confirmation]
+```
 
-K --> L[User wants to cancel?]
-L -- Yes --> M[User enters reference code]
-M --> N{Valid code?}
-N -- No --> O[Show invalid code error]
-N -- Yes --> P[Delete booking]
-P --> Q[Show cancellation confirmation]
-
----
-
-# ⭐ **5. ERD.md (Database Diagram in Mermaid)**
-
-```markdown
-# ERD – Database Structure
+## 13. ERD – Database Structure
 
 ```mermaid
 erDiagram
-
     TABLE {
         string table_number
         int capacity
@@ -469,16 +462,12 @@ erDiagram
     }
 
     TABLE ||--|{ BOOKING : "assigned to"
+```
 
----
-
-# ⭐ **6. BUGS.md (Full Table)**
-
-```markdown
-# Bugs & Fixes
+## 14. Bugs & Fixes
 
 | Bug | Cause | Fix |
-|-----|--------|------|
+|-----|-------|-----|
 | Templates collapsing into one line | VS Code auto-formatting | Disabled formatters, added workspace settings |
 | Unclosed tag errors | Template being minified | Rewrote templates with correct blocks |
 | Date validation error | User input wrong format | Added date picker widget |
@@ -486,35 +475,17 @@ erDiagram
 | Menu detail page 404 | Item not created in admin | Created test items |
 | Cancel booking always invalid | Reference not uppercase | Normalised `.upper()` on input |
 
+## 15. Future Enhancements
 
-## 13. Future Enhancements
-# Future Enhancements
+1. User authentication for booking history  
+2. Email notifications for booking + cancellation  
+3. Online payment for reservations  
+4. Review and rating system  
+5. Menu images  
+6. Table map / floor plan  
+7. Admin dashboard with stats  
 
-## 1. User Authentication
-- Users can log in and see booking history  
-
-## 2. Email Notifications
-- Confirmation email with reference  
-- Cancellation confirmation  
-
-## 3. Online Payment for Bookings
-- Reservation fee system  
-
-## 4. Review and Rating System
-- Users leave feedback  
-
-## 5. Menu Images
-- Add images to dishes  
-
-## 6. Table Map System
-- Visual floor plan  
-
-## 7. Admin Dashboard
-- Statistics & analytics  
-
-
-
-## 14. Credits
+## 16. Credits
 
 - Code Institute  
 - Django Documentation  
@@ -525,10 +496,6 @@ erDiagram
 # ✨ Thank You For Visiting Gezana!
 
 Proudly sharing Habesha culture through food and technology.
-
-
-
-
 
 
 
