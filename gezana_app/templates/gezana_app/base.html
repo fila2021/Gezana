@@ -16,14 +16,17 @@
         <h1>Gezana Restaurant</h1>
     </div>
 
-    <nav>
-        <a href="{% url 'gezana_app:home' %}">Home</a>
-        <a href="{% url 'gezana_app:menu_list' %}">Menu</a>
-        <a href="{% url 'gezana_app:make_booking' %}">Book</a>
-        <a href="{% url 'gezana_app:cancel_booking' %}">Cancel Booking</a>
-        <a href="{% url 'gezana_app:about' %}">About</a>
-        <a href="{% url 'gezana_app:contact' %}">Contact</a>
-    </nav>
+    <nav class="navbar">
+    <ul>
+        <li><a href="{% url 'gezana_app:home' %}">Home</a></li>
+        <li><a href="{% url 'gezana_app:menu_list' %}">Menu</a></li>
+        <li><a href="{% url 'gezana_app:make_booking' %}">Book</a></li>
+        <li><a href="{% url 'gezana_app:cancel_booking' %}">Cancel Booking</a></li>
+        <li><a href="{% url 'gezana_app:about' %}">About</a></li>
+        <li><a href="{% url 'gezana_app:contact' %}">Contact</a></li>
+    </ul>
+</nav>
+
 </header>
 
 

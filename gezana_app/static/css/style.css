@@ -42,6 +42,21 @@ nav a {
 nav a:hover {
     text-decoration: underline;
 }
+/* Header with Logo */
+.header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+}
+
+
+.logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 5px;
+}
 
 /* ============================
    BUTTONS
@@ -178,4 +193,52 @@ footer {
     form {
         margin: 10px 0;
     }
+}
+/* ============================
+   STYLISH NAVIGATION BAR
+============================ */
+
+.navbar {
+    background-color: #8c3c1c;
+    padding: 12px 0;
+    margin-top: 10px;
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar a {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 4px;
+    transition: 0.3s ease;
+    font-size: 17px;
+}
+
+/* Hover underline animation */
+.navbar a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #ffd28a;
+    transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+    width: 100%;
+}
+
+.navbar a:hover {
+    color: #ffd28a;
 }
