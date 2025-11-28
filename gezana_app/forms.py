@@ -1,6 +1,8 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from datetime import date, time
-from .models import Booking
+from .models import Booking, Table
+from .utils import find_available_table
 
 class BookingForm(forms.ModelForm):
     class Meta:
@@ -43,5 +45,27 @@ class BookingForm(forms.ModelForm):
             raise forms.ValidationError("Bookings must be between 12:00 PM and 7:00 PM.")
 
         return booking_time
+
+    def clean(self):
+        cleaned_data = super().clean()
+        booking_date = cleaned_data.get("date")
+        booking_time = cleaned_data.get("time")
+        guests = cleaned_data.get("guests")
+
+        # Only run availability checks when required fields are present.
+        if not booking_date or not booking_time or not guests:
+            return cleaned_data
+
+        # Ensure there is at least one table that can seat this party size.
+        suitable_tables = Table.objects.filter(capacity__gte=guests)
+        if not suitable_tables.exists():
+            raise ValidationError("No tables can accommodate that party size. Please reduce guests or contact us.")
+
+        # Check availability at the requested slot.
+        table = find_available_table(booking_date, booking_time, guests)
+        if table is None:
+            raise ValidationError("We are fully booked for that date and time. Please choose another slot.")
+
+        return cleaned_data
 class CancelBookingForm(forms.Form):
     reference = forms.CharField(max_length=8)
