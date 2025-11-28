@@ -71,3 +71,5 @@ def cancel_booking(request):
     return render(request, "gezana_app/cancel_booking.html", {"form": form})
 def about(request):
     return render(request, "gezana_app/about.html")
+def contact(request):
+    return render(request, "gezana_app/contact.html")
