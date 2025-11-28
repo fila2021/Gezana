@@ -242,6 +242,14 @@ footer {
 .navbar a:hover {
     color: #ffd28a;
 }
+
+.navbar a.active {
+    color: #ffd28a;
+}
+
+.navbar a.active::after {
+    width: 100%;
+}
 /* ============================
    FORM WITH ICONS
 ============================ */

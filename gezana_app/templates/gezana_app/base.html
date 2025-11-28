@@ -19,14 +19,16 @@
     </div>
 
     <nav class="navbar">
+    {% with current=request.resolver_match.url_name %}
     <ul>
-        <li><a href="{% url 'gezana_app:home' %}">Home</a></li>
-        <li><a href="{% url 'gezana_app:menu_list' %}">Menu</a></li>
-        <li><a href="{% url 'gezana_app:make_booking' %}">Book</a></li>
-        <li><a href="{% url 'gezana_app:about' %}">About</a></li>
-        <li><a href="{% url 'gezana_app:contact' %}">Contact</a></li>
+        <li><a href="{% url 'gezana_app:home' %}" class="{% if current == 'home' %}active{% endif %}">Home</a></li>
+        <li><a href="{% url 'gezana_app:menu_list' %}" class="{% if current in 'menu_list menu_detail' %}active{% endif %}">Menu</a></li>
+        <li><a href="{% url 'gezana_app:make_booking' %}" class="{% if current in 'make_booking booking_success' %}active{% endif %}">Book</a></li>
+        <li><a href="{% url 'gezana_app:about' %}" class="{% if current == 'about' %}active{% endif %}">About</a></li>
+        <li><a href="{% url 'gezana_app:contact' %}" class="{% if current == 'contact' %}active{% endif %}">Contact</a></li>
         <li><a href="{% url 'admin:index' %}" target="_blank" rel="noopener noreferrer">Admin</a></li>
     </ul>
+    {% endwith %}
 </nav>
 
 </header>
