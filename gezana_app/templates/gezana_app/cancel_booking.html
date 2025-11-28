@@ -1,0 +1,14 @@
+{% extends "gezana_app/base.html" %}
+
+{% block title %}Cancel Booking{% endblock %}
+
+{% block content %}
+<h2>Cancel Your Booking</h2>
+<p>Enter your cancellation code below:</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Cancel Booking</button>
+</form>
+{% endblock %}
