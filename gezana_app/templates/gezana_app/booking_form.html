@@ -3,8 +3,39 @@
 <h2>Book a Table</h2>
 
 <form method="post">
-  {% csrf_token %} {{ form.as_p }}
+    {% csrf_token %}
 
-  <button type="submit">Submit Booking</button>
+    <div class="input-group">
+        <i class="fa-solid fa-user"></i>
+        {{ form.name }}
+    </div>
+
+    <div class="input-group">
+        <i class="fa-solid fa-envelope"></i>
+        {{ form.email }}
+    </div>
+
+    <div class="input-group">
+        <i class="fa-solid fa-phone"></i>
+        {{ form.phone }}
+    </div>
+
+    <div class="input-group">
+        <i class="fa-solid fa-users"></i>
+        {{ form.guests }}
+    </div>
+
+    <div class="input-group">
+        <i class="fa-solid fa-calendar-days"></i>
+        {{ form.date }}
+    </div>
+
+    <div class="input-group">
+        <i class="fa-solid fa-clock"></i>
+        {{ form.time }}
+    </div>
+
+    <button type="submit">Confirm Booking</button>
 </form>
+
 {% endblock %}

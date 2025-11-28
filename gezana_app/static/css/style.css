@@ -242,3 +242,36 @@ footer {
 .navbar a:hover {
     color: #ffd28a;
 }
+/* ============================
+   FORM WITH ICONS
+============================ */
+
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group i {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #8c3c1c;
+    font-size: 18px;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 12px 12px 12px 40px; /* add space for icon */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: #8c3c1c;
+    box-shadow: 0 0 4px rgba(140, 60, 28, 0.4);
+}
