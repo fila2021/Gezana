@@ -21,6 +21,10 @@ class BookingForm(forms.ModelForm):
             field.widget.attrs.setdefault("placeholder", placeholders.get(field_name, ""))
             field.widget.attrs.setdefault("class", "input-with-icon")
 
+        # Use browser date picker
+        if "date" in self.fields:
+            self.fields["date"].widget.input_type = "date"
+
     def clean_date(self):
         booking_date = self.cleaned_data["date"]
 
