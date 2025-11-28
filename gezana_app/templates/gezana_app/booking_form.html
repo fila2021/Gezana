@@ -38,4 +38,22 @@
     <button type="submit">Confirm Booking</button>
 </form>
 
+<section class="booking-actions">
+    <div class="booking-actions-card">
+        <h3>Need to cancel a booking?</h3>
+        <p>Enter your reference code below or visit the cancel page.</p>
+        <form action="{% url 'gezana_app:cancel_booking' %}" method="post" class="inline-cancel-form">
+            {% csrf_token %}
+            <input
+                type="text"
+                name="reference"
+                placeholder="Enter reference code"
+                required
+            />
+            <button type="submit" class="button danger">Cancel booking</button>
+            <a class="button ghost" href="{% url 'gezana_app:cancel_booking' %}">Go to cancel page</a>
+        </form>
+    </div>
+</section>
+
 {% endblock %}
