@@ -63,6 +63,7 @@ This project targets the assessment criteria for Back End Development (Level 5) 
 - Avoids double bookings  
 - Shows success message  
 - Generates unique booking reference code  
+- Sends styled email confirmations (booking and cancellation)  
 
 ### ✔ Cancellation System
 - Enter reference code to cancel booking  
