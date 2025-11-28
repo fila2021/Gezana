@@ -4,7 +4,19 @@
 {% block title %}Menu – Gezana{% endblock %}
 
 {% block content %}
-<h2 class="menu-title">Our Traditional Habesha Dishes</h2>
+<section class="menu-hero">
+    <div>
+        <p class="eyebrow">Habesha Flavours</p>
+        <h2>Share injera, spice, and coffee aromas</h2>
+        <p class="lede">From doro wat to tibs and vegan shiro, every plate is cooked fresh with berbere heat and served to share.</p>
+    </div>
+    <div class="menu-legend">
+        <span class="pill veg">Veg</span>
+        <span class="pill new">New</span>
+        <span class="pill popular">Popular</span>
+        <span class="pill chef">Chef's pick</span>
+    </div>
+</section>
 
 <div class="menu-container">
     {% for item in items %}
@@ -17,12 +29,22 @@
                      class="menu-img"
                      onclick="openModal('{{ item.image.url }}')">
             {% else %}
-                <img src="{% static 'images/no_image_available.jpg' %}" class="menu-img">
+                <img src="{% static 'images/no_image_available.jpg' %}" class="menu-img" alt="No image">
             {% endif %}
+            <div class="menu-badges">
+                {% if item.is_vegetarian %}<span class="pill veg">Veg</span>{% endif %}
+                {% if item.is_new %}<span class="pill new">New</span>{% endif %}
+                {% if item.is_popular %}<span class="pill popular">Popular</span>{% endif %}
+                {% if item.is_chef_choice %}<span class="pill chef">Chef</span>{% endif %}
+            </div>
+            <div class="price-tag">€{{ item.price }}</div>
         </div>
 
         <div class="menu-card-body">
-            <h3 class="menu-item-name">{{ item.name }}</h3>
+            <div class="menu-card-top">
+                <p class="menu-category">{{ item.get_category_display }}</p>
+                <h3 class="menu-item-name">{{ item.name }}</h3>
+            </div>
 
             <p class="menu-item-description">{{ item.description }}</p>
 
@@ -30,7 +52,9 @@
                 <strong>Ingredients:</strong> {{ item.ingredients }}
             </p>
 
-            <p class="menu-item-price">€{{ item.price }}</p>
+            <div class="menu-card-footer">
+                <a href="{% url 'gezana_app:menu_detail' item.pk %}" class="button view-btn">View details</a>
+            </div>
         </div>
 
     </div>

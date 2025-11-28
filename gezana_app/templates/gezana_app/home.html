@@ -1,17 +1,52 @@
 {% extends "gezana_app/base.html" %}
+{% load static %}
 
 {% block title %}Home — Gezana{% endblock %}
 
 {% block content %}
-<div class="hero">
-    <div class="hero-text">
-        <a href="{% url 'gezana_app:make_booking' %}" class="button hero-button">Book a Table</a>
+<section class="home-hero">
+  <div class="home-hero-text">
+    <p class="eyebrow">Habesha Kitchen</p>
+    <h1>Share injera, spice, and coffee traditions in Dublin</h1>
+    <p class="lede">Freshly baked injera, slow-simmered stews, and a warm welcome. Book a table or browse the menu to start your journey.</p>
+    <div class="hero-actions">
+      <a href="{% url 'gezana_app:make_booking' %}" class="button primary">Book a Table</a>
+      <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">View Menu</a>
     </div>
-</div>
+  </div>
+  <div class="home-hero-card">
+    <p class="mini">Today’s hours</p>
+    <p class="callout">12:00 PM – 7:00 PM</p>
+    <p class="note">Walk-ins welcome • Bookings recommended</p>
+  </div>
+</section>
 
-<h2>Discover Our Menu</h2>
-<p>Explore a unique collection of traditional Habesha dishes.</p>
+<section class="home-grid">
+  <div class="home-card">
+    <h3>Traditional Plates</h3>
+    <p>Doro wat, tibs, shiro, and veggie sides on soft, tangy injera—made to share.</p>
+  </div>
+  <div class="home-card">
+    <h3>Coffee Ceremony</h3>
+    <p>Hand-roasted beans, brewed in a jebena clay pot, poured in three rounds for blessings.</p>
+  </div>
+  <div class="home-card">
+    <h3>Warm Hospitality</h3>
+    <p>We seat you at the right table, serve generously, and welcome you like family.</p>
+  </div>
+</section>
 
-<a href="{% url 'gezana_app:menu_list' %}" class="button">View Menu</a>
+<section class="home-cta">
+  <div class="home-cta-card">
+    <h3>Plan your visit</h3>
+    <p>Reserve ahead for celebrations or bring friends for a casual feast.</p>
+    <div class="hero-actions">
+      <a href="{% url 'gezana_app:make_booking' %}" class="button primary">Reserve now</a>
+      <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">See dishes</a>
+    </div>
+  </div>
+  <div class="home-cta-image">
+    <img src="{% static 'images/hero.png' %}" alt="Gezana restaurant interior">
+  </div>
+</section>
 {% endblock %}
-

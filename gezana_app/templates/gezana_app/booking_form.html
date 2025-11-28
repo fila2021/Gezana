@@ -1,67 +1,89 @@
 {% extends "gezana_app/base.html" %} {% block title %}Book a Table{% endblock %}
 {% block content %}
-<h2>Book a Table</h2>
+<section class="booking-hero">
+  <div>
+    <p class="eyebrow">Reserve Your Table</p>
+    <h2>Book a cozy spot for friends, family, or coffee ceremony</h2>
+    <p class="lede">Choose your date and time, and we will find the best table. We welcome small gatherings and celebrations.</p>
+  </div>
+  <div class="booking-hero-badge">
+    <p class="mini">Hours</p>
+    <p class="callout">12:00 PM — 7:00 PM</p>
+    <p class="note">Walk-ins welcome, but booking is recommended.</p>
+  </div>
+</section>
 
 {% if form.non_field_errors %}
-<div class="form-errors">
+<div class="form-errors card">
     {% for error in form.non_field_errors %}
     <p>{{ error }}</p>
     {% endfor %}
 </div>
 {% endif %}
 
-<form method="post">
-    {% csrf_token %}
+<div class="booking-layout">
+  <div class="booking-card card">
+    <h3>Booking Details</h3>
+    <form method="post">
+        {% csrf_token %}
 
-    <div class="input-group">
-        <i class="fa-solid fa-user"></i>
-        {{ form.name }}
-    </div>
+        <div class="input-group">
+            <i class="fa-solid fa-user"></i>
+            {{ form.name }}
+        </div>
 
-    <div class="input-group">
-        <i class="fa-solid fa-envelope"></i>
-        {{ form.email }}
-    </div>
+        <div class="input-group">
+            <i class="fa-solid fa-envelope"></i>
+            {{ form.email }}
+        </div>
 
-    <div class="input-group">
-        <i class="fa-solid fa-phone"></i>
-        {{ form.phone }}
-    </div>
+        <div class="input-group">
+            <i class="fa-solid fa-phone"></i>
+            {{ form.phone }}
+        </div>
 
-    <div class="input-group">
-        <i class="fa-solid fa-users"></i>
-        {{ form.guests }}
-    </div>
+        <div class="input-group">
+            <i class="fa-solid fa-users"></i>
+            {{ form.guests }}
+        </div>
 
-    <div class="input-group">
-        <i class="fa-solid fa-calendar-days"></i>
-        {{ form.date }}
-    </div>
+        <div class="input-group">
+            <i class="fa-solid fa-calendar-days"></i>
+            {{ form.date }}
+        </div>
 
-    <div class="input-group">
-        <i class="fa-solid fa-clock"></i>
-        {{ form.time }}
-    </div>
+        <div class="input-group">
+            <i class="fa-solid fa-clock"></i>
+            {{ form.time }}
+        </div>
 
-    <button type="submit">Confirm Booking</button>
-</form>
+        <button type="submit" class="button primary full">Confirm Booking</button>
+    </form>
+  </div>
 
-<section class="booking-actions">
-    <div class="booking-actions-card">
-        <h3>Need to cancel a booking?</h3>
-        <p>Enter your reference code below or visit the cancel page.</p>
-        <form action="{% url 'gezana_app:cancel_booking' %}" method="post" class="inline-cancel-form">
-            {% csrf_token %}
-            <input
-                type="text"
-                name="reference"
-                placeholder="Enter reference code"
-                required
-            />
-            <button type="submit" class="button danger">Cancel booking</button>
-            <a class="button ghost" href="{% url 'gezana_app:cancel_booking' %}">Go to cancel page</a>
-        </form>
-    </div>
-</section>
+  <div class="booking-side card">
+    <h3>Good to Know</h3>
+    <ul class="bullet-list">
+      <li>Bookings available 12:00 PM – 7:00 PM.</li>
+      <li>We’ll seat you at the best available table for your party size.</li>
+      <li>Please call if you’re running late; we hold tables for 15 minutes.</li>
+    </ul>
 
+    <div class="divider"></div>
+
+    <h3>Need to cancel?</h3>
+    <p>Enter your reference code below or visit the cancel page.</p>
+    <form action="{% url 'gezana_app:cancel_booking' %}" method="post" class="inline-cancel-form">
+        {% csrf_token %}
+        <input
+            type="text"
+            name="reference"
+            placeholder="Enter reference code"
+            required
+        />
+        <button type="submit" class="button danger">Cancel booking</button>
+        <a class="button ghost" href="{% url 'gezana_app:cancel_booking' %}">Go to cancel page</a>
+    </form>
+  </div>
+</div>
 {% endblock %}
