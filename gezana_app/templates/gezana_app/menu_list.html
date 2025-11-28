@@ -1,31 +1,46 @@
 {% extends "gezana_app/base.html" %}
+{% load static %}
 
-{% block title %}Menu — Gezana{% endblock %}
+{% block title %}Menu – Gezana{% endblock %}
 
 {% block content %}
-<h2 class="menu-title">Our Authentic Habesha Dishes</h2>
-<p class="menu-subtitle">Freshly prepared with love, tradition, and bold East African flavours.</p>
+<h2 class="menu-title">Our Traditional Habesha Dishes</h2>
 
 <div class="menu-container">
     {% for item in items %}
-    <div class="menu-card fade-in">
+    <div class="menu-card">
 
-    <div class="menu-img-wrapper">
-        {% if item.image and item.image.url %}
-            <img src="{{ item.image.url }}" alt="{{ item.name }}" class="menu-img">
-        {% endif %}
+        <div class="menu-img-wrapper">
+            {% if item.image and item.image.url %}
+                <img src="{{ item.image.url }}" 
+                     alt="{{ item.name }}" 
+                     class="menu-img"
+                     onclick="openModal('{{ item.image.url }}')">
+            {% else %}
+                <img src="{% static 'images/no_image_available.jpg' %}" class="menu-img">
+            {% endif %}
+        </div>
+
+        <div class="menu-card-body">
+            <h3 class="menu-item-name">{{ item.name }}</h3>
+
+            <p class="menu-item-description">{{ item.description }}</p>
+
+            <p class="menu-item-ingredients">
+                <strong>Ingredients:</strong> {{ item.ingredients }}
+            </p>
+
+            <p class="menu-item-price">€{{ item.price }}</p>
+        </div>
+
     </div>
-
-    <div class="menu-card-header">
-        <h3>{{ item.name }}</h3>
-    </div>
-
-    <p class="description">{{ item.description }}</p>
-    <p class="ingredients"><strong>Ingredients:</strong> {{ item.ingredients }}</p>
-    <p class="price">€{{ item.price }}</p>
-
-</div>
-
     {% endfor %}
 </div>
+
+<!-- IMAGE MODAL -->
+<div id="imageModal" class="image-modal" onclick="closeModal()">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
 {% endblock %}

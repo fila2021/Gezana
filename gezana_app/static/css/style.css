@@ -475,3 +475,117 @@ footer {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* MENU TITLE */
+.menu-title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.4rem;
+    color: #8C2A1A; /* Ethiopian coffee red */
+    font-weight: bold;
+}
+
+/* MENU GRID */
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+/* MENU CARD */
+.menu-card {
+    width: 320px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease;
+    cursor: pointer;
+}
+
+/* Hover Effect */
+.menu-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+}
+
+/* IMAGE BOX */
+.menu-img-wrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: #f5f5f5;
+}
+
+.menu-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s ease;
+}
+
+/* Zoom image on hover */
+.menu-card:hover .menu-img {
+    transform: scale(1.08);
+}
+
+/* CARD CONTENT */
+.menu-card-body {
+    padding: 20px;
+}
+
+.menu-item-name {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.menu-item-description {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+.menu-item-ingredients {
+    font-size: 0.9rem;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.menu-item-price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #8C2A1A; /* Brand color */
+}
+
+/* IMAGE MODAL */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 9000;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+    display: block;
+    margin: auto;
+    max-width: 85%;
+    max-height: 85%;
+    border-radius: 12px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+}
