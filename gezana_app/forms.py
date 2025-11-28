@@ -1,5 +1,5 @@
 from django import forms
-from datetime import date
+from datetime import date, time
 from .models import Booking
 
 class BookingForm(forms.ModelForm):
@@ -36,9 +36,11 @@ class BookingForm(forms.ModelForm):
     def clean_time(self):
         booking_time = self.cleaned_data["time"]
 
-        # Restaurant hours (customize later)
-        if booking_time < forms.TimeField().to_python("12:00") or booking_time > forms.TimeField().to_python("23:00"):
-            raise forms.ValidationError("Bookings must be between 12 PM and 11 PM.")
+        # Restaurant hours: 12:00 PM to 7:00 PM inclusive
+        start = time(hour=12, minute=0)
+        end = time(hour=19, minute=0)
+        if booking_time < start or booking_time > end:
+            raise forms.ValidationError("Bookings must be between 12:00 PM and 7:00 PM.")
 
         return booking_time
 class CancelBookingForm(forms.Form):
