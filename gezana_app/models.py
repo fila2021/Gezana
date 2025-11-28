@@ -1,4 +1,7 @@
 from django.db import models
+import random
+import string
+
 
 class MenuCategory(models.TextChoices):
     APPETIZER = "Appetizer", "Appetizer"
@@ -6,6 +9,7 @@ class MenuCategory(models.TextChoices):
     SIDES = "Sides", "Sides"
     DESSERT = "Dessert", "Dessert"
     DRINK = "Drink", "Drink"
+
 
 class MenuItem(models.Model):
     name = models.CharField(max_length=120)
@@ -20,13 +24,11 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.category}) - €{self.price}"
-from django.db import models
-from django.utils import timezone
-from datetime import time
+
 
 class Table(models.Model):
     """
-    Physical tables in the restaurant. 
+    Physical tables in the restaurant.
     Example capacities: 2, 4, 6, 8.
     """
     table_number = models.CharField(max_length=10, unique=True)
@@ -47,8 +49,20 @@ class Booking(models.Model):
     date = models.DateField()
     time = models.TimeField()
     table = models.ForeignKey(Table, on_delete=models.SET_NULL, null=True, blank=True)
+    reference = models.CharField(max_length=8, unique=True, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    def save(self, *args, **kwargs):
+        if not self.reference:
+            self.reference = self._generate_reference()
+        super().save(*args, **kwargs)
+
+    def _generate_reference(self):
+        """Return a unique 8-character reference code."""
+        while True:
+            code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+            if not Booking.objects.filter(reference=code).exists():
+                return code
 
     def __str__(self):
         return f"{self.name} — {self.date} {self.time} ({self.guests} guests)"
+        
