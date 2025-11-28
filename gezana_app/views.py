@@ -50,3 +50,22 @@ def booking_success(request):
     last_booking = Booking.objects.last()
     return render(request, "gezana_app/booking_success.html", {"booking": last_booking})
 
+from .forms import CancelBookingForm
+
+def cancel_booking(request):
+    if request.method == "POST":
+        form = CancelBookingForm(request.POST)
+        if form.is_valid():
+            ref = form.cleaned_data["reference"].strip().upper()
+
+            try:
+                booking = Booking.objects.get(reference=ref)
+                booking.delete()
+                messages.success(request, "Your booking has been cancelled.")
+                return redirect("gezana_app:home")
+            except Booking.DoesNotExist:
+                messages.error(request, "Invalid cancellation code.")
+    else:
+        form = CancelBookingForm()
+
+    return render(request, "gezana_app/cancel_booking.html", {"form": form})
