@@ -23,3 +23,5 @@ class BookingForm(forms.ModelForm):
             raise forms.ValidationError("Bookings must be between 12 PM and 11 PM.")
 
         return booking_time
+class CancelBookingForm(forms.Form):
+    reference = forms.CharField(max_length=8)
