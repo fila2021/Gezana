@@ -7,6 +7,6 @@ Booking Confirmed
 {% block content %}
 <h2>Your booking is confirmed!</h2>
 <p>We look forward to welcoming you at Gezana.</p>
-<a href="{% url 'gezana_app:home' %}">Return Home</a>
+<a href="{% url 'gezana_app:home' %}" class="button">Return Home</a>
 <p>Your cancellation code: <strong>{{ booking.reference }}</strong></p>
 {% endblock %}

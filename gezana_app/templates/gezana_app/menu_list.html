@@ -13,11 +13,19 @@
             <ul>
         {% endifchanged %}
 
-        <li>
-            <a href="{% url 'gezana_app:menu_detail' item.pk %}">{{ item.name }}</a> — €{{ item.price }}
-            {% if item.is_vegetarian %}(V){% endif %}
-            <p>{{ item.description }}</p>
-        </li>
+       <div class="menu-item">
+    <h3>
+        <a href="{% url 'gezana_app:menu_detail' item.pk %}">{{ item.name }}</a>
+    </h3>
+
+    <p><strong>Category:</strong> {{ item.get_category_display }}</p>
+    <p><strong>Price:</strong> €{{ item.price }}</p>
+
+    {% if item.is_vegetarian %}
+        <span class="veg-tag">Vegetarian</span>
+    {% endif %}
+</div>
+
 
         {% if forloop.last %}</ul>{% endif %}
     {% endfor %}
