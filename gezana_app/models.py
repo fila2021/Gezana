@@ -12,18 +12,32 @@ class MenuCategory(models.TextChoices):
 
 
 class MenuItem(models.Model):
-    name = models.CharField(max_length=120)
-    description = models.TextField(blank=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    category = models.CharField(max_length=20, choices=MenuCategory.choices, default=MenuCategory.MAIN)
-    is_vegetarian = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    CATEGORY_CHOICES = [
+        ("starter", "Starter"),
+        ("main", "Main Course"),
+        ("side", "Side Dish"),
+        ("dessert", "Dessert"),
+        ("drink", "Drink"),
+    ]
 
-    class Meta:
-        ordering = ["category", "name"]
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    ingredients = models.TextField(default="Ingredients not provided.", help_text="List the ingredients for this dish")
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    is_vegetarian = models.BooleanField(default=False)
+
+    # NEW SPECIAL LABELS
+    is_popular = models.BooleanField(default=False)
+    is_new = models.BooleanField(default=False)
+    is_chef_choice = models.BooleanField(default=False)
+
+    # IMAGE field
+    image = models.ImageField(upload_to="menu_images/", blank=True, null=True)
 
     def __str__(self):
-        return f"{self.name} ({self.category}) - €{self.price}"
+        return self.name
+
 
 
 class Table(models.Model):
