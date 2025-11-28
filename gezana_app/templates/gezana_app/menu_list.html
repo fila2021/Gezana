@@ -1,0 +1,27 @@
+{% extends "gezana_app/base.html" %}
+
+{% block title %}Menu — Gezana{% endblock %}
+
+{% block content %}
+<h2>Our Menu</h2>
+
+{% if items %}
+    {% for item in items %}
+        {% ifchanged item.category %}
+            {% if not forloop.first %}</ul>{% endif %}
+            <h3>{{ item.get_category_display }}</h3>
+            <ul>
+        {% endifchanged %}
+
+        <li>
+            <a href="{% url 'gezana_app:menu_detail' item.pk %}">{{ item.name }}</a> — €{{ item.price }}
+            {% if item.is_vegetarian %}(V){% endif %}
+            <p>{{ item.description }}</p>
+        </li>
+
+        {% if forloop.last %}</ul>{% endif %}
+    {% endfor %}
+{% else %}
+    <p>No menu items available yet.</p>
+{% endif %}
+{% endblock %}

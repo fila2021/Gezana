@@ -1,0 +1,16 @@
+{% extends "gezana_app/base.html" %} {% block title %} {{ item.name }} — Gezana
+{% endblock %} {% block content %}
+<h2>{{ item.name }}</h2>
+
+<p><strong>Category:</strong> {{ item.get_category_display }}</p>
+
+<p><strong>Price:</strong> €{{ item.price }}</p>
+
+{% if item.is_vegetarian %}
+<p><strong>Vegetarian</strong></p>
+{% endif %}
+
+<p>{{ item.description }}</p>
+
+<a href="{% url 'gezana_app:menu_list' %}">Back to Menu</a>
+{% endblock %}
