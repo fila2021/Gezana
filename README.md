@@ -8,15 +8,14 @@
 Gezana is a full-stack Django web application for a Habesha (Ethiopian & Eritrean) restaurant based in Dublin.  
 It provides:
 
-- Online table booking  
-- Automatic table assignment  
-- Double-booking prevention  
-- Booking cancellation with a reference code  
-- Menu display with categories  
-- About & Contact information  
-- Admin management system  
+- Online table booking with validation and automated table assignment  
+- Double-booking prevention and duplicate-contact checks  
+- Booking cancellation using a unique reference code  
+- Menu display by category with dietary badges and detail pages  
+- About, Contact (with map embed), and stylistic homepage sections  
+- Admin management for menu items, tables, and bookings  
 
-This project was developed for the Code Institute Full Stack Software Development Diploma (Milestone Project 3).
+This project targets the assessment criteria for Back End Development (Level 5) by delivering a fully functional, database-backed, full-stack Django app with CRUD, validation, testing, and deployment documentation.
 
 ---
 
@@ -36,18 +35,24 @@ This project was developed for the Code Institute Full Stack Software Developmen
 - Allow customers to reach the restaurant easily  
 - Organize tables, menu items, and bookings via Django admin  
 
+### Rationale & Audience
+- Audience: diners seeking Habesha cuisine in Dublin; staff managing tables and menu content.  
+- Purpose: provide an intuitive booking flow, clear feedback, and operational control via Django admin.  
+- UX approach: consistent layout, responsive grid, high contrast buttons, alt text on images, clear form labels/placeholders, and immediate messaging for success/error states.
+
 ---
 
 ## 3. Features
 
 ### ✔ Homepage
-- Clean introduction  
-- Navigation to Menu, Book, Cancel, About, Contact  
+- Hero with CTAs to book or view menu  
+- Highlights for cuisine, coffee ceremony, hospitality, and visit planning  
+- “Plan your visit” CTA with supporting image
 
 ### ✔ Menu Page
-- Menu items displayed by category  
+- Menu grid with badges (Veg/New/Popular/Chef) and price tags  
 - Individual dish detail page  
-- Vegetarian flag  
+- Uses uploaded images with graceful fallback  
 - All items editable via Django admin  
 
 ### ✔ Booking System
@@ -122,35 +127,60 @@ This project was developed for the Code Institute Full Stack Software Developmen
 ## 6. Database Schema
 
 ### Table Model
-| Field         | Type        |
-|---------------|-------------|
-| table_number  | CharField   |
-| capacity      | Integer     |
+| Field        | Type              | Notes |
+|--------------|-------------------|-------|
+| table_number | CharField (uniq)  | Human-friendly ID |
+| capacity     | PositiveInteger   | Seats per table |
 
 ### MenuItem Model
-| Field         | Type          |
-|---------------|---------------|
-| name          | CharField     |
-| description   | TextField     |
-| price         | DecimalField  |
-| category      | ChoiceField   |
-| is_vegetarian | BooleanField  |
+| Field          | Type         | Notes |
+|----------------|--------------|-------|
+| name           | CharField    | Dish name |
+| description    | TextField    | Dish summary |
+| ingredients    | TextField    | Defaults to placeholder |
+| price          | DecimalField | max_digits=6, decimal_places=2 |
+| category       | ChoiceField  | starter, main, side, dessert, drink |
+| is_vegetarian  | Boolean      | Veg badge |
+| is_popular     | Boolean      | Popular badge |
+| is_new         | Boolean      | New badge |
+| is_chef_choice | Boolean      | Chef badge |
+| image          | ImageField   | Optional upload |
 
 ### Booking Model
-| Field     | Type          |
-|-----------|---------------|
-| name      | CharField     |
-| email     | EmailField    |
-| phone     | CharField     |
-| guests    | Integer       |
-| date      | DateField     |
-| time      | TimeField     |
-| table     | ForeignKey    |
-| reference | CharField     |
+| Field     | Type         | Notes |
+|-----------|--------------|-------|
+| name      | CharField    | Guest name |
+| email     | EmailField   | Used to prevent duplicate same-day bookings |
+| phone     | CharField    | Optional, also used for duplicate checks |
+| guests    | PositiveInt  | Party size |
+| date      | DateField    | Date picker |
+| time      | TimeField    | Validated 12:00–19:00 |
+| table     | ForeignKey   | Assigned table or null |
+| reference | CharField    | Unique 8-char code, auto-generated |
 
 ---
 
-## 7. Testing
+## 7. CRUD & Data Operations
+- **Create**: Booking form creates bookings with validation and auto table assignment; admin can create menu items, tables, and bookings.  
+- **Read**: Public menu list/detail; bookings read internally for availability checks; admin list views.  
+- **Update**: Admin edits menu items, tables, bookings.  
+- **Delete**: Cancel booking form deletes by reference; admin can delete any model.  
+- **Immediate feedback**: Django messages show success/error; form-level validation for time window, past dates, duplicate contact on same date, and slot availability.
+
+---
+
+## 8. UX, Accessibility & Styling
+- Responsive layout (grid/flex) across home, menu, booking, about, contact.  
+- High-contrast primary buttons; ghost variants for secondary actions.  
+- Semantic headings, alt text on images (including menu fallback), and clear labels/placeholders.  
+- Form validation with inline error messages for blocking conditions.  
+- Keyboard focusable links/buttons; no hover-only critical actions.  
+- Contact page includes map embed; About and Menu use descriptive sectioning.  
+- Home and Menu heroes use gradients; cards with consistent spacing to avoid overlap.
+
+---
+
+## 9. Testing
 
 ### Manual Testing Summary
 
@@ -271,9 +301,6 @@ Checked using: pycodestyle .
 
 All core functionalities passed manual and validator testing.
 
-
-
-
 ### Validators
 - HTML — W3C validator  
 - CSS — Jigsaw validator  
@@ -281,7 +308,7 @@ All core functionalities passed manual and validator testing.
 
 ---
 
-## 8. Deployment (Render)
+## 10. Deployment (Render)
 
 ### Steps:
 1. Push project to GitHub  
@@ -296,6 +323,7 @@ gunicorn gezana.wsgi
 6. Add environment variables:
 - `SECRET_KEY`  
 - `DEBUG=False`  
+ - `ALLOWED_HOSTS` (e.g., your Render host)
 7. Run migrations:
 
 python3 manage.py migrate
@@ -304,7 +332,7 @@ python3 manage.py migrate
 python3 manage.py collectstatic
 App will deploy and become live.
 ---
-## 9. Running Locally
+## 11. Running Locally
 Clone the repo:
 git clone https://github.com/fila2021/Gezana.git
 cd Gezana
@@ -322,9 +350,7 @@ http://127.0.0.1:8000/
 
 ---
 
-## 10. User Stories
-
-## MoSCoW Prioritisation
+## 12. MoSCoW Prioritisation
 
 ### Must Have
 - Users can view the menu
@@ -365,15 +391,14 @@ http://127.0.0.1:8000/
 | 10 | Owner | Receive accurate customer details | Contact customers if needed |
 
 
-## 11. FEATURES
-# Features Overview
+## 13. Features Overview
 
 ## Implemented Features
 
 ### ✔ Menu System
-- Menu list
+- Menu list with badges (veg/new/popular/chef) and price tags
 - Dish detail page
-- Vegetarian flag
+- Image support with fallback
 - Admin-controlled content
 
 ### ✔ Booking System
@@ -400,16 +425,7 @@ http://127.0.0.1:8000/
 
 ---
 
-## Future Enhancements
-
-- User accounts & booking history  
-- Email notifications for bookings  
-- Online payment system  
-- Restaurant table map  
-- Reviews/testimonials  
-
-
-## 12. Flowchart – Booking & Cancellation
+## 14. Flowchart – Booking & Cancellation
 
 ```mermaid
 flowchart TD
@@ -434,7 +450,7 @@ flowchart TD
     P --> Q[Show cancellation confirmation]
 ```
 
-## 13. ERD – Database Structure
+## 15. ERD – Database Structure
 
 ```mermaid
 erDiagram
@@ -446,9 +462,14 @@ erDiagram
     MENUITEM {
         string name
         string description
+        string ingredients
         decimal price
         string category
         bool is_vegetarian
+        bool is_popular
+        bool is_new
+        bool is_chef_choice
+        string image
     }
 
     BOOKING {
@@ -464,7 +485,7 @@ erDiagram
     TABLE ||--|{ BOOKING : "assigned to"
 ```
 
-## 14. Bugs & Fixes
+## 16. Bugs & Fixes
 
 | Bug | Cause | Fix |
 |-----|-------|-----|
@@ -475,7 +496,7 @@ erDiagram
 | Menu detail page 404 | Item not created in admin | Created test items |
 | Cancel booking always invalid | Reference not uppercase | Normalised `.upper()` on input |
 
-## 15. Future Enhancements
+## 17. Future Enhancements
 
 1. User authentication for booking history  
 2. Email notifications for booking + cancellation  
@@ -485,7 +506,25 @@ erDiagram
 6. Table map / floor plan  
 7. Admin dashboard with stats  
 
-## 16. Credits
+## 18. Security & Configuration
+- Secrets are injected via environment variables; `SECRET_KEY` is not committed.  
+- `DEBUG=False` in production; `ALLOWED_HOSTS` configured per environment.  
+- Admin login protected by Django auth; no default credentials stored in repo.  
+- Media uploads stored on disk; restrict admin access to staff users only.  
+- CSRF protection active on all forms; Django ORM used to avoid SQL injection.  
+
+---
+
+## Assessment Criteria Coverage (summary)
+- **Front end UX & accessibility (1.1, 1.2, M(i))**: responsive layouts, semantic headings, alt text, high-contrast buttons, clear form feedback, intuitive navigation.  
+- **Data-backed full stack (1.3, 1.4, 2.1, 2.2, M(vii), M(viii))**: Django models for MenuItem/Table/Booking with relationships; schema documented; settings/env-driven config.  
+- **Validation & testing (1.5, 1.6, 1.7, 1.8, 1.9, M(v), M(vi))**: form validation for dates, times, duplicates, availability; documented manual testing and validators; PEP8 compliance.  
+- **CRUD operations (3.1, M(x), M(xi))**: create/read via public booking/menu; update/delete via admin; cancel deletes by reference with immediate UI feedback.  
+- **Deployment (4.1–4.3, M(xiii))**: Render deployment steps, env vars, migrations, collectstatic documented.  
+- **Security (5.1–5.4, M(xiv))**: git for version control, secrets kept in env vars, DEBUG off in production, admin auth, CSRF and ORM protections.  
+- **Rationale & audience (M(xiv))**: purpose and target users stated in Goals section.
+
+## 19. Credits
 
 - Code Institute  
 - Django Documentation  
@@ -496,10 +535,4 @@ erDiagram
 # ✨ Thank You For Visiting Gezana!
 
 Proudly sharing Habesha culture through food and technology.
-
-
-
-
-
-
 
