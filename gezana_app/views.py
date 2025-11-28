@@ -47,4 +47,6 @@ def make_booking(request):
 
 
 def booking_success(request):
-    return render(request, "gezana_app/booking_success.html")
+    last_booking = Booking.objects.last()
+    return render(request, "gezana_app/booking_success.html", {"booking": last_booking})
+
