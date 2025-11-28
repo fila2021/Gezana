@@ -245,6 +245,9 @@ footer {
 
 .navbar a.active {
     color: #ffd28a;
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 6px 10px;
 }
 
 .navbar a.active::after {
