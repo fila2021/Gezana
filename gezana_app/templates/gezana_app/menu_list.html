@@ -4,12 +4,53 @@
 {% block title %}Menu – Gezana{% endblock %}
 
 {% block content %}
+
 <h2 class="menu-title">Our Traditional Habesha Dishes</h2>
 
+<!-- 🔎 SEARCH + CATEGORY FILTER BAR -->
+<div class="menu-filter-bar">
+
+    <!-- SEARCH BAR -->
+    <form method="GET" class="search-form">
+        <input 
+            type="text" 
+            name="search" 
+            placeholder="Search dishes..."
+            value="{{ search|default:'' }}"
+            class="search-input"
+        >
+        <button type="submit" class="search-btn">Search</button>
+    </form>
+
+    <!-- CATEGORY FILTER BUTTONS -->
+    <div class="category-buttons">
+        <a href="{% url 'gezana_app:menu_list' %}" 
+           class="cat-btn {% if not category %}active{% endif %}">All</a>
+
+        <a href="?category=meat" 
+           class="cat-btn {% if category == 'meat' %}active{% endif %}">Meat</a>
+
+        <a href="?category=veg" 
+           class="cat-btn {% if category == 'veg' %}active{% endif %}">Vegetarian</a>
+
+        <a href="?category=seafood" 
+           class="cat-btn {% if category == 'seafood' %}active{% endif %}">Seafood</a>
+
+        <a href="?category=drinks" 
+           class="cat-btn {% if category == 'drinks' %}active{% endif %}">Drinks</a>
+
+        <a href="?category=dessert" 
+           class="cat-btn {% if category == 'dessert' %}active{% endif %}">Desserts</a>
+    </div>
+
+</div>
+
+<!-- MENU GRID -->
 <div class="menu-container">
     {% for item in items %}
     <div class="menu-card">
 
+        <!-- IMAGE -->
         <div class="menu-img-wrapper">
             {% if item.image and item.image.url %}
                 <img src="{{ item.image.url }}" 
@@ -21,6 +62,7 @@
             {% endif %}
         </div>
 
+        <!-- CARD BODY -->
         <div class="menu-card-body">
             <h3 class="menu-item-name">{{ item.name }}</h3>
 
@@ -31,6 +73,12 @@
             </p>
 
             <p class="menu-item-price">€{{ item.price }}</p>
+
+            <!-- ADD TO CART BUTTON -->
+            <button class="add-to-cart-btn"
+                    onclick="addToCart('{{ item.id }}', '{{ item.name }}', '{{ item.price }}')">
+                Add to Order
+            </button>
         </div>
 
     </div>
@@ -43,4 +91,31 @@
     <img class="modal-content" id="modalImage">
 </div>
 
+<!-- CART CONFIRMATION POPUP -->
+<div id="cartNotification" class="cart-notification">
+    Added to your order!
+</div>
+
 {% endblock %}
+
+{% block extra_scripts %}
+<script>
+function openModal(imgUrl) {
+    document.getElementById("modalImage").src = imgUrl;
+    document.getElementById("imageModal").style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("imageModal").style.display = "none";
+}
+
+function addToCart(id, name, price) {
+    let cart = JSON.parse(localStorage.getItem("gezana_cart") || "[]");
+
+    cart.push({
+        id: id,
+        name: name,
+        price: price
+    });
+
+    localStorage.setItem("ge

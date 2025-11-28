@@ -1,13 +1,36 @@
 from .models import MenuItem
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+from django.db.models import Q
+
 
 def home(request):
     return render(request, 'gezana_app/home.html')
 
 def menu_list(request):
+
+    # GET FILTERS
+    category = request.GET.get("category")
+    search = request.GET.get("search")
+
     items = MenuItem.objects.all()
-    return render(request, "gezana_app/menu_list.html", {"items": items})
+
+    # CATEGORY FILTER
+    if category:
+        items = items.filter(category=category)
+
+    # SEARCH FILTER (name or ingredients)
+    if search:
+        items = items.filter(
+            Q(name__icontains=search) | Q(ingredients__icontains=search)
+        )
+
+    return render(request, "gezana_app/menu_list.html", {
+        "items": items,
+        "category": category,
+        "search": search,
+    })
+
 
 def menu_detail(request, pk):
     item = get_object_or_404(MenuItem, pk=pk)
