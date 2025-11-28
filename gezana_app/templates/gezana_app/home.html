@@ -3,6 +3,17 @@
 {% block title %}Home — Gezana{% endblock %}
 
 {% block content %}
-<h2>Welcome to Gezana</h2>
-<p>Authentic Habesha Cuisine in Dublin.</p>
+<div class="hero">
+    <div class="hero-text">
+        <h1>Welcome to Gezana Restaurant</h1>
+        <p>Experience authentic Ethiopian & Eritrean flavours in the heart of Dublin.</p>
+        <a href="{% url 'gezana_app:make_booking' %}" class="button hero-button">Book a Table</a>
+    </div>
+</div>
+
+<h2>Discover Our Menu</h2>
+<p>Explore a unique collection of traditional Habesha dishes.</p>
+
+<a href="{% url 'gezana_app:menu_list' %}" class="button">View Menu</a>
 {% endblock %}
+

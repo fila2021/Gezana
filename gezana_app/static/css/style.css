@@ -318,3 +318,41 @@ footer {
     color: #444;
     margin-bottom: 15px;
 }
+/* ============================
+   HERO SECTION
+============================ */
+
+.hero {
+    background-image: url("../images/hero.jpg");
+    height: 350px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    filter: brightness(0.9);
+}
+
+.hero-text {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    color: #fff;
+    max-width: 400px;
+}
+
+.hero-text h1 {
+    font-size: 36px;
+    margin: 0;
+}
+
+.hero-text p {
+    font-size: 16px;
+    margin: 10px 0 20px;
+}
+
+.hero-button {
+    background-color: #e8ba60 !important;
+    color: #000 !important;
+    font-weight: bold;
+}
