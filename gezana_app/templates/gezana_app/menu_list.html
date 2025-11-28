@@ -37,6 +37,24 @@
     {% endfor %}
 </div>
 
+<section class="booking-actions">
+    <div class="booking-actions-card">
+        <h3>Already booked?</h3>
+        <p>Enter your reference code to cancel quickly, or visit the cancel page.</p>
+        <form action="{% url 'gezana_app:cancel_booking' %}" method="post" class="inline-cancel-form">
+            {% csrf_token %}
+            <input
+                type="text"
+                name="reference"
+                placeholder="Enter reference code"
+                required
+            />
+            <button type="submit" class="button danger">Cancel booking</button>
+            <a class="button ghost" href="{% url 'gezana_app:cancel_booking' %}">Go to cancel page</a>
+        </form>
+    </div>
+</section>
+
 <!-- IMAGE MODAL -->
 <div id="imageModal" class="image-modal" onclick="closeModal()">
     <span class="close-modal">&times;</span>

@@ -589,3 +589,65 @@ footer {
     color: #fff;
     cursor: pointer;
 }
+
+/* Booking actions section on menu page */
+.booking-actions {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.booking-actions-card {
+    max-width: 720px;
+    width: 100%;
+    background: #f8f8f8;
+    border: 1px solid #e2e2e2;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.booking-actions-card h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.booking-actions-card p {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.inline-cancel-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.inline-cancel-form input[type="text"] {
+    flex: 1 1 220px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.inline-cancel-form .button {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.inline-cancel-form .button.danger {
+    background: #c0392b;
+    color: #fff;
+}
+
+.inline-cancel-form .button.ghost {
+    background: transparent;
+    color: #c0392b;
+    border: 1px solid #c0392b;
+}
