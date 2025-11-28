@@ -8,30 +8,24 @@
 
 <div class="menu-grid">
     {% for item in items %}
-       <p>Image URL Test: {{ item.image.url }}</p>
     <div class="menu-card fade-in">
 
-        <div class="menu-card-header">
-            <h3>{{ item.name }}</h3>
-
-            {% if item.is_vegetarian %}
-                <span class="veg-tag">Vegetarian</span>
-            {% endif %}
-        </div>
-
-        <p class="category">{{ item.get_category_display }}</p>
-
-        <p class="description">
-            {{ item.description|truncatewords:20 }}
-        </p>
-
-        <p class="price">€{{ item.price }}</p>
-
-        <a href="{% url 'gezana_app:menu_detail' item.pk %}" class="button view-btn">
-            View Details
-        </a>
+    <div class="menu-img-wrapper">
+        {% if item.image and item.image.url %}
+            <img src="{{ item.image.url }}" alt="{{ item.name }}" class="menu-img">
+        {% endif %}
     </div>
+
+    <div class="menu-card-header">
+        <h3>{{ item.name }}</h3>
+    </div>
+
+    <p class="description">{{ item.description }}</p>
+    <p class="ingredients"><strong>Ingredients:</strong> {{ item.ingredients }}</p>
+    <p class="price">€{{ item.price }}</p>
+
+</div>
+
     {% endfor %}
 </div>
 {% endblock %}
-
