@@ -32,7 +32,7 @@ def make_booking(request):
             )
 
             if table is None:
-                messages.error(request, "Sorry, no table available at that time.")
+                messages.error(request, "Sorry, no table is available at that time.")
             else:
                 booking.table = table
                 booking.save()
@@ -43,6 +43,7 @@ def make_booking(request):
         form = BookingForm()
 
     return render(request, "gezana_app/booking_form.html", {"form": form})
+
 
 
 def booking_success(request):
