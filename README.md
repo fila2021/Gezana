@@ -308,29 +308,24 @@ All core functionalities passed manual and validator testing.
 
 ---
 
-## 10. Deployment (Render)
+## 10. Deployment (Heroku)
 
 ### Steps:
 1. Push project to GitHub  
-2. Create a *Web Service* on Render  
-3. Connect GitHub repository  
-4. Build command:
+2. Create a Heroku app  
+3. Set environment variables in Heroku:  
+   - `SECRET_KEY`  
+   - `DEBUG=False`  
+   - `ALLOWED_HOSTS` (e.g., your Heroku domain)  
+   - `DATABASE_URL` (Heroku Postgres)  
+4. Buildpack/Stack: Use the default Python buildpack.  
+5. Deploy from GitHub (automatic deploys) or push via Git:  
+   - `git push heroku main`  
+6. Run migrations: `heroku run python manage.py migrate`  
+7. Collect static files: `heroku run python manage.py collectstatic --noinput`  
+8. (Optional) Create a superuser: `heroku run python manage.py createsuperuser`  
+9. Open the app: `heroku open`
 
-pip install -r requirements.txt
-5. Start command:
-
-gunicorn gezana.wsgi
-6. Add environment variables:
-- `SECRET_KEY`  
-- `DEBUG=False`  
- - `ALLOWED_HOSTS` (e.g., your Render host)
-7. Run migrations:
-
-python3 manage.py migrate
-8. Collect static files:
-
-python3 manage.py collectstatic
-App will deploy and become live.
 ---
 ## 11. Running Locally
 Clone the repo:
@@ -513,21 +508,11 @@ erDiagram
 - Media uploads stored on disk; restrict admin access to staff users only.  
 - CSRF protection active on all forms; Django ORM used to avoid SQL injection.  
 
----
-
-## Assessment Criteria Coverage (summary)
-- **Front end UX & accessibility (1.1, 1.2, M(i))**: responsive layouts, semantic headings, alt text, high-contrast buttons, clear form feedback, intuitive navigation.  
-- **Data-backed full stack (1.3, 1.4, 2.1, 2.2, M(vii), M(viii))**: Django models for MenuItem/Table/Booking with relationships; schema documented; settings/env-driven config.  
-- **Validation & testing (1.5, 1.6, 1.7, 1.8, 1.9, M(v), M(vi))**: form validation for dates, times, duplicates, availability; documented manual testing and validators; PEP8 compliance.  
-- **CRUD operations (3.1, M(x), M(xi))**: create/read via public booking/menu; update/delete via admin; cancel deletes by reference with immediate UI feedback.  
-- **Deployment (4.1–4.3, M(xiii))**: Render deployment steps, env vars, migrations, collectstatic documented.  
-- **Security (5.1–5.4, M(xiv))**: git for version control, secrets kept in env vars, DEBUG off in production, admin auth, CSRF and ORM protections.  
-- **Rationale & audience (M(xiv))**: purpose and target users stated in Goals section.
-
 ## 19. Credits
 
 - Code Institute  
 - Django Documentation  
+- Photos: royalty-free images sourced from copyright-free sites (checked for free-to-use licenses)  
 - All content and development by the project author  
 
 ---
@@ -535,4 +520,3 @@ erDiagram
 # ✨ Thank You For Visiting Gezana!
 
 Proudly sharing Habesha culture through food and technology.
-
