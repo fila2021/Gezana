@@ -165,6 +165,115 @@ This project was developed for the Code Institute Full Stack Software Developmen
 | Templates        | All extend base.html correctly               | Pass   |
 | Form Validation  | Guests/date/time validated                   | Pass   |
 
+# Testing Documentation
+
+## Manual Testing
+
+### Navigation
+| Action | Expected Result | Outcome |
+|--------|------------------|---------|
+| Click “Home” | Homepage loads | Pass |
+| Click “Menu” | Menu list displayed | Pass |
+| Click “Book” | Booking form appears | Pass |
+| Click “Cancel Booking” | Cancellation form loads | Pass |
+| Click “About” | About page loads | Pass |
+| Click “Contact” | Contact page loads | Pass |
+
+---
+
+## Booking System Tests
+
+### 1. Valid Booking
+**Input:** Valid name, email, guests, date, time  
+**Expected:** Booking confirmation + reference code  
+**Result:** Pass  
+
+### 2. Double Booking Prevention
+**Scenario:** Two users try to book same table/time  
+**Expected:** Second user gets error  
+**Result:** Pass  
+
+### 3. Invalid Date
+| Input | Expected | Result |
+|-------|----------|--------|
+| Past date | Error message | Pass |
+| 31/11/2025 | Validation error | Pass |
+
+### 4. Invalid Time
+| Time | Expected | Result |
+|------|----------|--------|
+| 05:00 | “Invalid time” | Pass |
+| 23:30 | Out-of-hours error | Pass |
+
+---
+
+## Cancellation Tests
+
+### 1. Valid Reference
+**Input:** Real reference code  
+**Expected:** Booking deleted, success message  
+**Result:** Pass  
+
+### 2. Invalid Reference
+**Input:** Random letters  
+**Expected:** “Invalid cancellation code.”  
+**Result:** Pass  
+
+---
+
+## Menu Page Testing
+
+| Test | Expected | Result |
+|------|----------|--------|
+| Menu items display | All items visible | Pass |
+| Category field | Human-readable format | Pass |
+| “Vegetarian” tag | Correctly shown | Pass |
+| Item details | Correct info loads | Pass |
+
+---
+
+## Template Testing
+
+| Template | Inherits from base.html? | Pass |
+|----------|---------------------------|------|
+| home.html | Yes | ✔ |
+| menu_list.html | Yes | ✔ |
+| menu_detail.html | Yes | ✔ |
+| booking_success.html | Yes | ✔ |
+| cancel_booking.html | Yes | ✔ |
+
+---
+
+## Python Code Testing (PEP8)
+Checked using: pycodestyle .
+
+| File | Errors Found | Status |
+|------|--------------|--------|
+| views.py | 0 | Pass |
+| models.py | 0 | Pass |
+| forms.py | 0 | Pass |
+| urls.py | 0 | Pass |
+
+---
+
+## Browser Compatibility
+| Browser | Result |
+|---------|--------|
+| Chrome | Pass |
+| Safari | Pass |
+| Firefox | Pass |
+| Mobile iOS Safari | Pass |
+| Mobile Android Chrome | Pass |
+
+---
+
+## Final Result
+
+All core functionalities passed manual and validator testing.
+
+
+
+
 ### Validators
 - HTML — W3C validator  
 - CSS — Jigsaw validator  
@@ -213,7 +322,199 @@ http://127.0.0.1:8000/
 
 ---
 
-## 10. Credits
+## 10. User Stories
+
+## MoSCoW Prioritisation
+
+### Must Have
+- Users can view the menu
+- Users can book a table
+- Double-booking is prevented
+- Users receive a booking confirmation
+- Users can cancel booking using a reference code
+- Admin can manage menu, tables and bookings
+
+### Should Have
+- Clear success/error messages
+- Responsive layout
+- Contact details page
+
+### Could Have
+- Customer reviews
+- Online payment integration
+
+### Won’t Have (for now)
+- Food delivery system
+- Multi-language support
+
+---
+
+# Full User Story Table
+
+| ID | As a… | I want to… | So I can… |
+|----|--------|-------------|------------|
+| 1 | User | View the menu | Decide what to eat |
+| 2 | User | Book a table online | Reserve a spot easily |
+| 3 | User | See booking confirmation | Know my booking succeeded |
+| 4 | User | Cancel my booking | Change plans easily |
+| 5 | User | Learn about the restaurant | Understand its background |
+| 6 | User | Find contact information | Call/email the restaurant |
+| 7 | Owner | Prevent double bookings | Avoid conflicts |
+| 8 | Owner | Manage menu items via admin | Update dishes easily |
+| 9 | Owner | Assign tables automatically | Reduce mistakes |
+| 10 | Owner | Receive accurate customer details | Contact customers if needed |
+
+
+## 11. FEATURES
+# Features Overview
+
+## Implemented Features
+
+### ✔ Menu System
+- Menu list
+- Dish detail page
+- Vegetarian flag
+- Admin-controlled content
+
+### ✔ Booking System
+- Booking form
+- Date/time validation
+- Automatic table assignment
+- Double-booking prevention
+- Success message
+- Unique reference code
+
+### ✔ Cancellation System
+- Enter reference code
+- Cancel booking
+- Error handling
+
+### ✔ Static Pages
+- About page
+- Contact page
+
+### ✔ Admin Management
+- Tables
+- Menu Items
+- Bookings
+
+---
+
+## Future Enhancements
+
+- User accounts & booking history  
+- Email notifications for bookings  
+- Online payment system  
+- Restaurant table map  
+- Reviews/testimonials  
+
+
+## 12. Flowchart Mermaid Diagram
+# Flowchart – Booking & Cancellation System
+
+```mermaid
+flowchart TD
+
+A[User opens Booking Page] --> B[User submits booking form]
+B --> C{Valid form?}
+C -- No --> D[Show error message]
+C -- Yes --> E[Check table availability]
+
+E --> F{Table available?}
+F -- No --> G[Show: "Fully booked"]
+F -- Yes --> H[Create booking]
+
+H --> I[Generate reference code]
+I --> J[Save booking]
+J --> K[Show booking success page]
+
+K --> L[User wants to cancel?]
+L -- Yes --> M[User enters reference code]
+M --> N{Valid code?}
+N -- No --> O[Show invalid code error]
+N -- Yes --> P[Delete booking]
+P --> Q[Show cancellation confirmation]
+
+---
+
+# ⭐ **5. ERD.md (Database Diagram in Mermaid)**
+
+```markdown
+# ERD – Database Structure
+
+```mermaid
+erDiagram
+
+    TABLE {
+        string table_number
+        int capacity
+    }
+
+    MENUITEM {
+        string name
+        string description
+        decimal price
+        string category
+        bool is_vegetarian
+    }
+
+    BOOKING {
+        string name
+        string email
+        string phone
+        int guests
+        date date
+        time time
+        string reference
+    }
+
+    TABLE ||--|{ BOOKING : "assigned to"
+
+---
+
+# ⭐ **6. BUGS.md (Full Table)**
+
+```markdown
+# Bugs & Fixes
+
+| Bug | Cause | Fix |
+|-----|--------|------|
+| Templates collapsing into one line | VS Code auto-formatting | Disabled formatters, added workspace settings |
+| Unclosed tag errors | Template being minified | Rewrote templates with correct blocks |
+| Date validation error | User input wrong format | Added date picker widget |
+| Booking success not showing message | Missing messages block | Added Django messages to base.html |
+| Menu detail page 404 | Item not created in admin | Created test items |
+| Cancel booking always invalid | Reference not uppercase | Normalised `.upper()` on input |
+
+
+## 13. Future Enhancements
+# Future Enhancements
+
+## 1. User Authentication
+- Users can log in and see booking history  
+
+## 2. Email Notifications
+- Confirmation email with reference  
+- Cancellation confirmation  
+
+## 3. Online Payment for Bookings
+- Reservation fee system  
+
+## 4. Review and Rating System
+- Users leave feedback  
+
+## 5. Menu Images
+- Add images to dishes  
+
+## 6. Table Map System
+- Visual floor plan  
+
+## 7. Admin Dashboard
+- Statistics & analytics  
+
+
+
+## 14. Credits
 
 - Code Institute  
 - Django Documentation  
