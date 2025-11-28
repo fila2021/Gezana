@@ -5,31 +5,25 @@
 {% block content %}
 <h2>Our Menu</h2>
 
-{% if items %}
+<div class="menu-grid">
     {% for item in items %}
-        {% ifchanged item.category %}
-            {% if not forloop.first %}</ul>{% endif %}
-            <h3>{{ item.get_category_display }}</h3>
-            <ul>
-        {% endifchanged %}
+    <div class="menu-card">
+        <h3>{{ item.name }}</h3>
 
-       <div class="menu-item">
-    <h3>
-        <a href="{% url 'gezana_app:menu_detail' item.pk %}">{{ item.name }}</a>
-    </h3>
+        {% if item.is_vegetarian %}
+            <span class="veg-tag">Vegetarian</span>
+        {% endif %}
 
-    <p><strong>Category:</strong> {{ item.get_category_display }}</p>
-    <p><strong>Price:</strong> €{{ item.price }}</p>
+        <p class="category">{{ item.get_category_display }}</p>
+        <p class="description">{{ item.description|truncatewords:20 }}</p>
 
-    {% if item.is_vegetarian %}
-        <span class="veg-tag">Vegetarian</span>
-    {% endif %}
-</div>
+        <p class="price">€{{ item.price }}</p>
 
-
-        {% if forloop.last %}</ul>{% endif %}
+        <a href="{% url 'gezana_app:menu_detail' item.pk %}" class="button">
+            View Details
+        </a>
+    </div>
     {% endfor %}
-{% else %}
-    <p>No menu items available yet.</p>
-{% endif %}
+</div>
 {% endblock %}
+
