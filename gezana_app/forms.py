@@ -7,6 +7,20 @@ class BookingForm(forms.ModelForm):
         model = Booking
         fields = ["name", "email", "phone", "guests", "date", "time"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        placeholders = {
+            "name": "Full name",
+            "email": "Email address",
+            "phone": "Phone number (optional)",
+            "guests": "Number of guests",
+            "date": "Booking date",
+            "time": "Booking time",
+        }
+        for field_name, field in self.fields.items():
+            field.widget.attrs.setdefault("placeholder", placeholders.get(field_name, ""))
+            field.widget.attrs.setdefault("class", "input-with-icon")
+
     def clean_date(self):
         booking_date = self.cleaned_data["date"]
 

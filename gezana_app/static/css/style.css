@@ -269,6 +269,12 @@ footer {
     font-size: 15px;
 }
 
+.input-with-icon {
+    /* ensure form inputs follow the same sizing as the icon wrapper */
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .input-group input:focus,
 .input-group select:focus {
     outline: none;
