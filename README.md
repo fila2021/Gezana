@@ -87,6 +87,21 @@ This project targets the assessment criteria for Back End Development (Level 5) 
 
 ---
 
+## Final Design Screenshots
+Place your captured screenshots in `docs/screenshots/` and update the filenames below if needed.
+
+![Home](docs/screenshots/home.png)  
+![Menu](docs/screenshots/menu.png)  
+![Booking](docs/screenshots/booking.png)  
+![Cancellation](docs/screenshots/cancellation.png)  
+![About](docs/screenshots/about.png)  
+![Contact](docs/screenshots/contact.png)
+
+## Wireframe
+Place the wireframe image in `docs/wireframes/` (update the filename if different).
+
+![Site Wireframe](docs/wireframes/gezana-wireframe.png)
+
 ## 4. Technologies Used
 
 ### Languages
