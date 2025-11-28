@@ -48,11 +48,13 @@ def make_booking(request):
         if form.is_valid():
             booking = form.save(commit=False)
 
-            table = find_available_table(
-                booking.date,
-                booking.time,
-                booking.guests
-            )
+            table = getattr(form, "available_table", None)
+            if table is None:
+                table = find_available_table(
+                    booking.date,
+                    booking.time,
+                    booking.guests
+                )
 
             if table is None:
                 messages.error(request, "Sorry, no table is available at that time.")

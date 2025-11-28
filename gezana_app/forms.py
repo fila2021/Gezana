@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 from datetime import date, time
 from .models import Booking, Table
 from .utils import find_available_table
@@ -51,6 +52,8 @@ class BookingForm(forms.ModelForm):
         booking_date = cleaned_data.get("date")
         booking_time = cleaned_data.get("time")
         guests = cleaned_data.get("guests")
+        email = cleaned_data.get("email")
+        phone = cleaned_data.get("phone")
 
         # Only run availability checks when required fields are present.
         if not booking_date or not booking_time or not guests:
@@ -65,6 +68,20 @@ class BookingForm(forms.ModelForm):
         table = find_available_table(booking_date, booking_time, guests)
         if table is None:
             raise ValidationError("We are fully booked for that date and time. Please choose another slot.")
+
+        # Prevent duplicate bookings by same contact on the same date.
+        if email or phone:
+            dup_q = Q(date=booking_date)
+            if email:
+                dup_q &= Q(email__iexact=email)
+            if phone:
+                dup_q |= Q(date=booking_date, phone__iexact=phone)
+            existing = Booking.objects.filter(dup_q)
+            if existing.exists():
+                raise ValidationError("It looks like you already have a booking for that date. Please modify the existing booking or choose another date.")
+
+        # store selected table so view can reuse without re-querying
+        self.available_table = table
 
         return cleaned_data
 class CancelBookingForm(forms.Form):
