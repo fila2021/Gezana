@@ -157,3 +157,5 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "gezanabooking@gmail.com")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "Gezana Booking <gezanabooking@gmail.com>")
+
+ #updated DATABASE from SQlite to Postgres
