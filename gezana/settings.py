@@ -31,7 +31,15 @@ SECRET_KEY = os.getenv("SECRET_KEY", "change-me")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",") if os.getenv("ALLOWED_HOSTS") else []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    ".herokuapp.com",
+]
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.herokuapp.com",
+]
+
 
 
 # Application definition
