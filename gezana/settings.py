@@ -146,10 +146,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STORAGES = {
-    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
-}
+
 
 
 
@@ -172,15 +169,18 @@ EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "Gezana Booking <gezanabooking@gmail.com>")
 
 # Cloudinary configuration
-
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 
-# MEDIA settings
-MEDIA_URL = "/media/"  # keep this for local fallback
+# Media (uploads)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"  # local dev only
 
+# Storage backends (Django 4.2+)
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+}
+
+# If Cloudinary is configured, store uploaded media there
 if CLOUDINARY_URL:
-    # Use Cloudinary in production (Heroku)
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-else:
-    # Local dev: store uploads in /media
-    MEDIA_ROOT = BASE_DIR / "media"
+    STORAGES["default"] = {"BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage"}
