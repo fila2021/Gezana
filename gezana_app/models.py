@@ -1,3 +1,5 @@
+from django.core.files import File
+from pathlib import Path
 from django.db import models
 import random
 import string
@@ -34,6 +36,20 @@ class MenuItem(models.Model):
 
     # IMAGE field
     image = models.ImageField(upload_to="menu_images/", blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        """
+        Auto-assign a default placeholder image if none uploaded.
+        """
+        if not self.image:
+            placeholder_path = Path(__file__).resolve().parent / "static" / "images" / "no_image_available.png"
+
+            if placeholder_path.exists():
+                with open(placeholder_path, "rb") as f:
+                    # Saves into the active storage backend (Cloudinary on Heroku)
+                    self.image.save("no_image_available.png", File(f), save=False)
+
+        super().save(*args, **kwargs)
 
 
     def __str__(self):
