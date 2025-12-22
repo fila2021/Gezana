@@ -35,6 +35,7 @@ class MenuItem(models.Model):
     # IMAGE field
     image = models.ImageField(upload_to="menu_images/", blank=True, null=True)
 
+
     def __str__(self):
         return self.name
 
