@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gezana_app',
+    "cloudinary",
+    "cloudinary_storage",
+
 
 
 
@@ -168,4 +171,16 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "Gezana Booking <gezanabooking@gmail.com>")
 
- #updated DATABASE from SQlite to Postgres
+# Cloudinary configuration
+
+CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
+
+# MEDIA settings
+MEDIA_URL = "/media/"  # keep this for local fallback
+
+if CLOUDINARY_URL:
+    # Use Cloudinary in production (Heroku)
+    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+else:
+    # Local dev: store uploads in /media
+    MEDIA_ROOT = BASE_DIR / "media"
