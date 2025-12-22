@@ -10,3 +10,9 @@ docs/.DS_Store
 docs/screenshots/.DS_Store
 media/
 staticfiles/
+echo "venv/" >> .gitignore
+echo "__pycache__/" >> .gitignore
+echo "*.pyc" >> .gitignore
+echo "db.sqlite3" >> .gitignore
+echo ".DS_Store" >> .gitignore
+echo "media/" >> .gitignore
