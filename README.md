@@ -331,29 +331,36 @@ All core functionalities passed manual and validator testing.
 
 ---
 
-## 10. Deployment (Heroku)
+## 10. Deployment (cloud platforms like Heroku or Render)
 
-### Steps:
-1. Push project to GitHub  
-2. Create a Heroku app  
-3. Set environment variables in Heroku:  
-   - `SECRET_KEY`  
-   - `DEBUG=False`  
-   - `ALLOWED_HOSTS` (e.g., your Heroku domain)  
-   - `DATABASE_URL` (Heroku Postgres)  
-4. Buildpack/Stack: Use the default Python buildpack.  
-5. Deploy from GitHub (automatic deploys) or push via Git:  
-   - `git push heroku main`  
-6. Run migrations: `heroku run python manage.py migrate`  
-7. Collect static files: `heroku run python manage.py collectstatic --noinput`  
-8. (Optional) Create a superuser: `heroku run python manage.py createsuperuser`  
-9. Open the app: `heroku open`
+### Required environment variables
+Copy `.env.example` to `.env` (for local) and set the same keys in your hosting dashboard:
+- `SECRET_KEY` — unique per deployment
+- `DEBUG` — `False` in production
+- `ALLOWED_HOSTS` — comma-separated list of domains (e.g., `gezana.onrender.com,localhost`)
+- Email settings as needed
+
+### Steps
+1. Push code to your Git repository.  
+2. Configure the environment variables above in your hosting platform.  
+3. Ensure a production database (e.g., Postgres) is configured and `DATABASE_URL` is set if you switch from SQLite.  
+4. Install dependencies (`pip install -r requirements.txt`) on the platform build step.  
+5. Run migrations: `python manage.py migrate`.  
+6. Collect static files: `python manage.py collectstatic --noinput` (STATIC_ROOT is set to `staticfiles/`).  
+7. Create a superuser if needed: `python manage.py createsuperuser`.  
+8. Start the app using a WSGI server (e.g., `gunicorn gezana.wsgi:application`).  
+9. Verify the app responds on your configured domain(s) in `ALLOWED_HOSTS`.
 
 ---
 ## 11. Running Locally
 Clone the repo:
 git clone https://github.com/fila2021/Gezana.git
 cd Gezana
+
+Copy the example environment file and update values:
+cp .env.example .env
+# edit .env and set SECRET_KEY, DEBUG, ALLOWED_HOSTS, email settings
+
 Create virtual environment:
 python3 -m venv venv
 source venv/bin/activate
@@ -525,8 +532,8 @@ erDiagram
 7. Admin dashboard with stats  
 
 ## 18. Security & Configuration
-- Secrets are injected via environment variables; `SECRET_KEY` is not committed.  
-- `DEBUG=False` in production; `ALLOWED_HOSTS` configured per environment.  
+- Secrets are injected via environment variables; create `.env` from `.env.example` and never commit it.  
+- `DEBUG` must be `False` in production; `ALLOWED_HOSTS` configured per environment.  
 - Admin login protected by Django auth; no default credentials stored in repo.  
 - Media uploads stored on disk; restrict admin access to staff users only.  
 - CSRF protection active on all forms; Django ORM used to avoid SQL injection.  

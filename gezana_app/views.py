@@ -58,6 +58,7 @@ def make_booking(request):
                 booking.table = table
                 booking.save()
                 _send_booking_confirmation(booking)
+                request.session["last_booking_reference"] = booking.reference
                 messages.success(request, "Your booking has been confirmed!")
                 return redirect("gezana_app:booking_success")
 
@@ -69,10 +70,14 @@ def make_booking(request):
 
 
 def booking_success(request):
-    last_booking = Booking.objects.last()
-    return render(request, "gezana_app/booking_success.html", {"booking": last_booking})
+    ref = request.session.pop("last_booking_reference", None)
+    booking = Booking.objects.filter(reference=ref).first() if ref else None
 
-from .forms import CancelBookingForm
+    if not booking:
+        messages.info(request, "Your booking is confirmed. If you need your reference, please check your email.")
+        return redirect("gezana_app:make_booking")
+
+    return render(request, "gezana_app/booking_success.html", {"booking": booking})
 
 def cancel_booking(request):
     if request.method == "POST":

@@ -5,8 +5,30 @@ Booking Confirmed
 {% endblock %}
 
 {% block content %}
-<h2>Your booking is confirmed!</h2>
-<p>We look forward to welcoming you at Gezana.</p>
-<a href="{% url 'gezana_app:home' %}" class="button">Return Home</a>
-<p>Your cancellation code: <strong>{{ booking.reference }}</strong></p>
+<section class="booking-hero">
+  <div>
+    <p class="eyebrow">Booking Confirmed</p>
+    <h2>See you soon at Gezana!</h2>
+    <p class="lede">We’ve saved your table and sent your confirmation to your email.</p>
+  </div>
+  <div class="booking-hero-badge">
+    <p class="mini">Reference</p>
+    <p class="callout">{{ booking.reference }}</p>
+    <p class="note">Keep this code to cancel or modify.</p>
+  </div>
+</section>
+
+<div class="booking-card card">
+  <h3>Reservation Details</h3>
+  <p><strong>Name:</strong> {{ booking.name }}</p>
+  <p><strong>Date:</strong> {{ booking.date }}</p>
+  <p><strong>Time:</strong> {{ booking.time }}</p>
+  <p><strong>Guests:</strong> {{ booking.guests }}</p>
+  <p><strong>Table:</strong> {{ booking.table|default:"Assigned on arrival" }}</p>
+
+  <div class="hero-actions" style="margin-top: 12px;">
+    <a href="{% url 'gezana_app:home' %}" class="button ghost">Return Home</a>
+    <a href="{% url 'gezana_app:cancel_booking' %}" class="button danger">Cancel Booking</a>
+  </div>
+</div>
 {% endblock %}
