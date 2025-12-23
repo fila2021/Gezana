@@ -6,10 +6,7 @@
   <div>
     <p class="eyebrow">Reserve Your Table</p>
     <h2>Book a cozy spot for friends, family, or coffee ceremony</h2>
-    <p class="lede">
-      Choose your date and time, and we will find the best table.
-      We welcome small gatherings and celebrations.
-    </p>
+    <p class="lede">Choose your date and time, and we will find the best table. We welcome small gatherings and celebrations.</p>
   </div>
   <div class="booking-hero-badge">
     <p class="mini">Hours</p>
@@ -18,7 +15,6 @@
   </div>
 </section>
 
-{# ✅ Non-field errors (form-level errors) #}
 {% if form.non_field_errors %}
   <div class="form-errors card" role="alert">
     {% for error in form.non_field_errors %}
@@ -34,19 +30,12 @@
     <form method="post" novalidate>
       {% csrf_token %}
 
-      {# ✅ Global warning container (JS will fill this) #}
-      <div id="live-warnings" class="form-errors card" style="display:none;" role="alert"></div>
-
       <div class="field-block">
         <div class="input-group">
           <i class="fa-solid fa-user"></i>
           {{ form.name }}
         </div>
-        {% if form.name.errors %}
-          <div class="field-errors">
-            {% for e in form.name.errors %}<p>{{ e }}</p>{% endfor %}
-          </div>
-        {% endif %}
+        {% for e in form.name.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
       </div>
 
       <div class="field-block">
@@ -54,11 +43,8 @@
           <i class="fa-solid fa-envelope"></i>
           {{ form.email }}
         </div>
-        {% if form.email.errors %}
-          <div class="field-errors">
-            {% for e in form.email.errors %}<p>{{ e }}</p>{% endfor %}
-          </div>
-        {% endif %}
+        {% for e in form.email.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+        <p class="hint">Email or phone is required.</p>
       </div>
 
       <div class="field-block">
@@ -66,11 +52,7 @@
           <i class="fa-solid fa-phone"></i>
           {{ form.phone }}
         </div>
-        {% if form.phone.errors %}
-          <div class="field-errors">
-            {% for e in form.phone.errors %}<p>{{ e }}</p>{% endfor %}
-          </div>
-        {% endif %}
+        {% for e in form.phone.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
       </div>
 
       <div class="field-block">
@@ -78,11 +60,7 @@
           <i class="fa-solid fa-users"></i>
           {{ form.guests }}
         </div>
-        {% if form.guests.errors %}
-          <div class="field-errors">
-            {% for e in form.guests.errors %}<p>{{ e }}</p>{% endfor %}
-          </div>
-        {% endif %}
+        {% for e in form.guests.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
       </div>
 
       <div class="field-block">
@@ -90,12 +68,8 @@
           <i class="fa-solid fa-calendar-days"></i>
           {{ form.date }}
         </div>
-        {% if form.date.errors %}
-          <div class="field-errors">
-            {% for e in form.date.errors %}<p>{{ e }}</p>{% endfor %}
-          </div>
-        {% endif %}
-        <p class="hint">Bookings cannot be made for past dates.</p>
+        {% for e in form.date.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+        <p class="hint">You cannot choose a past date.</p>
       </div>
 
       <div class="field-block">
@@ -103,12 +77,8 @@
           <i class="fa-solid fa-clock"></i>
           {{ form.time }}
         </div>
-        {% if form.time.errors %}
-          <div class="field-errors">
-            {% for e in form.time.errors %}<p>{{ e }}</p>{% endfor %}
-          </div>
-        {% endif %}
-        <p class="hint">Booking hours: 12:00–19:00</p>
+        {% for e in form.time.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+        <p class="hint">Booking hours: 12:00–19:00 (every 30 mins).</p>
       </div>
 
       <button type="submit" class="button primary full">Confirm Booking</button>
@@ -135,54 +105,4 @@
     </form>
   </div>
 </div>
-
-{# ✅ Optional client-side warning for instant feedback (server-side validation still applies) #}
-<script>
-(function () {
-  const warningsBox = document.getElementById("live-warnings");
-  const dateInput = document.querySelector('input[name="date"]');
-  const timeSelect = document.querySelector('select[name="time"]');
-
-  function showWarnings(messages) {
-    if (!messages.length) {
-      warningsBox.style.display = "none";
-      warningsBox.innerHTML = "";
-      return;
-    }
-    warningsBox.style.display = "block";
-    warningsBox.innerHTML = messages.map(m => `<p>${m}</p>`).join("");
-  }
-
-  function validateLive() {
-    const messages = [];
-
-    // Date warning
-    if (dateInput && dateInput.value) {
-      const today = new Date();
-      today.setHours(0,0,0,0);
-      const chosen = new Date(dateInput.value + "T00:00:00");
-      if (chosen < today) {
-        messages.push("❌ You cannot book a date in the past.");
-      }
-    }
-
-    // Time warning (12:00 - 19:00)
-    if (timeSelect && timeSelect.value) {
-      const [hh, mm] = timeSelect.value.split(":").map(Number);
-      const minutes = hh * 60 + mm;
-      const open = 12 * 60;
-      const close = 19 * 60;
-      if (minutes < open || minutes > close) {
-        messages.push("❌ Bookings must be between 12:00 and 19:00.");
-      }
-    }
-
-    showWarnings(messages);
-  }
-
-  if (dateInput) dateInput.addEventListener("change", validateLive);
-  if (timeSelect) timeSelect.addEventListener("change", validateLive);
-})();
-</script>
-
 {% endblock %}

@@ -24,44 +24,37 @@ class MenuItem(models.Model):
 
     name = models.CharField(max_length=100)
     description = models.TextField()
-    ingredients = models.TextField(default="Ingredients not provided.", help_text="List the ingredients for this dish")
+    ingredients = models.TextField(
+        default="Ingredients not provided.",
+        help_text="List the ingredients for this dish"
+    )
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     is_vegetarian = models.BooleanField(default=False)
 
-    # NEW SPECIAL LABELS
     is_popular = models.BooleanField(default=False)
     is_new = models.BooleanField(default=False)
     is_chef_choice = models.BooleanField(default=False)
 
-    # IMAGE field
     image = models.ImageField(upload_to="menu_images/", blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        """
-        Auto-assign a default placeholder image if none uploaded.
-        """
+        # Auto-assign a default placeholder image if none uploaded.
         if not self.image:
-            placeholder_path = Path(__file__).resolve().parent / "static" / "images" / "no_image_available.png"
-
+            placeholder_path = (
+                Path(__file__).resolve().parent / "static" / "images" / "no_image_available.png"
+            )
             if placeholder_path.exists():
                 with open(placeholder_path, "rb") as f:
-                    # Saves into the active storage backend (Cloudinary on Heroku)
                     self.image.save("no_image_available.png", File(f), save=False)
 
         super().save(*args, **kwargs)
-
 
     def __str__(self):
         return self.name
 
 
-
 class Table(models.Model):
-    """
-    Physical tables in the restaurant.
-    Example capacities: 2, 4, 6, 8.
-    """
     table_number = models.CharField(max_length=10, unique=True)
     capacity = models.PositiveIntegerField()
 
@@ -70,12 +63,12 @@ class Table(models.Model):
 
 
 class Booking(models.Model):
-    """
-    Stores a booking request.
-    """
     name = models.CharField(max_length=100)
-    email = models.EmailField()
+
+    # ✅ Email OR phone: email now optional
+    email = models.EmailField(blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True)
+
     guests = models.PositiveIntegerField()
     date = models.DateField()
     time = models.TimeField()
@@ -96,4 +89,3 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"{self.name} — {self.date} {self.time} ({self.guests} guests)"
-        
