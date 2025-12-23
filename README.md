@@ -360,6 +360,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 python3 manage.py migrate
 python3 manage.py runserver
+```
 
 ---
 ## 14. MoSCoW Prioritisation
@@ -446,63 +447,11 @@ These features are outside the current project scope:
 
 ## 17. Flowchart – Booking & Cancellation
 
-```mermaid
-flowchart TD
-    A[User opens booking page] --> B[User submits booking form]
-    B --> C{Valid form?}
-    C -- No --> D[Show error message]
-    C -- Yes --> E[Check table availability]
-
-    E --> F{Table available?}
-    F -- No --> G[Show fully booked message]
-    F -- Yes --> H[Create booking]
-
-    H --> I[Generate reference code]
-    I --> J[Save booking]
-    J --> K[Show booking success page]
-
-    K --> L{User wants to cancel?}
-    L -- Yes --> M[User enters reference code]
-    M --> N{Valid code?}
-    N -- No --> O[Show invalid code error]
-    N -- Yes --> P[Delete booking]
-    P --> Q[Show cancellation confirmation]
+![Booking Flowchart](docs/diagrams/booking-flowchart.png)
 
 ## 18. ERD – Database Structure
 
-```mermaid
-erDiagram
-    TABLE {
-        string table_number
-        int capacity
-    }
-
-    MENUITEM {
-        string name
-        string description
-        string ingredients
-        decimal price
-        string category
-        bool is_vegetarian
-        bool is_popular
-        bool is_new
-        bool is_chef_choice
-        string image
-    }
-
-    BOOKING {
-        string name
-        string email
-        string phone
-        int guests
-        date date
-        time time
-        string reference
-    }
-
-    TABLE ||--|{ BOOKING : "assigned to"
-
-
+![Database ERD](docs/diagrams/erd.png)
 
 ## 19. Bugs & Fixes
 
