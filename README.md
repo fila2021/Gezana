@@ -565,18 +565,7 @@ Key learnings include:
 Challenges such as database migrations, image handling on Heroku, and configuration conflicts helped develop strong problem-solving and debugging skills. The project demonstrates a complete full-stack workflow from planning and wireframing through development, testing, deployment, and refinement.
 
 ---
-
-## 23. Credits
-
-- Code Institute  
-- Django Documentation  
-- Heroku Documentation  
-- Cloudinary Documentation  
-- Royalty-free images sourced from open-license platforms  
-- All content, design, and development by the project author  
-
----
-## 24. Reflection
+## 23. Reflection
 
 ### What Went Well
 - Building the booking system helped me develop a strong understanding of Django models, forms, and server-side validation.
@@ -607,7 +596,7 @@ Challenges such as database migrations, image handling on Heroku, and configurat
 
 ---
 
-## 25. Recent Updates (Media & Deployment Improvements)
+## 24. Recent Updates (Media & Deployment Improvements)
 
 During the final deployment phase, the following improvements were implemented:
 
@@ -620,6 +609,18 @@ During the final deployment phase, the following improvements were implemented:
 
 
 ---
+
+## 25. Credits
+
+- Code Institute  
+- Django Documentation  
+- Heroku Documentation  
+- Cloudinary Documentation  
+- Royalty-free images sourced from open-license platforms  
+- All content, design, and development by the project author 
+
+---
+
 # ✨ Thank You For Visiting Gezana!
 
 Proudly sharing Habesha culture through food and technology.
