@@ -47,7 +47,7 @@ This project targets the assessment criteria for Back End Development (Level 5) 
 ### ✔ Homepage
 - Hero with CTAs to book or view menu  
 - Highlights for cuisine, coffee ceremony, hospitality, and visit planning  
-- “Plan your visit” CTA with supporting image
+- “Plan your visit” CTA with supporting image  
 
 ### ✔ Menu Page
 - Menu grid with badges (Veg/New/Popular/Chef) and price tags  
@@ -87,7 +87,7 @@ This project targets the assessment criteria for Back End Development (Level 5) 
 
 ---
 
-## Final Design Screenshots
+## 4. Final Design Screenshots
 Place your captured screenshots in `docs/screenshots/` and update the filenames below if needed.
 
 ![Home](docs/screenshots/home.png)  
@@ -95,21 +95,23 @@ Place your captured screenshots in `docs/screenshots/` and update the filenames 
 ![Booking](docs/screenshots/booking.png)  
 ![Cancellation](docs/screenshots/cancellation.png)  
 ![About](docs/screenshots/about.png)  
-![Contact](docs/screenshots/contact.png)
+![Contact](docs/screenshots/contact.png)  
 
+### Admin Page
+![Bookings](docs/screenshots/admin-booking.png)  
+![Menu Items](docs/screenshots/menu-items.png)  
+![Tables](docs/screenshots/tables.png)  
 
-Admin Page
-![Bookings](docs/screenshots/admin-booking.png)
-![Menu Items](docs/screenshots/menu-items.png)
-![Tables](docs/screenshots/tables.png)
+---
 
-
-## Wireframe
+## 5. Wireframe
 Place the wireframe image in `docs/wireframes/` (update the filename if different).
 
 ![Site Wireframe](docs/wireframes/gezana-wireframe.png)
 
-## 4. Technologies Used
+---
+
+## 6. Technologies Used
 
 ### Languages
 - Python  
@@ -123,11 +125,14 @@ Place the wireframe image in `docs/wireframes/` (update the filename if differen
 ### Tools
 - Git & GitHub  
 - VS Code  
-- Render (deployment)  
+- Heroku  
+- PostgreSQL  
+- Cloudinary  
+- WhiteNoise  
 
 ---
 
-## 5. User Stories
+## 7. User Stories
 
 ### As a user:
 - I want to view the menu to see what dishes are available.  
@@ -147,7 +152,7 @@ Place the wireframe image in `docs/wireframes/` (update the filename if differen
 
 ---
 
-## 6. Database Schema
+## 8. Database Schema
 
 ### Table Model
 | Field        | Type              | Notes |
@@ -183,7 +188,7 @@ Place the wireframe image in `docs/wireframes/` (update the filename if differen
 
 ---
 
-## 7. CRUD & Data Operations
+## 9. CRUD & Data Operations
 - **Create**: Booking form creates bookings with validation and auto table assignment; admin can create menu items, tables, and bookings.  
 - **Read**: Public menu list/detail; bookings read internally for availability checks; admin list views.  
 - **Update**: Admin edits menu items, tables, bookings.  
@@ -192,7 +197,7 @@ Place the wireframe image in `docs/wireframes/` (update the filename if differen
 
 ---
 
-## 8. UX, Accessibility & Styling
+## 10. UX, Accessibility & Styling
 - Responsive layout (grid/flex) across home, menu, booking, about, contact.  
 - High-contrast primary buttons; ghost variants for secondary actions.  
 - Semantic headings, alt text on images (including menu fallback), and clear labels/placeholders.  
@@ -203,7 +208,7 @@ Place the wireframe image in `docs/wireframes/` (update the filename if differen
 
 ---
 
-## 9. Testing
+## 11. Testing
 
 ### Manual Testing Summary
 
@@ -217,22 +222,6 @@ Place the wireframe image in `docs/wireframes/` (update the filename if differen
 | Navigation       | All links route correctly                    | Pass   |
 | Templates        | All extend base.html correctly               | Pass   |
 | Form Validation  | Guests/date/time validated                   | Pass   |
-
-# Testing Documentation
-
-## Manual Testing
-
-### Navigation
-| Action | Expected Result | Outcome |
-|--------|------------------|---------|
-| Click “Home” | Homepage loads | Pass |
-| Click “Menu” | Menu list displayed | Pass |
-| Click “Book” | Booking form appears | Pass |
-| Click “Cancel Booking” | Cancellation form loads | Pass |
-| Click “About” | About page loads | Pass |
-| Click “Contact” | Contact page loads | Pass |
-
----
 
 ## Booking System Tests
 
@@ -331,76 +320,80 @@ All core functionalities passed manual and validator testing.
 
 ---
 
-## 10. Deployment (cloud platforms like Heroku or Render)
+### Validators
+- HTML — W3C validator  
+- CSS — Jigsaw validator  
+- Python — PEP8 compliant  
+
+---
+
+## 12. Deployment (Heroku)
 
 ### Required environment variables
-Copy `.env.example` to `.env` (for local) and set the same keys in your hosting dashboard:
-- `SECRET_KEY` — unique per deployment
-- `DEBUG` — `False` in production
-- `ALLOWED_HOSTS` — comma-separated list of domains (e.g., `gezana.onrender.com,localhost`)
-- Email settings as needed
+Copy `.env.example` to `.env` (for local) and set the same keys in Heroku Config Vars:
+
+- `SECRET_KEY` — unique per deployment  
+- `DEBUG` — `False` in production  
+- `ALLOWED_HOSTS` — comma-separated list of domains  
+- `DATABASE_URL` — automatically provided by Heroku Postgres add-on  
+- `CLOUDINARY_URL` — provided by Cloudinary dashboard  
 
 ### Steps
-1. Push code to your Git repository.  
-2. Configure the environment variables above in your hosting platform.  
-3. Ensure a production database (e.g., Postgres) is configured and `DATABASE_URL` is set if you switch from SQLite.  
-4. Install dependencies (`pip install -r requirements.txt`) on the platform build step.  
-5. Run migrations: `python manage.py migrate`.  
-6. Collect static files: `python manage.py collectstatic --noinput` (STATIC_ROOT is set to `staticfiles/`).  
-7. Create a superuser if needed: `python manage.py createsuperuser`.  
-8. Start the app using a WSGI server (e.g., `gunicorn gezana.wsgi:application`).  
-9. Verify the app responds on your configured domain(s) in `ALLOWED_HOSTS`.
+1. Push code to GitHub.  
+2. Create a Heroku app.  
+3. Add **Heroku Postgres** add-on.  
+4. Set Config Vars (`SECRET_KEY`, `DEBUG`, `ALLOWED_HOSTS`, `CLOUDINARY_URL`).  
+5. Deploy using `git push heroku main`.  
+6. Run migrations: `heroku run python manage.py migrate`.  
+7. Create a superuser: `heroku run python manage.py createsuperuser`.  
+8. Open the site: `heroku open`.
 
 ---
-## 11. Running Locally
-Clone the repo:
+
+## 13. Running Locally
+
+```bash
 git clone https://github.com/fila2021/Gezana.git
 cd Gezana
-
-Copy the example environment file and update values:
-cp .env.example .env
-# edit .env and set SECRET_KEY, DEBUG, ALLOWED_HOSTS, email settings
-
-Create virtual environment:
 python3 -m venv venv
 source venv/bin/activate
-Install dependencies:
 pip install -r requirements.txt
-Run migrations:
 python3 manage.py migrate
-Start server:
 python3 manage.py runserver
-Visit:
-http://127.0.0.1:8000/
 
 ---
+## 14. MoSCoW Prioritisation
 
-## 12. MoSCoW Prioritisation
+The MoSCoW method was used to prioritise features based on importance and project scope.
 
 ### Must Have
-- Users can view the menu
-- Users can book a table
-- Double-booking is prevented
-- Users receive a booking confirmation
-- Users can cancel booking using a reference code
-- Admin can manage menu, tables and bookings
+These features are essential for the application to meet its core purpose:
+- Users can view the menu  
+- Users can book a table  
+- Double-booking is prevented  
+- Users receive a booking confirmation  
+- Users can cancel a booking using a reference code  
+- Admin can manage menu items, tables, and bookings  
 
 ### Should Have
-- Clear success/error messages
-- Responsive layout
-- Contact details page
+These features significantly improve usability and user experience:
+- Clear success and error messages  
+- Responsive layout across devices  
+- Contact details page  
 
 ### Could Have
-- Customer reviews
-- Online payment integration
+These features are desirable but not critical for the current release:
+- Customer reviews  
+- Online payment integration  
 
 ### Won’t Have (for now)
-- Food delivery system
-- Multi-language support
+These features are outside the current project scope:
+- Food delivery system  
+- Multi-language support  
 
 ---
 
-# Full User Story Table
+## 15. Full User Story Table
 
 | ID | As a… | I want to… | So I can… |
 |----|--------|-------------|------------|
@@ -415,42 +408,43 @@ http://127.0.0.1:8000/
 | 9 | Owner | Assign tables automatically | Reduce mistakes |
 | 10 | Owner | Receive accurate customer details | Contact customers if needed |
 
+---
 
-## 13. Features Overview
+## 16. Features Overview
 
-## Implemented Features
+### Implemented Features
 
-### ✔ Menu System
-- Menu list with badges (veg/new/popular/chef) and price tags
-- Dish detail page
-- Image support with fallback
-- Admin-controlled content
+#### ✔ Menu System
+- Menu list with badges (vegetarian, new, popular, chef’s choice) and price tags  
+- Dish detail page  
+- Image support with fallback for missing images  
+- Fully admin-controlled content  
 
-### ✔ Booking System
-- Booking form
-- Date/time validation
-- Automatic table assignment
-- Double-booking prevention
-- Success message
-- Unique reference code
+#### ✔ Booking System
+- Booking form with validation  
+- Date and time validation  
+- Automatic table assignment based on capacity  
+- Double-booking prevention  
+- Success message after booking  
+- Unique reference code generation  
 
-### ✔ Cancellation System
-- Enter reference code
-- Cancel booking
-- Error handling
+#### ✔ Cancellation System
+- Cancellation via reference code  
+- Booking removal from database  
+- Error handling for invalid references  
 
-### ✔ Static Pages
-- About page
-- Contact page
+#### ✔ Static Pages
+- About page  
+- Contact page  
 
-### ✔ Admin Management
-- Tables
-- Menu Items
-- Bookings
+#### ✔ Admin Management
+- Manage tables  
+- Manage menu items  
+- Manage bookings  
 
 ---
 
-## 14. Flowchart – Booking & Cancellation
+## 17. Flowchart – Booking & Cancellation
 
 ```mermaid
 flowchart TD
@@ -460,7 +454,7 @@ flowchart TD
     C -- Yes --> E[Check table availability]
 
     E --> F{Table available?}
-    F -- No --> G["Show fully booked message"]
+    F -- No --> G[Show fully booked message]
     F -- Yes --> H[Create booking]
 
     H --> I[Generate reference code]
@@ -473,9 +467,8 @@ flowchart TD
     N -- No --> O[Show invalid code error]
     N -- Yes --> P[Delete booking]
     P --> Q[Show cancellation confirmation]
-```
 
-## 15. ERD – Database Structure
+## 18. ERD – Database Structure
 
 ```mermaid
 erDiagram
@@ -508,45 +501,125 @@ erDiagram
     }
 
     TABLE ||--|{ BOOKING : "assigned to"
-```
 
-## 16. Bugs & Fixes
+
+
+## 19. Bugs & Fixes
+
+Throughout development and deployment, several issues were encountered and resolved. These fixes improved stability, usability, and production readiness.
 
 | Bug | Cause | Fix |
 |-----|-------|-----|
-| Templates collapsing into one line | VS Code auto-formatting | Disabled formatters, added workspace settings |
-| Unclosed tag errors | Template being minified | Rewrote templates with correct blocks |
-| Date validation error | User input wrong format | Added date picker widget |
-| Booking success not showing message | Missing messages block | Added Django messages to base.html |
-| Menu detail page 404 | Item not created in admin | Created test items |
-| Cancel booking always invalid | Reference not uppercase | Normalised `.upper()` on input |
-
-## 17. Future Enhancements
-
-1. User authentication for booking history  
-2. Email notifications for booking + cancellation  
-3. Online payment for reservations  
-4. Review and rating system  
-5. Menu images  
-6. Table map / floor plan  
-7. Admin dashboard with stats  
-
-## 18. Security & Configuration
-- Secrets are injected via environment variables; create `.env` from `.env.example` and never commit it.  
-- `DEBUG` must be `False` in production; `ALLOWED_HOSTS` configured per environment.  
-- Admin login protected by Django auth; no default credentials stored in repo.  
-- Media uploads stored on disk; restrict admin access to staff users only.  
-- CSRF protection active on all forms; Django ORM used to avoid SQL injection.  
-
-## 19. Credits
-
-- Code Institute  
-- Django Documentation  
-- Photos: royalty-free images sourced from copyright-free sites (checked for free-to-use licenses)  
-- All content and development by the project author  
+| Templates collapsing into one line | VS Code auto-formatting | Disabled formatters and added workspace settings |
+| Unclosed tag errors | Template minification | Rewrote templates with correct block structure |
+| Date validation error | Incorrect user input | Added date picker widget and server-side validation |
+| Booking success message missing | Messages block missing | Added Django messages to `base.html` |
+| Menu detail page returning 404 | Menu item not created | Added test data via Django admin |
+| Cancel booking always invalid | Reference case mismatch | Normalised reference input using `.upper()` |
+| Menu images missing on Heroku | Ephemeral file system | Integrated Cloudinary for media storage |
+| App crash on startup | Conflicting storage settings | Removed `DEFAULT_FILE_STORAGE` when using `STORAGES` |
+| Admin errors after deploy | Migrations not applied | Ran migrations on Heroku production database |
 
 ---
 
+## 20. Future Enhancements
+
+Planned improvements to extend functionality and enhance user experience include:
+
+1. User authentication with booking history  
+2. Automated email notifications for bookings and cancellations  
+3. Online payment integration for reservations  
+4. Customer review and rating system  
+5. Visual table layout / floor plan  
+6. Analytics dashboard for admin users  
+7. Multi-language support for broader accessibility  
+
+---
+
+## 21. Security & Configuration
+
+Security and configuration best practices were followed throughout development:
+
+- Sensitive data is managed using environment variables and excluded from version control  
+- `DEBUG` is set to `False` in production  
+- `ALLOWED_HOSTS` configured appropriately for deployment environments  
+- Django admin protected by authentication and staff permissions  
+- CSRF protection enabled on all forms  
+- Django ORM used to prevent SQL injection  
+- Media handling configured safely using Cloudinary in production  
+
+---
+
+## 22. Reflection
+
+This project was a valuable learning experience that strengthened both backend development and deployment skills.
+
+Key learnings include:
+- Building a full CRUD system with Django models, forms, views, and templates  
+- Implementing real-world validation logic such as date/time checks and double-booking prevention  
+- Understanding the importance of environment-specific configuration  
+- Deploying a Django application to Heroku and resolving production-only issues  
+- Handling media files correctly in a cloud environment using Cloudinary  
+- Debugging application crashes using Heroku logs  
+
+Challenges such as database migrations, image handling on Heroku, and configuration conflicts helped develop strong problem-solving and debugging skills. The project demonstrates a complete full-stack workflow from planning and wireframing through development, testing, deployment, and refinement.
+
+---
+
+## 23. Credits
+
+- Code Institute  
+- Django Documentation  
+- Heroku Documentation  
+- Cloudinary Documentation  
+- Royalty-free images sourced from open-license platforms  
+- All content, design, and development by the project author  
+
+---
+## 24. Reflection
+
+### What Went Well
+- Building the booking system helped me develop a strong understanding of Django models, forms, and server-side validation.
+- Implementing table assignment logic improved my ability to think through real-world constraints such as seating capacity and time slots.
+- Using the Django messages framework significantly improved user experience by providing clear success and error feedback.
+
+### Challenges Faced
+- Deployment issues arose when uploaded media files were not persistent on Heroku.
+- Template block and formatting issues occurred when files auto-collapsed into a single line due to editor formatting.
+- GitHub and Heroku push errors happened when large files (screen recordings) were accidentally committed.
+
+### How I Solved Them
+- Removed large files from Git history and ensured media files were excluded using `.gitignore`.
+- Fixed template inheritance issues by ensuring all `{% block %}` tags were properly opened and closed.
+- Switched media storage to Cloudinary to ensure reliable image handling in production.
+- Added fallback images and additional validation checks to prevent runtime errors.
+
+### What I Learned
+- The importance of correct environment variable management and storage configuration in production.
+- How to debug deployment issues effectively using `heroku logs --tail`.
+- Best practices for Django deployment, including PostgreSQL usage, static file handling, and secret management.
+- The value of small, incremental commits to make debugging and rollbacks easier.
+
+### Next Steps
+- Add user accounts to allow customers to view booking history.
+- Implement a cart/order system for future expansion.
+- Add automated tests for forms and views to improve reliability and maintainability.
+
+---
+
+## 25. Recent Updates (Media & Deployment Improvements)
+
+During the final deployment phase, the following improvements were implemented:
+
+- Integrated Cloudinary for persistent menu image uploads on Heroku.
+- Fixed `DEFAULT_FILE_STORAGE` vs `STORAGES` conflicts that caused application crashes.
+- Added graceful fallback images for menu items without uploaded photos.
+- Added favicon support to eliminate production 404 requests.
+- Removed large files that were blocking GitHub pushes.
+- Updated deployment settings and verified application stability using Heroku logs.
+
+
+---
 # ✨ Thank You For Visiting Gezana!
 
 Proudly sharing Habesha culture through food and technology.
