@@ -1,25 +1,34 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.db.models import Q
-from datetime import date, time
+from datetime import date, time, datetime
+import re
 
 from .models import Booking, Table
 from .utils import find_available_table
 
 
+PHONE_REGEX = re.compile(r'^\+?[0-9\s\-\(\)]{7,20}$')
+
+
 class BookingForm(forms.ModelForm):
-    # Restaurant hours: 12:00 to 19:00 inclusive (last slot at 19:00)
     OPEN_TIME = time(12, 0)
     CLOSE_TIME = time(19, 0)
 
-    # ✅ Dropdown time choices every 30 mins
-    TIME_CHOICES = [
-        (time(h, m).strftime("%H:%M"), time(h, m).strftime("%H:%M"))
-        for h in range(12, 20)  # 12..19
-        for m in (0, 30)
-    ]
+    # ✅ Time dropdown: 12:00 → 19:00 (30 min steps)
+    TIME_CHOICES = []
+    _current = datetime.combine(date.today(), OPEN_TIME)
+    _end = datetime.combine(date.today(), CLOSE_TIME)
 
-    # Override the model TimeField widget as a dropdown
+    while _current <= _end:
+        label = _current.strftime("%H:%M")
+        TIME_CHOICES.append((label, label))
+        _current = (
+            _current.replace(minute=30)
+            if _current.minute == 0
+            else _current.replace(hour=_current.hour + 1, minute=0)
+        )
+
     time = forms.ChoiceField(choices=TIME_CHOICES)
 
     class Meta:
@@ -31,7 +40,7 @@ class BookingForm(forms.ModelForm):
 
         placeholders = {
             "name": "Full name",
-            "email": "Email address",
+            "email": "Email address (recommended)",
             "phone": "Phone number (optional)",
             "guests": "Number of guests",
             "date": "Booking date",
@@ -42,30 +51,56 @@ class BookingForm(forms.ModelForm):
             field.widget.attrs.setdefault("placeholder", placeholders.get(field_name, ""))
             field.widget.attrs.setdefault("class", "input-with-icon")
 
-        # ✅ Use browser date picker + prevent selecting past dates in UI
-        if "date" in self.fields:
-            self.fields["date"].widget.input_type = "date"
-            self.fields["date"].widget.attrs["min"] = date.today().isoformat()
+        # Email optional (since phone exists)
+        self.fields["email"].required = False
+
+        # Date picker + UI restriction
+        self.fields["date"].widget.input_type = "date"
+        self.fields["date"].widget.attrs["min"] = date.today().isoformat()
+
+    # -------------------
+    # FIELD VALIDATIONS
+    # -------------------
 
     def clean_date(self):
-        booking_date = self.cleaned_data["date"]
-        if booking_date < date.today():
-            raise forms.ValidationError("❌ You cannot book a date in the past.")
+        booking_date = self.cleaned_data.get("date")
+        if booking_date and booking_date < date.today():
+            raise ValidationError("❌ You cannot book a date in the past.")
         return booking_date
 
     def clean_time(self):
-        """
-        Our time field is now a ChoiceField returning a string ("HH:MM"),
-        so we convert it to a datetime.time to match the Booking model.
-        """
-        booking_time_str = self.cleaned_data["time"]  # e.g. "12:30"
-        hour, minute = map(int, booking_time_str.split(":"))
+        time_str = self.cleaned_data.get("time")
+        if not time_str:
+            return time_str
+
+        hour, minute = map(int, time_str.split(":"))
         booking_time = time(hour=hour, minute=minute)
 
         if booking_time < self.OPEN_TIME or booking_time > self.CLOSE_TIME:
-            raise forms.ValidationError("❌ Bookings must be between 12:00 and 19:00.")
+            raise ValidationError("❌ Bookings must be between 12:00 and 19:00.")
 
         return booking_time
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get("phone", "").strip()
+
+        if not phone:
+            return phone  # optional
+
+        if not PHONE_REGEX.match(phone):
+            raise ValidationError(
+                "❌ Enter a valid phone number (digits, spaces, +, -, or parentheses)."
+            )
+
+        # Normalize phone (keep digits + leading +)
+        cleaned = re.sub(r"[^\d+]", "", phone)
+
+        # Length check (E.164-ish)
+        digits_only = re.sub(r"\D", "", cleaned)
+        if len(digits_only) < 7 or len(digits_only) > 15:
+            raise ValidationError("❌ Phone number must contain 7–15 digits.")
+
+        return cleaned
 
     def clean(self):
         cleaned_data = super().clean()
@@ -78,35 +113,36 @@ class BookingForm(forms.ModelForm):
         if not booking_date or not booking_time or not guests:
             return cleaned_data
 
-        suitable_tables = Table.objects.filter(capacity__gte=guests)
-        if not suitable_tables.exists():
+        # Require at least one contact method
+        if not email and not phone:
             raise ValidationError(
-                "No tables can accommodate that party size. Please reduce guests or contact us."
+                "Please provide at least an email address or a phone number."
             )
 
+        # Capacity check
+        if not Table.objects.filter(capacity__gte=guests).exists():
+            raise ValidationError(
+                "No tables can accommodate that party size. Please reduce guests."
+            )
+
+        # Availability check
         table = find_available_table(booking_date, booking_time, guests)
         if table is None:
             raise ValidationError(
                 "We are fully booked for that date and time. Please choose another slot."
             )
 
-        # Prevent duplicate bookings by same contact on the same date.
-        if email or phone:
-            dup_q = Q(date=booking_date)
-            if email:
-                dup_q &= Q(email__iexact=email)
-            if phone:
-                dup_q |= Q(date=booking_date, phone__iexact=phone)
+        # Duplicate booking check (correct logic)
+        dup_q = Q()
+        if email:
+            dup_q |= Q(date=booking_date, email__iexact=email)
+        if phone:
+            dup_q |= Q(date=booking_date, phone__iexact=phone)
 
-            if Booking.objects.filter(dup_q).exists():
-                raise ValidationError(
-                    "It looks like you already have a booking for that date. "
-                    "Please modify the existing booking or choose another date."
-                )
+        if Booking.objects.filter(dup_q).exists():
+            raise ValidationError(
+                "It looks like you already have a booking for that date."
+            )
 
         self.available_table = table
         return cleaned_data
-
-
-class CancelBookingForm(forms.Form):
-    reference = forms.CharField(max_length=8)
