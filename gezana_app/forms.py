@@ -55,7 +55,7 @@ class BookingForm(forms.ModelForm):
     def clean_date(self):
         d = self.cleaned_data.get("date")
         if d and d < date.today():
-            raise ValidationError("❌ You cannot book a date in the past.")
+            raise ValidationError("❌ Date is invalid: you cannot book a date in the past.")
         return d
 
     def clean_time(self):
@@ -74,7 +74,7 @@ class BookingForm(forms.ModelForm):
             raise ValidationError("❌ Please choose a valid time slot (every 30 minutes).")
 
         if booking_time < self.OPEN_TIME or booking_time > self.CLOSE_TIME:
-            raise ValidationError("❌ Bookings must be between 12:00 and 19:00.")
+           raise ValidationError("❌ Time is invalid: bookings are only available from 12:00 to 19:00.")
 
         return booking_time
 

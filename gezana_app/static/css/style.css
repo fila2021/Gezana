@@ -1254,3 +1254,41 @@ footer {
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
 }
+
+
+/* ===== Alerts & Validation Errors (bold red) ===== */
+.alert {
+  border: 2px solid #b00020;
+  background: rgba(176, 0, 32, 0.08);
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin: 14px 0;
+  font-weight: 800;
+  color: #b00020;
+}
+
+.alert p { margin: 0; }
+
+.alert-warning { /* warnings also red + bold per your request */
+  border-color: #b00020;
+  background: rgba(176, 0, 32, 0.06);
+  color: #b00020;
+}
+
+.alert-error {
+  border-color: #b00020;
+  background: rgba(176, 0, 32, 0.10);
+  color: #b00020;
+}
+
+.field-error {
+  color: #b00020;
+  font-weight: 800;
+  margin: 6px 0 0;
+}
+
+.hint {
+  margin-top: 6px;
+  opacity: 0.85;
+  font-size: 0.95rem;
+}

@@ -6,7 +6,7 @@
   <div>
     <p class="eyebrow">Reserve Your Table</p>
     <h2>Book a cozy spot for friends, family, or coffee ceremony</h2>
-    <p class="lede">Choose your date and time, and we will find the best table. We welcome small gatherings and celebrations.</p>
+    <p class="lede">Choose your date and time, and we will find the best table.</p>
   </div>
   <div class="booking-hero-badge">
     <p class="mini">Hours</p>
@@ -15,8 +15,9 @@
   </div>
 </section>
 
+{# ✅ Non-field errors show in bold red box #}
 {% if form.non_field_errors %}
-  <div class="form-errors card" role="alert">
+  <div class="alert alert-error" role="alert">
     {% for error in form.non_field_errors %}
       <p>{{ error }}</p>
     {% endfor %}
@@ -44,7 +45,7 @@
           {{ form.email }}
         </div>
         {% for e in form.email.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
-        <p class="hint">Email or phone is required.</p>
+        <p class="hint">Provide email or phone (at least one).</p>
       </div>
 
       <div class="field-block">
@@ -69,7 +70,7 @@
           {{ form.date }}
         </div>
         {% for e in form.date.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
-        <p class="hint">You cannot choose a past date.</p>
+        <p class="hint">Past dates are not allowed.</p>
       </div>
 
       <div class="field-block">
@@ -78,7 +79,7 @@
           {{ form.time }}
         </div>
         {% for e in form.time.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
-        <p class="hint">Booking hours: 12:00–19:00 (every 30 mins).</p>
+        <p class="hint">Booking hours: 12:00–19:00 (30-minute slots).</p>
       </div>
 
       <button type="submit" class="button primary full">Confirm Booking</button>
