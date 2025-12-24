@@ -847,3 +847,62 @@ footer{
   margin-top: 34px;
   box-shadow: 0 -10px 26px rgba(0,0,0,0.08);
 }
+/* ============================
+   HOME (make text sections look premium)
+============================ */
+
+.home-hours-card{
+  background: rgba(255,255,255,0.72);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  color: var(--text);
+}
+
+/* Feature cards grid */
+.home-feature-grid{
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 980px){
+  .home-feature-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px){
+  .home-feature-grid{ grid-template-columns: 1fr; }
+}
+
+.home-feature-card{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.home-feature-card h3{
+  margin: 0;
+}
+
+.home-feature-card p{
+  margin: 0;
+}
+
+/* CTA card */
+.home-cta{
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.home-cta-actions{
+  justify-content: flex-end;
+}
+
+@media (max-width: 760px){
+  .home-cta-actions{ width: 100%; justify-content: flex-start; }
+}

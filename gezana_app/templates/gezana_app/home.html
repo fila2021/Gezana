@@ -5,8 +5,9 @@
 
 {% block content %}
 
-<section class="home-hero">
-  <div class="home-hero-text">
+<!-- HERO (simple + premium) -->
+<section class="home-hero card">
+  <div>
     <p class="eyebrow">Habesha Kitchen</p>
     <h1>Share injera, spice, and coffee traditions in Dublin</h1>
     <p class="lede">
@@ -15,44 +16,62 @@
     </p>
 
     <div class="hero-actions">
-      <a href="{% url 'gezana_app:make_booking' %}" class="button primary">Book a Table</a>
-      <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">View Menu</a>
+      <a href="{% url 'gezana_app:make_booking' %}" class="button primary">
+        Book a Table
+      </a>
+      <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">
+        View Menu
+      </a>
     </div>
   </div>
 
-  <div class="home-hero-card">
+  <div class="home-hours-card">
     <p class="mini">Today’s hours</p>
     <p class="callout">12:00 PM – 7:00 PM</p>
-    <p class="note">Walk-ins welcome • Bookings recommended</p>
+    <p class="muted" style="margin:0;">Walk-ins welcome • Bookings recommended</p>
   </div>
 </section>
 
-<section class="home-grid">
-  <div class="home-card">
+<!-- FEATURE CARDS (this replaces the plain text blocks) -->
+<section class="home-feature-grid">
+  <article class="home-feature-card card">
     <h3>Traditional Plates</h3>
-    <p>Doro wat, tibs, shiro, and veggie sides on soft, tangy injera—made to share.</p>
-  </div>
+    <p class="muted">
+      Doro wat, tibs, shiro, and veggie sides on soft, tangy injera—made to share.
+    </p>
+    <a class="button ghost full" href="{% url 'gezana_app:menu_list' %}">Explore dishes</a>
+  </article>
 
-  <div class="home-card">
+  <article class="home-feature-card card">
     <h3>Coffee Ceremony</h3>
-    <p>Hand-roasted beans, brewed in a jebena clay pot, poured in three rounds for blessings.</p>
-  </div>
+    <p class="muted">
+      Hand-roasted beans, brewed in a jebena clay pot, poured in three rounds for blessings.
+    </p>
+    <a class="button ghost full" href="{% url 'gezana_app:about' %}">Learn the ritual</a>
+  </article>
 
-  <div class="home-card">
+  <article class="home-feature-card card">
     <h3>Warm Hospitality</h3>
-    <p>We seat you at the right table, serve generously, and welcome you like family.</p>
-  </div>
+    <p class="muted">
+      We seat you at the right table, serve generously, and welcome you like family.
+    </p>
+    <a class="button ghost full" href="{% url 'gezana_app:make_booking' %}">Reserve now</a>
+  </article>
 </section>
 
-<section class="home-cta">
-  <div class="home-cta-card">
-    <h3>Plan your visit</h3>
-    <p>Reserve ahead for celebrations or bring friends for a casual feast.</p>
+<!-- CTA -->
+<section class="home-cta card">
+  <div>
+    <p class="eyebrow">Plan your visit</p>
+    <h2 style="margin:6px 0 10px;">Ready for a Habesha feast?</h2>
+    <p class="muted" style="margin:0;">
+      Reserve ahead for celebrations or bring friends for a casual meal and coffee.
+    </p>
+  </div>
 
-    <div class="hero-actions" style="justify-content:center;">
-      <a href="{% url 'gezana_app:make_booking' %}" class="button primary">Reserve now</a>
-      <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">See dishes</a>
-    </div>
+  <div class="hero-actions home-cta-actions">
+    <a href="{% url 'gezana_app:make_booking' %}" class="button primary">Reserve now</a>
+    <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">See dishes</a>
   </div>
 </section>
 
