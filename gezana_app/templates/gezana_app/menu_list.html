@@ -22,48 +22,35 @@
   </div>
 </section>
 
+<!-- Filter bar (CATEGORY ONLY) -->
 <section class="menu-toolbar card">
-  <form method="get" action="{% url 'gezana_app:menu_list' %}" class="menu-toolbar-form">
+  <form method="get" class="menu-toolbar-form">
 
     <div class="menu-toolbar-left">
-      <div class="menu-search">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input
-          type="text"
-          name="search"
-          value="{{ search }}"
-          placeholder="Search dishes or ingredients..."
-        />
-      </div>
-
       <div class="menu-select">
         <i class="fa-solid fa-filter"></i>
-        <select name="category">
-          <option value="" {% if not category %}selected{% endif %}>All categories</option>
-
-          {% for value,label in categories %}
-            <option value="{{ value }}" {% if category == value %}selected{% endif %}>
-              {{ label }}
-            </option>
-          {% endfor %}
+        <select name="category" onchange="this.form.submit()">
+          <option value="">All categories</option>
+          <option value="starter" {% if category == "starter" %}selected{% endif %}>Starter</option>
+          <option value="main" {% if category == "main" %}selected{% endif %}>Main Course</option>
+          <option value="side" {% if category == "side" %}selected{% endif %}>Side Dish</option>
+          <option value="dessert" {% if category == "dessert" %}selected{% endif %}>Dessert</option>
+          <option value="drink" {% if category == "drink" %}selected{% endif %}>Drink</option>
         </select>
       </div>
     </div>
 
+    {% if category %}
     <div class="menu-toolbar-right">
-      <button type="submit" class="button primary">
-        <i class="fa-solid fa-sliders"></i> Apply
-      </button>
-
-      {% if category or search %}
-        <a class="button ghost" href="{% url 'gezana_app:menu_list' %}">
-          <i class="fa-solid fa-rotate-left"></i> Reset
-        </a>
-      {% endif %}
+      <a class="button ghost" href="{% url 'gezana_app:menu_list' %}">
+        <i class="fa-solid fa-rotate-left"></i> Reset
+      </a>
     </div>
+    {% endif %}
 
   </form>
 </section>
+
 
 {% if recommended %}
 <section class="card recommend-wrap">
