@@ -5,9 +5,6 @@
 
 {% block content %}
 
-<!-- =========================
-     MENU HERO
-========================== -->
 <section class="menu-hero">
   <div>
     <p class="eyebrow">Habesha Flavours</p>
@@ -25,33 +22,30 @@
   </div>
 </section>
 
-<!-- =========================
-     FILTER BAR (GET search + category)
-========================== -->
 <section class="menu-toolbar card">
-  <form method="get" class="menu-toolbar-form">
+  <form method="get" action="{% url 'gezana_app:menu_list' %}" class="menu-toolbar-form">
+
     <div class="menu-toolbar-left">
       <div class="menu-search">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
           name="search"
-          value="{{ search|default:'' }}"
+          value="{{ search }}"
           placeholder="Search dishes or ingredients..."
         />
       </div>
 
       <div class="menu-select">
         <i class="fa-solid fa-filter"></i>
-
-        {# ✅ If your model category values differ, update these option values to match EXACTLY #}
         <select name="category">
           <option value="" {% if not category %}selected{% endif %}>All categories</option>
-          <option value="starter" {% if category == "starter" %}selected{% endif %}>Starter</option>
-          <option value="main" {% if category == "main" %}selected{% endif %}>Main Course</option>
-          <option value="side" {% if category == "side" %}selected{% endif %}>Side Dish</option>
-          <option value="dessert" {% if category == "dessert" %}selected{% endif %}>Dessert</option>
-          <option value="drink" {% if category == "drink" %}selected{% endif %}>Drink</option>
+
+          {% for value,label in categories %}
+            <option value="{{ value }}" {% if category == value %}selected{% endif %}>
+              {{ label }}
+            </option>
+          {% endfor %}
         </select>
       </div>
     </div>
@@ -67,12 +61,10 @@
         </a>
       {% endif %}
     </div>
+
   </form>
 </section>
 
-<!-- =========================
-     RECOMMENDED (Top Picks)
-========================== -->
 {% if recommended %}
 <section class="card recommend-wrap">
   <div class="recommend-head">
@@ -118,9 +110,6 @@
 </section>
 {% endif %}
 
-<!-- =========================
-     MAIN MENU GRID
-========================== -->
 <section class="menu-grid-new">
   {% for item in items %}
     <article class="dish-card">
@@ -161,13 +150,5 @@
     </div>
   {% endfor %}
 </section>
-
-<!-- IMAGE MODAL (optional: only needed if you still use openModal/closeModal somewhere) -->
-{# 
-<div id="imageModal" class="image-modal" onclick="closeModal()">
-  <span class="close-modal">&times;</span>
-  <img class="modal-content" id="modalImage">
-</div>
-#}
 
 {% endblock %}
