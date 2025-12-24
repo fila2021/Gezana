@@ -576,6 +576,7 @@ During the final deployment phase, the following improvements were implemented:
 - Cloudinary Documentation  
 - Royalty-free images sourced from open-license platforms  
 - All content, design, and development by the project author 
+- AI-generated images( Logo, Menu Items) created using ChatGPT
 
 ---
 
