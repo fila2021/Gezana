@@ -21,14 +21,42 @@
 
     <nav class="navbar">
   <ul>
-    <li><a href="{% url 'gezana_app:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
-    <li><a href="{% url 'gezana_app:menu_list' %}" class="{% if request.resolver_match.url_name == 'menu_list' or request.resolver_match.url_name == 'menu_detail' %}active{% endif %}">Menu</a></li>
-    <li><a href="{% url 'gezana_app:make_booking' %}" class="{% if request.resolver_match.url_name == 'make_booking' or request.resolver_match.url_name == 'booking_success' %}active{% endif %}">Book</a></li>
-    <li><a href="{% url 'gezana_app:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
-    <li><a href="{% url 'gezana_app:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
-    <li><a href="/admin/" class="{% if 'admin' in request.path %}active{% endif %}">Admin</a></li>
+    <li>
+      <a href="{% url 'gezana_app:home' %}"
+         class="{% if request.path == '/' %}active{% endif %}">
+        Home
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'gezana_app:menu_list' %}"
+         class="{% if '/menu' in request.path %}active{% endif %}">
+        Menu
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'gezana_app:make_booking' %}"
+         class="{% if '/book' in request.path %}active{% endif %}">
+        Book
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'gezana_app:about' %}"
+         class="{% if '/about' in request.path %}active{% endif %}">
+        About
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'gezana_app:contact' %}"
+         class="{% if '/contact' in request.path %}active{% endif %}">
+        Contact
+      </a>
+    </li>
+    <li>
+      <a href="/admin/" target="_blank">Admin</a>
+    </li>
   </ul>
 </nav>
+
 
 
 </header>
