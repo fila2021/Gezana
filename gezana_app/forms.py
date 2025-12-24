@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.db.models import Q
+from django.utils import timezone
 from datetime import date, time, datetime, timedelta
 import re
 
@@ -13,6 +14,9 @@ PHONE_REGEX = re.compile(r'^\+?[0-9\s\-\(\)]{7,20}$')
 class BookingForm(forms.ModelForm):
     OPEN_TIME = time(12, 0)
     CLOSE_TIME = time(19, 0)
+
+    # Optional: require bookings to be at least X minutes from now (for today)
+    LEAD_TIME_MINUTES = 0  # change to 15 if you want 15-min buffer
 
     # ✅ Safe dropdown: 12:00 → 19:00 every 30 mins (no 19:30)
     TIME_CHOICES = []
@@ -32,7 +36,7 @@ class BookingForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # ✅ email optional in form as well
+        # ✅ email optional
         self.fields["email"].required = False
 
         placeholders = {
@@ -74,7 +78,7 @@ class BookingForm(forms.ModelForm):
             raise ValidationError("❌ Please choose a valid time slot (every 30 minutes).")
 
         if booking_time < self.OPEN_TIME or booking_time > self.CLOSE_TIME:
-           raise ValidationError("❌ Time is invalid: bookings are only available from 12:00 to 19:00.")
+            raise ValidationError("❌ Time is invalid: bookings are only available from 12:00 to 19:00.")
 
         return booking_time
 
@@ -84,11 +88,8 @@ class BookingForm(forms.ModelForm):
             return phone
 
         if not PHONE_REGEX.match(phone):
-            raise ValidationError(
-                "❌ Enter a valid phone number (digits, spaces, +, -, parentheses)."
-            )
+            raise ValidationError("❌ Enter a valid phone number (digits, spaces, +, -, parentheses).")
 
-        # normalize phone: keep digits and leading +
         cleaned = re.sub(r"[^\d+]", "", phone)
         digits_only = re.sub(r"\D", "", cleaned)
 
@@ -112,6 +113,15 @@ class BookingForm(forms.ModelForm):
         if not email and not phone:
             raise ValidationError("Please provide at least an email address or phone number.")
 
+        # ✅ NEW: block booking a time that already passed (when booking date is today)
+        now_local = timezone.localtime(timezone.now())
+        tz = timezone.get_current_timezone()
+        requested_dt = timezone.make_aware(datetime.combine(booking_date, booking_time), tz)
+        min_allowed = now_local + timedelta(minutes=self.LEAD_TIME_MINUTES)
+
+        if booking_date == now_local.date() and requested_dt <= min_allowed:
+            raise ValidationError("❌ Time is invalid: please choose a future time for today.")
+
         # capacity check
         if not Table.objects.filter(capacity__gte=guests).exists():
             raise ValidationError("No tables can accommodate that party size. Please reduce guests.")
@@ -121,7 +131,7 @@ class BookingForm(forms.ModelForm):
         if table is None:
             raise ValidationError("We are fully booked for that date and time. Please choose another slot.")
 
-        # ✅ duplicate check: same date + same email OR same date + same phone
+        # duplicate check: same date + same email OR same date + same phone
         dup_q = Q()
         if email:
             dup_q |= Q(date=booking_date, email__iexact=email)

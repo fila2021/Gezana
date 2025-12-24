@@ -22,7 +22,7 @@ Booking Confirmed
   <h3>Reservation Details</h3>
   <p><strong>Name:</strong> {{ booking.name }}</p>
   <p><strong>Date:</strong> {{ booking.date }}</p>
-  <p><strong>Time:</strong> {{ booking.time }}</p>
+  <p><strong>Time:</strong> {{ booking.time|time:"H:i" }}</p>
   <p><strong>Guests:</strong> {{ booking.guests }}</p>
   <p><strong>Table:</strong> {{ booking.table|default:"Assigned on arrival" }}</p>
 

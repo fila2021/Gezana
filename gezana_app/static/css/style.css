@@ -1,6 +1,11 @@
 /* ============================
    GENERAL STYLING
 ============================ */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 
 body {
     font-family: "Poppins", sans-serif;
@@ -424,11 +429,15 @@ footer {
 .menu-card {
     background: #fff;
     padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #e0d7cc;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    position: relative;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    overflow: hidden;
+    width: 100%;          
+    max-width: 420px;     
+    box-sizing: border-box;
 }
+
 
 .menu-card h3 {
     margin: 0 0 10px;

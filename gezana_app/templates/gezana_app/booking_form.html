@@ -106,4 +106,60 @@
     </form>
   </div>
 </div>
+<script>
+(function () {
+  const dateInput = document.querySelector('input[name="date"]');
+  const timeSelect = document.querySelector('select[name="time"]');
+
+  if (!dateInput || !timeSelect) return;
+
+  function todayISO() {
+    const d = new Date();
+    d.setHours(0,0,0,0);
+    return d.toISOString().slice(0,10);
+  }
+
+  function minsFromHHMM(v) {
+    const [h, m] = v.split(":").map(Number);
+    return h * 60 + m;
+  }
+
+  function refreshTimes() {
+    const chosenDate = dateInput.value;
+    const isToday = chosenDate && chosenDate === todayISO();
+
+    const now = new Date();
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+
+    // Enable all first
+    [...timeSelect.options].forEach(opt => {
+      if (!opt.value) return;
+      opt.disabled = false;
+      opt.hidden = false;
+    });
+
+    // If today, disable & hide times that already passed
+    if (isToday) {
+      [...timeSelect.options].forEach(opt => {
+        if (!opt.value) return;
+        const tMin = minsFromHHMM(opt.value);
+        if (tMin <= nowMin) {
+          opt.disabled = true;
+          opt.hidden = true;
+        }
+      });
+    }
+
+    // If selected time is disabled, clear it
+    const sel = timeSelect.options[timeSelect.selectedIndex];
+    if (sel && sel.disabled) {
+      timeSelect.value = "";
+    }
+  }
+
+  dateInput.addEventListener("change", refreshTimes);
+  refreshTimes();
+})();
+</script>
+
 {% endblock %}
