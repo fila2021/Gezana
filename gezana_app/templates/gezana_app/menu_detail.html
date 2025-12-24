@@ -1,16 +1,115 @@
-{% extends "gezana_app/base.html" %} {% block title %} {{ item.name }} — Gezana
-{% endblock %} {% block content %}
-<h2>{{ item.name }}</h2>
+{% extends "gezana_app/base.html" %}
+{% load static %}
 
-<p><strong>Category:</strong> {{ item.get_category_display }}</p>
+{% block title %}{{ item.name }} — Gezana{% endblock %}
 
-<p><strong>Price:</strong> €{{ item.price }}</p>
+{% block content %}
 
-{% if item.is_vegetarian %}
-<p><strong>Vegetarian</strong></p>
+<section class="menu-detail-hero card">
+  <div class="menu-detail-grid">
+
+    <!-- IMAGE -->
+    <div class="menu-detail-image">
+      {% if item.image %}
+        <img
+          src="{{ item.image.url }}"
+          alt="{{ item.name }}"
+          onclick="openModal('{{ item.image.url }}')"
+        >
+      {% else %}
+        <img src="{% static 'images/no_image_available.png' %}" alt="No image available">
+      {% endif %}
+
+      <div class="menu-detail-price">€{{ item.price }}</div>
+
+      <div class="menu-detail-badges">
+        {% if item.is_vegetarian %}<span class="pill veg">Veg</span>{% endif %}
+        {% if item.is_new %}<span class="pill new">New</span>{% endif %}
+        {% if item.is_popular %}<span class="pill popular">Popular</span>{% endif %}
+        {% if item.is_chef_choice %}<span class="pill chef">Chef</span>{% endif %}
+      </div>
+    </div>
+
+    <!-- DETAILS -->
+    <div class="menu-detail-info">
+      <p class="menu-detail-category">{{ item.get_category_display }}</p>
+      <h1 class="menu-detail-title">{{ item.name }}</h1>
+
+      <p class="menu-detail-desc">{{ item.description }}</p>
+
+      {% if item.ingredients %}
+        <div class="menu-detail-panel">
+          <h3 class="panel-title"><i class="fa-solid fa-list-check"></i> Ingredients</h3>
+          <p class="muted" style="margin:0;">{{ item.ingredients }}</p>
+        </div>
+      {% endif %}
+
+      <div class="menu-detail-actions">
+        <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">
+          <i class="fa-solid fa-arrow-left"></i> Back to Menu
+        </a>
+        <a href="{% url 'gezana_app:make_booking' %}" class="button primary">
+          <i class="fa-solid fa-calendar-check"></i> Book a Table
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% if recommended %}
+<section class="card recommend-wrap">
+  <div class="recommend-head">
+    <div>
+      <p class="eyebrow" style="margin:0;">More like this</p>
+      <h2 style="margin:6px 0 0;">You may also like</h2>
+      <p class="muted" style="margin:6px 0 0;">Popular choices from the same category.</p>
+    </div>
+
+    <a class="button ghost" href="{% url 'gezana_app:menu_list' %}?category={{ item.category }}">
+      <i class="fa-solid fa-filter"></i> View category
+    </a>
+  </div>
+
+  <div class="recommend-grid">
+    {% for r in recommended %}
+      <article class="recommend-card">
+        <a href="{% url 'gezana_app:menu_detail' r.pk %}" class="recommend-media">
+          {% if r.image %}
+            <img src="{{ r.image.url }}" alt="{{ r.name }}" loading="lazy">
+          {% else %}
+            <img src="{% static 'images/no_image_available.png' %}" alt="No image available" loading="lazy">
+          {% endif %}
+
+          <div class="recommend-price">€{{ r.price }}</div>
+
+          <div class="recommend-badges">
+            {% if r.is_vegetarian %}<span class="pill veg">Veg</span>{% endif %}
+            {% if r.is_new %}<span class="pill new">New</span>{% endif %}
+            {% if r.is_popular %}<span class="pill popular">Popular</span>{% endif %}
+            {% if r.is_chef_choice %}<span class="pill chef">Chef</span>{% endif %}
+          </div>
+        </a>
+
+        <div class="recommend-body">
+          <p class="recommend-cat">{{ r.get_category_display }}</p>
+          <h3 class="recommend-title">{{ r.name }}</h3>
+          <p class="recommend-desc">{{ r.description }}</p>
+
+          <a class="button primary full" href="{% url 'gezana_app:menu_detail' r.pk %}">
+            View dish
+          </a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
 {% endif %}
 
-<p>{{ item.description }}</p>
+<!-- IMAGE MODAL -->
+<div id="imageModal" class="image-modal" onclick="closeModal()">
+  <span class="close-modal" onclick="closeModal()">&times;</span>
+  <img class="modal-content" id="modalImage" onclick="event.stopPropagation()">
+</div>
 
-<a href="{% url 'gezana_app:menu_list' %}">Back to Menu</a>
 {% endblock %}

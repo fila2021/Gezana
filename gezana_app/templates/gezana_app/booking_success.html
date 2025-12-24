@@ -1,34 +1,72 @@
 {% extends "gezana_app/base.html" %}
 
-{% block title %}
-Booking Confirmed
-{% endblock %}
+{% block title %}Booking Confirmed{% endblock %}
 
 {% block content %}
 <section class="booking-hero">
   <div>
     <p class="eyebrow">Booking Confirmed</p>
     <h2>See you soon at Gezana!</h2>
-    <p class="lede">We’ve saved your table and sent your confirmation to your email.</p>
+    <p class="lede">We’ve saved your table. Your confirmation has been sent to your email/phone (if provided).</p>
   </div>
+
   <div class="booking-hero-badge">
     <p class="mini">Reference</p>
     <p class="callout">{{ booking.reference }}</p>
-    <p class="note">Keep this code to cancel or modify.</p>
+    <p class="note">Keep this code safe — you’ll need it to cancel.</p>
   </div>
 </section>
 
-<div class="booking-card card">
-  <h3>Reservation Details</h3>
-  <p><strong>Name:</strong> {{ booking.name }}</p>
-  <p><strong>Date:</strong> {{ booking.date }}</p>
-  <p><strong>Time:</strong> {{ booking.time|time:"H:i" }}</p>
-  <p><strong>Guests:</strong> {{ booking.guests }}</p>
-  <p><strong>Table:</strong> {{ booking.table|default:"Assigned on arrival" }}</p>
+<div class="card success-card">
+  <div class="success-header">
+    <div class="success-icon">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+    <div>
+      <h3 style="margin:0;">Reservation Details</h3>
+      <p class="muted" style="margin:6px 0 0;">Please arrive on time — we hold tables for 15 minutes.</p>
+    </div>
+  </div>
 
-  <div class="hero-actions" style="margin-top: 12px;">
-    <a href="{% url 'gezana_app:home' %}" class="button ghost">Return Home</a>
-    <a href="{% url 'gezana_app:cancel_booking' %}" class="button danger">Cancel Booking</a>
+  <div class="success-grid">
+    <div class="success-row">
+      <span class="success-label">Name</span>
+      <span class="success-value">{{ booking.name }}</span>
+    </div>
+
+    <div class="success-row">
+      <span class="success-label">Date</span>
+      <span class="success-value">{{ booking.date }}</span>
+    </div>
+
+    <div class="success-row">
+      <span class="success-label">Time</span>
+      <span class="success-value">{{ booking.time|time:"H:i" }}</span>
+    </div>
+
+    <div class="success-row">
+      <span class="success-label">Guests</span>
+      <span class="success-value">{{ booking.guests }}</span>
+    </div>
+
+    <div class="success-row">
+      <span class="success-label">Table</span>
+      <span class="success-value">{{ booking.table|default:"Assigned on arrival" }}</span>
+    </div>
+
+    <div class="success-row highlight">
+      <span class="success-label">Reference</span>
+      <span class="success-value mono">{{ booking.reference }}</span>
+    </div>
+  </div>
+
+  <div class="hero-actions" style="margin-top: 14px;">
+    <a href="{% url 'gezana_app:home' %}" class="button ghost">
+      <i class="fa-solid fa-house"></i> Return Home
+    </a>
+    <a href="{% url 'gezana_app:cancel_booking' %}" class="button danger">
+      <i class="fa-solid fa-ban"></i> Cancel Booking
+    </a>
   </div>
 </div>
 {% endblock %}

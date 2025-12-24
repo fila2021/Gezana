@@ -3,12 +3,56 @@
 {% block title %}Cancel Booking{% endblock %}
 
 {% block content %}
-<h2>Cancel Your Booking</h2>
-<p>Enter your cancellation code below:</p>
+<section class="booking-hero">
+  <div>
+    <p class="eyebrow">Cancel Booking</p>
+    <h2>Need to cancel your reservation?</h2>
+    <p class="lede">Enter your reference code below. Your booking will be cancelled immediately.</p>
+  </div>
 
-<form method="post">
+  <div class="booking-hero-badge">
+    <p class="mini">Tip</p>
+    <p class="callout">Check your email</p>
+    <p class="note">Your reference code is in your confirmation message.</p>
+  </div>
+</section>
+
+<div class="card cancel-card">
+  <h3 style="margin-top:0;">Enter Reference Code</h3>
+  <p class="muted">Example: <span class="mono">AB12CD34</span></p>
+
+  <form method="post" novalidate>
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Cancel Booking</button>
-</form>
+
+    {% if form.non_field_errors %}
+      <div class="alert alert-error" role="alert">
+        {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="field-block">
+      <label class="field-label" for="{{ form.reference.id_for_label }}">Reference</label>
+      <div class="input-group">
+        <i class="fa-solid fa-ticket"></i>
+        {{ form.reference }}
+      </div>
+      {% for e in form.reference.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+    </div>
+
+    <button type="submit" class="button danger full">
+      <i class="fa-solid fa-ban"></i> Cancel Booking
+    </button>
+
+    <div class="hero-actions" style="margin-top: 12px;">
+      <a class="button ghost" href="{% url 'gezana_app:home' %}">
+        <i class="fa-solid fa-house"></i> Return Home
+      </a>
+      <a class="button primary" href="{% url 'gezana_app:make_booking' %}">
+        <i class="fa-solid fa-calendar-check"></i> Make a New Booking
+      </a>
+    </div>
+  </form>
+</div>
 {% endblock %}

@@ -4,6 +4,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.db.models import Q
 
+
 from .forms import BookingForm, CancelBookingForm
 from .utils import find_available_table
 from .models import Booking, MenuItem
@@ -21,6 +22,7 @@ def contact(request):
     return render(request, "gezana_app/contact.html")
 
 
+
 def menu_list(request):
     category = request.GET.get("category")
     search = request.GET.get("search")
@@ -35,16 +37,51 @@ def menu_list(request):
             Q(name__icontains=search) | Q(ingredients__icontains=search)
         )
 
+    # Recommended (top picks) — show even when filters are used
+    recommended = (
+        MenuItem.objects
+        .filter(Q(is_chef_choice=True) | Q(is_popular=True) | Q(is_new=True))
+        .order_by("-is_chef_choice", "-is_popular", "-is_new", "name")[:6]
+    )
+
     return render(request, "gezana_app/menu_list.html", {
         "items": items,
+        "recommended": recommended,
         "category": category,
         "search": search,
     })
 
 
+
+
+
 def menu_detail(request, pk):
     item = get_object_or_404(MenuItem, pk=pk)
-    return render(request, "gezana_app/menu_detail.html", {"item": item})
+
+    # Recommended items: same category, exclude current
+    recommended = (
+        MenuItem.objects
+        .filter(category=item.category)
+        .exclude(pk=item.pk)
+        .order_by("-is_chef_choice", "-is_popular", "-is_new", "name")[:6]
+    )
+
+    # fallback if category has few items (optional)
+    if not recommended:
+        recommended = (
+            MenuItem.objects
+            .exclude(pk=item.pk)
+            .filter(Q(is_chef_choice=True) | Q(is_popular=True) | Q(is_new=True))
+            .order_by("-is_chef_choice", "-is_popular", "-is_new", "name")[:6]
+        )
+
+    return render(request, "gezana_app/menu_detail.html", {
+        "item": item,
+        "recommended": recommended,
+    })
+
+
+
 
 
 def make_booking(request):

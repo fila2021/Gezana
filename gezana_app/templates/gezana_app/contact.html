@@ -3,44 +3,82 @@
 {% block title %}Contact Us — Gezana{% endblock %}
 
 {% block content %}
-<section class="contact-hero">
-  <div>
+
+<!-- =========================
+     CONTACT HERO (Premium)
+========================== -->
+<section class="page-hero card contact-hero-premium">
+  <div class="page-hero-left">
     <p class="eyebrow">Selam</p>
     <h2>We would love to hear from you</h2>
     <p class="lede">
-      Questions, feedback, special occasions, or group bookings—drop us a line and we will get back to you quickly.
+      Questions, feedback, special occasions, or group bookings—drop us a line
+      and we will get back to you quickly.
     </p>
+
+    <div class="hero-actions">
+      <a href="{% url 'gezana_app:make_booking' %}" class="button primary">
+        <i class="fa-solid fa-calendar-check"></i> Book a Table
+      </a>
+      <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">
+        <i class="fa-solid fa-utensils"></i> View Menu
+      </a>
+    </div>
   </div>
-  <div class="contact-hero-card">
-    <p class="mini">Call us</p>
-    <p class="callout">+353 85 123 4567</p>
-    <p class="mini">Email</p>
-    <p class="callout">gezanabooking@gmail.com</p>
-  </div>
+
+  <aside class="page-hero-right">
+    <div class="highlight-card">
+      <p class="mini">Call us</p>
+      <p class="callout">+353 85 123 4567</p>
+      <div class="divider"></div>
+      <p class="mini">Email</p>
+      <p class="callout">gezanabooking@gmail.com</p>
+      <p class="muted" style="margin:10px 0 0;">
+        For events or large groups, include date, time, and party size.
+      </p>
+    </div>
+  </aside>
 </section>
 
-<section class="contact-grid">
-  <div class="contact-card">
+<!-- =========================
+     CONTACT CARDS
+========================== -->
+<section class="info-grid">
+  <article class="info-card card">
+    <div class="home-card-icon"><i class="fa-solid fa-location-dot"></i></div>
     <h3>Visit Us</h3>
-    <p>Gezana Restaurant</p>
-    <p>123 Dublin Street</p>
-    <p>Dublin, Ireland</p>
-  </div>
+    <p class="muted" style="margin:0;">Gezana Restaurant</p>
+    <p class="muted" style="margin:0;">123 Dublin Street</p>
+    <p class="muted" style="margin:0;">Dublin, Ireland</p>
+  </article>
 
-  <div class="contact-card">
+  <article class="info-card card">
+    <div class="home-card-icon"><i class="fa-solid fa-clock"></i></div>
     <h3>Opening Hours</h3>
-    <p>Monday – Sunday</p>
-    <p>12:00 PM – 11:00 PM</p>
-    <p class="note">Kitchen closes at 10:30 PM</p>
-  </div>
+    <p class="muted" style="margin:0;">Monday – Sunday</p>
+    <p class="muted" style="margin:0;">12:00 PM – 11:00 PM</p>
+    <p class="muted" style="margin-top:8px;"><strong>Kitchen closes:</strong> 10:30 PM</p>
+  </article>
 
-  <div class="contact-card">
+  <article class="info-card card">
+    <div class="home-card-icon"><i class="fa-solid fa-champagne-glasses"></i></div>
     <h3>Reservations & Events</h3>
-    <p>For private dining, catering, or large groups, mention your date, time, and party size.</p>
-  </div>
+    <p class="muted">
+      Planning a birthday, coffee ceremony, or group dinner?
+      Tell us your party size and preferred time, and we’ll help you plan.
+    </p>
+    <a class="button ghost" href="{% url 'gezana_app:make_booking' %}">
+      Reserve online
+    </a>
+  </article>
 </section>
 
-<section class="contact-map">
+<!-- =========================
+     MAP (Premium)
+========================== -->
+<section class="card contact-map-card" style="margin-top:16px;">
+  <h3 style="margin-top:0;">Find us on the map</h3>
+
   <div class="map-embed">
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2381.699899176151!2d-6.2675!3d53.3500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48670e9b6b3b6b6b%3A0x2604c8fc3c7067be!2sDublin!5e0!3m2!1sen!2sie!4v1732770000!5m2!1sen!2sie"
@@ -54,4 +92,5 @@
     ></iframe>
   </div>
 </section>
+
 {% endblock %}

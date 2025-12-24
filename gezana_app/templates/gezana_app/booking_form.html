@@ -8,6 +8,7 @@
     <h2>Book a cozy spot for friends, family, or coffee ceremony</h2>
     <p class="lede">Choose your date and time, and we will find the best table.</p>
   </div>
+
   <div class="booking-hero-badge">
     <p class="mini">Hours</p>
     <p class="callout">12:00 PM — 7:00 PM</p>
@@ -15,7 +16,6 @@
   </div>
 </section>
 
-{# ✅ Non-field errors show in bold red box #}
 {% if form.non_field_errors %}
   <div class="alert alert-error" role="alert">
     {% for error in form.non_field_errors %}
@@ -26,12 +26,16 @@
 
 <div class="booking-layout">
   <div class="booking-card card">
-    <h3>Booking Details</h3>
+    <div class="card-head">
+      <h3>Booking Details</h3>
+      <p class="muted">Provide an email or phone number so we can confirm your booking.</p>
+    </div>
 
     <form method="post" novalidate>
       {% csrf_token %}
 
       <div class="field-block">
+        <label class="field-label" for="{{ form.name.id_for_label }}">Name</label>
         <div class="input-group">
           <i class="fa-solid fa-user"></i>
           {{ form.name }}
@@ -40,15 +44,17 @@
       </div>
 
       <div class="field-block">
+        <label class="field-label" for="{{ form.email.id_for_label }}">Email (optional)</label>
         <div class="input-group">
           <i class="fa-solid fa-envelope"></i>
           {{ form.email }}
         </div>
         {% for e in form.email.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
-        <p class="hint">Provide email or phone (at least one).</p>
+        <p class="hint">Provide <strong>email or phone</strong> (at least one).</p>
       </div>
 
       <div class="field-block">
+        <label class="field-label" for="{{ form.phone.id_for_label }}">Phone (optional)</label>
         <div class="input-group">
           <i class="fa-solid fa-phone"></i>
           {{ form.phone }}
@@ -56,60 +62,79 @@
         {% for e in form.phone.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
       </div>
 
-      <div class="field-block">
-        <div class="input-group">
-          <i class="fa-solid fa-users"></i>
-          {{ form.guests }}
+      <div class="field-grid">
+        <div class="field-block">
+          <label class="field-label" for="{{ form.guests.id_for_label }}">Guests</label>
+          <div class="input-group">
+            <i class="fa-solid fa-users"></i>
+            {{ form.guests }}
+          </div>
+          {% for e in form.guests.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
         </div>
-        {% for e in form.guests.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+
+        <div class="field-block">
+          <label class="field-label" for="{{ form.date.id_for_label }}">Date</label>
+          <div class="input-group">
+            <i class="fa-solid fa-calendar-days"></i>
+            {{ form.date }}
+          </div>
+          {% for e in form.date.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+          <p class="hint">Past dates are not allowed.</p>
+        </div>
       </div>
 
       <div class="field-block">
-        <div class="input-group">
-          <i class="fa-solid fa-calendar-days"></i>
-          {{ form.date }}
-        </div>
-        {% for e in form.date.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
-        <p class="hint">Past dates are not allowed.</p>
-      </div>
-
-      <div class="field-block">
+        <label class="field-label" for="{{ form.time.id_for_label }}">Time</label>
         <div class="input-group">
           <i class="fa-solid fa-clock"></i>
           {{ form.time }}
         </div>
         {% for e in form.time.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
         <p class="hint">Booking hours: 12:00–19:00 (30-minute slots).</p>
+
+        <!-- Optional UX hint when today is selected -->
+        <p id="timeHelp" class="hint hint-strong" style="display:none;">
+          Some times are hidden because they already passed today.
+        </p>
       </div>
 
-      <button type="submit" class="button primary full">Confirm Booking</button>
+      <button type="submit" class="button primary full">
+        <i class="fa-solid fa-check"></i> Confirm Booking
+      </button>
     </form>
   </div>
 
-  <div class="booking-side card">
+  <aside class="booking-side card">
     <h3>Good to Know</h3>
     <ul class="bullet-list">
-      <li>Bookings available 12:00 PM – 7:00 PM.</li>
-      <li>We’ll seat you at the best available table for your party size.</li>
-      <li>Please call if you’re running late; we hold tables for 15 minutes.</li>
+      <li><strong>Hours:</strong> 12:00 PM – 7:00 PM.</li>
+      <li>We seat you at the best available table for your party size.</li>
+      <li>We hold tables for <strong>15 minutes</strong> if you’re running late.</li>
     </ul>
 
     <div class="divider"></div>
 
     <h3>Need to cancel?</h3>
-    <p>Enter your reference code below or visit the cancel page.</p>
+    <p class="muted">Enter your reference code below or visit the cancel page.</p>
+
     <form action="{% url 'gezana_app:cancel_booking' %}" method="post" class="inline-cancel-form">
       {% csrf_token %}
       <input type="text" name="reference" placeholder="Enter reference code" required />
-      <button type="submit" class="button danger">Cancel booking</button>
-      <a class="button ghost" href="{% url 'gezana_app:cancel_booking' %}">Go to cancel page</a>
+      <button type="submit" class="button danger">
+        <i class="fa-solid fa-ban"></i> Cancel booking
+      </button>
+      <a class="button ghost" href="{% url 'gezana_app:cancel_booking' %}">
+        <i class="fa-solid fa-arrow-right"></i> Cancel page
+      </a>
     </form>
-  </div>
+  </aside>
 </div>
+
 <script>
 (function () {
   const dateInput = document.querySelector('input[name="date"]');
   const timeSelect = document.querySelector('select[name="time"]');
+  const timeHelp = document.getElementById('timeHelp');
   if (!dateInput || !timeSelect) return;
 
   function todayISO() {
@@ -129,6 +154,8 @@
     const now = new Date();
     const nowMin = now.getHours() * 60 + now.getMinutes();
 
+    let hiddenCount = 0;
+
     [...timeSelect.options].forEach(opt => {
       if (!opt.value) return;
       opt.disabled = false;
@@ -139,18 +166,21 @@
         if (tMin <= nowMin) {
           opt.disabled = true;
           opt.hidden = true;
+          hiddenCount++;
         }
       }
     });
 
     const sel = timeSelect.options[timeSelect.selectedIndex];
     if (sel && sel.disabled) timeSelect.value = "";
+
+    if (timeHelp) {
+      timeHelp.style.display = (isToday && hiddenCount > 0) ? "block" : "none";
+    }
   }
 
   dateInput.addEventListener("change", refreshTimes);
   refreshTimes();
 })();
 </script>
-
-
 {% endblock %}

@@ -3,37 +3,104 @@
 {% block title %}About Us — Gezana{% endblock %}
 
 {% block content %}
-<section class="about-hero">
-  <div>
+
+<!-- =========================
+     ABOUT HERO (Premium)
+========================== -->
+<section class="page-hero card">
+  <div class="page-hero-left">
     <p class="eyebrow">Our Story</p>
     <h2>Gezana brings Habesha warmth and flavor to Dublin</h2>
     <p class="lede">
-      We serve the dishes we grew up with: feasts built on injera, slow-simmered stews, and coffee poured in three rounds for blessings and conversation.
+      We serve the dishes we grew up with: feasts built on injera, slow-simmered stews,
+      and coffee poured in three rounds for blessings and conversation.
     </p>
+
+    <div class="hero-actions">
+      <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">
+        <i class="fa-solid fa-utensils"></i> Browse Menu
+      </a>
+      <a href="{% url 'gezana_app:make_booking' %}" class="button primary">
+        <i class="fa-solid fa-calendar-check"></i> Book a Table
+      </a>
+    </div>
   </div>
-  <div class="about-highlight">
-    <p class="mini">Signature Ritual</p>
-    <p class="callout">Traditional Coffee Ceremony</p>
-    <p class="note">Roast • Grind • Brew in a jebena • Share three rounds: abol, tona, baraka.</p>
+
+  <aside class="page-hero-right">
+    <div class="highlight-card">
+      <p class="mini">Signature Ritual</p>
+      <p class="callout">Traditional Coffee Ceremony</p>
+      <p class="muted" style="margin:0;">
+        Roast • Grind • Brew in a jebena • Share three rounds: abol, tona, baraka.
+      </p>
+    </div>
+
+    <div class="pill-row">
+      <span class="pill popular"><i class="fa-solid fa-fire"></i> Popular plates</span>
+      <span class="pill chef"><i class="fa-solid fa-star"></i> Chef’s picks</span>
+      <span class="pill veg"><i class="fa-solid fa-leaf"></i> Veg friendly</span>
+    </div>
+  </aside>
+</section>
+
+<!-- =========================
+     ABOUT GRID
+========================== -->
+<section class="info-grid">
+  <article class="info-card card">
+    <div class="home-card-icon"><i class="fa-solid fa-bowl-food"></i></div>
+    <h3>Our Cuisine</h3>
+    <p class="muted">
+      Soft, tangy injera is the heart of the table, with doro wat, tibs, shiro,
+      and veggie sides served family-style. Berbere and mitmita add warmth and depth.
+    </p>
+  </article>
+
+  <article class="info-card card">
+    <div class="home-card-icon"><i class="fa-solid fa-mug-saucer"></i></div>
+    <h3>Coffee Ceremony</h3>
+    <p class="muted">
+      We hand-roast beans until glossy, grind them fresh, and brew in a clay jebena.
+      The aroma fills the room as we pour three rounds for friendship and good fortune.
+    </p>
+  </article>
+
+  <article class="info-card card">
+    <div class="home-card-icon"><i class="fa-solid fa-people-group"></i></div>
+    <h3>Hospitality</h3>
+    <p class="muted">
+      We welcome you like family: generous portions, injera for scooping,
+      and stories of home. Whether it’s your first time or a familiar craving—welcome.
+    </p>
+  </article>
+
+  <article class="info-card card">
+    <div class="home-card-icon"><i class="fa-solid fa-heart"></i></div>
+    <h3>Our Promise</h3>
+    <p class="muted">
+      Fresh ingredients, traditional methods, and a table set for sharing.
+      Bring friends, family, or colleagues—Gezana is your home for Habesha food and culture.
+    </p>
+  </article>
+</section>
+
+<!-- =========================
+     CTA STRIP
+========================== -->
+<section class="page-cta card">
+  <div>
+    <p class="eyebrow" style="margin:0;">Come hungry</p>
+    <h2 style="margin:6px 0 10px;">Ready to taste Habesha tradition?</h2>
+    <p class="muted" style="margin:0;">Reserve now, or browse the menu first.</p>
+  </div>
+  <div class="hero-actions" style="justify-content:flex-end;">
+    <a href="{% url 'gezana_app:make_booking' %}" class="button primary">
+      <i class="fa-solid fa-calendar-check"></i> Reserve a Table
+    </a>
+    <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">
+      <i class="fa-solid fa-utensils"></i> View Menu
+    </a>
   </div>
 </section>
 
-<section class="about-grid">
-  <div class="about-card">
-    <h3>Our Cuisine</h3>
-    <p>Soft, tangy injera is the heart of the table, with doro wat, tibs, shiro, and fresh veggie sides served family-style. Berbere and mitmita spices add depth, heat, and warmth to every bite.</p>
-  </div>
-  <div class="about-card">
-    <h3>Coffee Ceremony</h3>
-    <p>We hand-roast beans until glossy, grind them fresh, and brew in a clay jebena. The aroma fills the room as we pour three rounds—each shared for friendship and good fortune.</p>
-  </div>
-  <div class="about-card">
-    <h3>Hospitality</h3>
-    <p>We welcome you like family: generous portions, injera for scooping, and stories of home. Whether it’s your first time or you’re craving familiar flavors, we’re here to host you.</p>
-  </div>
-  <div class="about-card">
-    <h3>Our Promise</h3>
-    <p>Fresh ingredients, traditional methods, and a table set for sharing. Bring friends, family, or colleagues—Gezana is your home for Habesha food, coffee, and culture.</p>
-  </div>
-</section>
 {% endblock %}
