@@ -92,15 +92,16 @@ Place your captured screenshots in `docs/screenshots/` and update the filenames 
 
 ![Home](docs/screenshots/home.png)  
 ![Menu](docs/screenshots/menu.png)  
-![Menu1](docs/screenshots/menu1.png)  
+![Menu1](docs/screenshots/menu1.png) 
 ![Menu2](docs/screenshots/menu2.png)  
-![Menu3](docs/screenshots/menu3.png)  
-![Menu4](docs/screenshots/menu4.png)  
-![Menu5](docs/screenshots/menu5.png)  
+![Menu3](docs/screenshots/menu3.png) 
+![Menu4](docs/screenshots/menu4.png)   
+![Menu5](docs/screenshots/menu5.png)   
 ![Booking](docs/screenshots/booking.png)  
 ![Cancellation](docs/screenshots/cancellation.png)  
 ![About](docs/screenshots/about.png)  
-![Contact](docs/screenshots/contact.png)  
+![Contact](docs/screenshots/contact.png) 
+
 
 ### Admin Page
 ![Bookings](docs/screenshots/admin-booking.png)  
