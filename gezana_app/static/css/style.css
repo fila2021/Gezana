@@ -1,6 +1,9 @@
 /* ============================
-   DESIGN SYSTEM / RESET
+   GEZANA — CLEANED STYLESHEET
+   (keeps your current look, removes repetition, improves consistency)
 ============================ */
+
+/* ---------- Design tokens ---------- */
 :root{
   --bg: #fbf7f2;
   --surface: #ffffff;
@@ -24,6 +27,7 @@
   --container: 980px;
 }
 
+/* ---------- Reset / base ---------- */
 *,
 *::before,
 *::after{ box-sizing: border-box; }
@@ -41,14 +45,14 @@ img, video{
 }
 
 body{
-  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   margin: 0;
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text);
   background:
     radial-gradient(1200px 500px at 50% -10%, rgba(201,106,59,0.18), transparent 60%),
     radial-gradient(900px 400px at 10% 10%, rgba(255,210,138,0.15), transparent 60%),
     var(--bg);
-  color: var(--text);
-  line-height: 1.6;
 }
 
 /* Main container */
@@ -58,15 +62,21 @@ body{
   padding: 0 16px;
 }
 
-/* Typography defaults (don’t hard reset all margins everywhere) */
-h1,h2,h3{ line-height: 1.2; margin: 0 0 10px 0; }
+/* Typography (keep natural spacing) */
+h1, h2, h3{
+  line-height: 1.2;
+  margin: 0 0 10px 0;
+}
+
 p{ margin: 0 0 12px 0; }
-a{ color: var(--brand); text-decoration: none; }
+
+a{
+  color: var(--brand);
+  text-decoration: none;
+}
 a:hover{ opacity: 0.92; }
 
-/* ============================
-   HEADER + NAV
-============================ */
+/* ---------- Header + nav ---------- */
 header{
   background: linear-gradient(120deg, var(--brand) 0%, var(--brand-2) 55%, #f7d9a4 120%);
   color: #fff;
@@ -140,9 +150,7 @@ header h1{
   }
 }
 
-/* ============================
-   COMMON UTILS + CARDS
-============================ */
+/* ---------- Common UI ---------- */
 .card{
   background: var(--surface);
   border: 1px solid var(--border);
@@ -175,9 +183,7 @@ header h1{
   opacity: 0.95;
 }
 
-/* ============================
-   BUTTONS
-============================ */
+/* ---------- Buttons ---------- */
 .button,
 button,
 input[type="submit"]{
@@ -223,9 +229,7 @@ input[type="submit"]:hover{
 
 .button.full{ width: 100%; }
 
-/* ============================
-   FORMS
-============================ */
+/* ---------- Forms ---------- */
 form{
   background: transparent;
   padding: 0;
@@ -267,9 +271,7 @@ input:focus, select:focus, textarea:focus{
   box-shadow: 0 0 0 4px rgba(140,60,28,0.15);
 }
 
-/* ============================
-   ALERTS / ERRORS (bold red)
-============================ */
+/* ---------- Alerts / errors ---------- */
 .alert{
   border: 2px solid var(--danger);
   background: rgba(176, 0, 32, 0.08);
@@ -293,9 +295,7 @@ input:focus, select:focus, textarea:focus{
   font-size: 0.95rem;
 }
 
-/* ============================
-   HERO SECTIONS (Legacy + Premium)
-============================ */
+/* ---------- Hero sections ---------- */
 .booking-hero,
 .menu-hero,
 .contact-hero,
@@ -305,6 +305,10 @@ input:focus, select:focus, textarea:focus{
   border: 1px solid var(--border);
   padding: 26px;
   box-shadow: var(--shadow-soft);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  align-items: center;
 }
 
 .booking-hero,
@@ -351,25 +355,9 @@ input:focus, select:focus, textarea:focus{
   color: var(--muted);
 }
 
-.home-hero h1{
-  font-size: 2.1rem;
-}
-
+.home-hero h1{ font-size: 2.1rem; }
 .home-hero .lede,
-.contact-hero .lede{
-  opacity: 0.92;
-}
-
-.booking-hero,
-.menu-hero,
-.about-hero,
-.contact-hero,
-.home-hero{
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 16px;
-  align-items: center;
-}
+.contact-hero .lede{ opacity: 0.92; }
 
 @media (max-width: 900px){
   .booking-hero,
@@ -400,9 +388,7 @@ input:focus, select:focus, textarea:focus{
   margin: 0 0 6px 0;
 }
 
-/* ============================
-   BOOKING LAYOUT
-============================ */
+/* ---------- Booking layout ---------- */
 .booking-layout{
   display: grid;
   grid-template-columns: 3fr 2fr;
@@ -436,9 +422,7 @@ input:focus, select:focus, textarea:focus{
   }
 }
 
-/* ============================
-   PILLS
-============================ */
+/* ---------- Pills ---------- */
 .pill{
   display: inline-block;
   padding: 6px 10px;
@@ -449,6 +433,7 @@ input:focus, select:focus, textarea:focus{
   color: #4a3a32;
   background: #fff;
 }
+
 .pill.veg{ background: #e6f4ec; border-color: #c8e5d2; color: #1f7a3d; }
 .pill.new{ background: #fdf2dd; border-color: #f4deac; color: #8c5a1c; }
 .pill.popular{ background: #fbe9e6; border-color: #f3c9c2; color: #b13b2a; }
@@ -464,9 +449,7 @@ input:focus, select:focus, textarea:focus{
   .menu-legend{ justify-content: flex-start; }
 }
 
-/* ============================
-   MENU LIST (Toolbar + Grid)
-============================ */
+/* ---------- Menu list (toolbar + grid) ---------- */
 .menu-toolbar{
   position: sticky;
   top: 10px;
@@ -632,9 +615,7 @@ input:focus, select:focus, textarea:focus{
   gap: 10px;
 }
 
-/* ============================
-   MENU DETAIL + RECOMMENDED
-============================ */
+/* ---------- Menu detail: minimal helpers (layout handled by your detail CSS) ---------- */
 .menu-detail-info{ min-width: 0; }
 
 .menu-detail-title{
@@ -652,6 +633,7 @@ input:focus, select:focus, textarea:focus{
   color: var(--brand);
 }
 
+/* ---------- Recommended section ---------- */
 .recommend-wrap{ margin-top: 16px; }
 
 .recommend-head{
@@ -760,9 +742,7 @@ input:focus, select:focus, textarea:focus{
   overflow: hidden;
 }
 
-/* ============================
-   IMAGE MODAL
-============================ */
+/* ---------- Image modal ---------- */
 .image-modal{
   display: none;
   position: fixed;
@@ -792,9 +772,7 @@ input:focus, select:focus, textarea:focus{
   cursor: pointer;
 }
 
-/* ============================
-   ABOUT + CONTACT (Premium sections)
-============================ */
+/* ---------- About + contact premium sections ---------- */
 .page-hero{
   display: grid;
   grid-template-columns: 1.25fr 0.9fr;
@@ -860,9 +838,7 @@ input:focus, select:focus, textarea:focus{
   align-content: start;
 }
 
-/* ============================
-   FOOTER
-============================ */
+/* ---------- Footer ---------- */
 footer{
   text-align: center;
   padding: 18px;
