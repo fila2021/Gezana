@@ -5,11 +5,16 @@
 
 {% block content %}
 
+<!-- =========================
+     MENU HERO
+========================== -->
 <section class="menu-hero">
   <div>
     <p class="eyebrow">Habesha Flavours</p>
     <h2>Share injera, spice, and coffee aromas</h2>
-    <p class="lede">From doro wat to tibs and vegan shiro, every plate is cooked fresh with berbere heat and served to share.</p>
+    <p class="lede">
+      From doro wat to tibs and vegan shiro, every plate is cooked fresh with berbere heat and served to share.
+    </p>
   </div>
 
   <div class="menu-legend">
@@ -20,7 +25,9 @@
   </div>
 </section>
 
-<!-- Filter bar -->
+<!-- =========================
+     FILTER BAR (GET search + category)
+========================== -->
 <section class="menu-toolbar card">
   <form method="get" class="menu-toolbar-form">
     <div class="menu-toolbar-left">
@@ -36,8 +43,10 @@
 
       <div class="menu-select">
         <i class="fa-solid fa-filter"></i>
+
+        {# ✅ If your model category values differ, update these option values to match EXACTLY #}
         <select name="category">
-          <option value="">All categories</option>
+          <option value="" {% if not category %}selected{% endif %}>All categories</option>
           <option value="starter" {% if category == "starter" %}selected{% endif %}>Starter</option>
           <option value="main" {% if category == "main" %}selected{% endif %}>Main Course</option>
           <option value="side" {% if category == "side" %}selected{% endif %}>Side Dish</option>
@@ -152,5 +161,13 @@
     </div>
   {% endfor %}
 </section>
+
+<!-- IMAGE MODAL (optional: only needed if you still use openModal/closeModal somewhere) -->
+{# 
+<div id="imageModal" class="image-modal" onclick="closeModal()">
+  <span class="close-modal">&times;</span>
+  <img class="modal-content" id="modalImage">
+</div>
+#}
 
 {% endblock %}
