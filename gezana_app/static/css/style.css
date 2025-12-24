@@ -7,6 +7,7 @@ html, body {
 }
 
 
+
 body {
     font-family: "Poppins", sans-serif;
     margin: 0;
@@ -17,10 +18,12 @@ body {
 }
 
 main {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 0 20px;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
+
 
 /* ============================
    HEADER & NAVIGATION
@@ -1300,4 +1303,51 @@ footer {
   margin-top: 6px;
   opacity: 0.85;
   font-size: 0.95rem;
+}
+
+
+
+/* Ensure menu area never causes horizontal overflow */
+.menu-container,
+.menu-card,
+.menu-img-wrapper,
+.menu-img {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Force responsive cards (overrides older width:320px rules) */
+.menu-card {
+  width: 100% !important;
+  max-width: 420px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Keep menu grid responsive */
+.menu-container {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+  gap: 26px !important;
+  width: 100%;
+}
+
+/* Mobile: single column */
+@media (max-width: 768px) {
+  .menu-container {
+    grid-template-columns: 1fr !important;
+  }
+
+  .menu-hero {
+    grid-template-columns: 1fr;
+    padding: 22px;
+  }
+
+  .menu-legend {
+    justify-content: flex-start;
+  }
+
+  main {
+    padding: 0 12px;
+  }
 }

@@ -15,10 +15,10 @@ class BookingForm(forms.ModelForm):
     OPEN_TIME = time(12, 0)
     CLOSE_TIME = time(19, 0)
 
-    # Optional: require bookings to be at least X minutes from now (for today)
-    LEAD_TIME_MINUTES = 0  # change to 15 if you want 15-min buffer
+    # Optional buffer (e.g. 15 minutes)
+    LEAD_TIME_MINUTES = 0
 
-    # ✅ Safe dropdown: 12:00 → 19:00 every 30 mins (no 19:30)
+    # ✅ Time dropdown: 12:00 → 19:00 every 30 mins
     TIME_CHOICES = []
     _cur = datetime.combine(date.today(), OPEN_TIME)
     _end = datetime.combine(date.today(), CLOSE_TIME)
@@ -36,7 +36,7 @@ class BookingForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # ✅ email optional
+        # Email optional
         self.fields["email"].required = False
 
         placeholders = {
@@ -52,7 +52,7 @@ class BookingForm(forms.ModelForm):
             field.widget.attrs.setdefault("placeholder", placeholders.get(field_name, ""))
             field.widget.attrs.setdefault("class", "input-with-icon")
 
-        # ✅ Date picker + UI restriction
+        # Date picker + prevent past dates in UI
         self.fields["date"].widget.input_type = "date"
         self.fields["date"].widget.attrs["min"] = date.today().isoformat()
 
@@ -63,9 +63,6 @@ class BookingForm(forms.ModelForm):
         return d
 
     def clean_time(self):
-        """
-        ChoiceField gives "HH:MM" string -> convert to datetime.time for model.
-        """
         t = self.cleaned_data.get("time")
         if not t:
             return t
@@ -73,7 +70,6 @@ class BookingForm(forms.ModelForm):
         hh, mm = map(int, t.split(":"))
         booking_time = time(hh, mm)
 
-        # enforce 30-min increments
         if mm not in (0, 30):
             raise ValidationError("❌ Please choose a valid time slot (every 30 minutes).")
 
@@ -109,11 +105,10 @@ class BookingForm(forms.ModelForm):
         if not booking_date or not booking_time or not guests:
             return cleaned_data
 
-        # ✅ require at least one contact method
         if not email and not phone:
             raise ValidationError("Please provide at least an email address or phone number.")
 
-        # ✅ NEW: block booking a time that already passed (when booking date is today)
+        # ✅ NEW: prevent booking a past time for today
         now_local = timezone.localtime(timezone.now())
         tz = timezone.get_current_timezone()
         requested_dt = timezone.make_aware(datetime.combine(booking_date, booking_time), tz)
@@ -126,12 +121,12 @@ class BookingForm(forms.ModelForm):
         if not Table.objects.filter(capacity__gte=guests).exists():
             raise ValidationError("No tables can accommodate that party size. Please reduce guests.")
 
-        # availability check (uses overlap logic)
+        # availability check
         table = find_available_table(booking_date, booking_time, guests)
         if table is None:
             raise ValidationError("We are fully booked for that date and time. Please choose another slot.")
 
-        # duplicate check: same date + same email OR same date + same phone
+        # duplicate check
         dup_q = Q()
         if email:
             dup_q |= Q(date=booking_date, email__iexact=email)

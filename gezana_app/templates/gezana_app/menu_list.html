@@ -21,20 +21,17 @@
 <div class="menu-container">
     {% for item in items %}
     <div class="menu-card">
-
-        {% load static %}
-
-<div class="menu-img-wrapper">
-    {% if item.image %}
-        <img src="{{ item.image.url }}"
-             alt="{{ item.name }}"
-             class="menu-img"
-             onclick="openModal('{{ item.image.url }}')">
-    {% else %}
-        <img src="{% static 'images/no_image_available.png' %}"
-             class="menu-img"
-             alt="No image available">
-    {% endif %}
+        <div class="menu-img-wrapper">
+            {% if item.image %}
+                <img src="{{ item.image.url }}"
+                     alt="{{ item.name }}"
+                     class="menu-img"
+                     onclick="openModal('{{ item.image.url }}')">
+            {% else %}
+                <img src="{% static 'images/no_image_available.png' %}"
+                     class="menu-img"
+                     alt="No image available">
+            {% endif %}
 
             <div class="menu-badges">
                 {% if item.is_vegetarian %}<span class="pill veg">Veg</span>{% endif %}
@@ -66,10 +63,8 @@
     {% endfor %}
 </div>
 
-<!-- IMAGE MODAL -->
 <div id="imageModal" class="image-modal" onclick="closeModal()">
     <span class="close-modal">&times;</span>
     <img class="modal-content" id="modalImage">
 </div>
-
 {% endblock %}
