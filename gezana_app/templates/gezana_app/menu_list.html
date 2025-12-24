@@ -22,37 +22,48 @@
   </div>
 </section>
 
-<!-- Filter bar (CATEGORY ONLY) -->
-<section class="menu-toolbar card">
-  <form method="get" class="menu-toolbar-form">
+<!-- CATEGORY FILTER (CARD BUTTONS) -->
+<section class="menu-category-bar card">
 
-    <div class="menu-toolbar-left">
-      <div class="menu-select">
-        <i class="fa-solid fa-filter"></i>
-        <select name="category" onchange="this.form.submit()">
-          <option value="">All categories</option>
-          <option value="starter" {% if category == "starter" %}selected{% endif %}>Starter</option>
-          <option value="main" {% if category == "main" %}selected{% endif %}>Main Course</option>
-          <option value="side" {% if category == "side" %}selected{% endif %}>Side Dish</option>
-          <option value="dessert" {% if category == "dessert" %}selected{% endif %}>Dessert</option>
-          <option value="drink" {% if category == "drink" %}selected{% endif %}>Drink</option>
-        </select>
-      </div>
-    </div>
+  <div class="category-cards">
 
-    {% if category %}
-    <div class="menu-toolbar-right">
-      <a class="button ghost" href="{% url 'gezana_app:menu_list' %}">
-        <i class="fa-solid fa-rotate-left"></i> Reset
-      </a>
-    </div>
-    {% endif %}
+    <a href="{% url 'gezana_app:menu_list' %}"
+       class="category-card {% if not category %}active{% endif %}">
+      All
+    </a>
 
-  </form>
+    <a href="{% url 'gezana_app:menu_list' %}?category=starter"
+       class="category-card {% if category == 'starter' %}active{% endif %}">
+      Starter
+    </a>
+
+    <a href="{% url 'gezana_app:menu_list' %}?category=main"
+       class="category-card {% if category == 'main' %}active{% endif %}">
+      Main Course
+    </a>
+
+    <a href="{% url 'gezana_app:menu_list' %}?category=side"
+       class="category-card {% if category == 'side' %}active{% endif %}">
+      Side Dish
+    </a>
+
+    <a href="{% url 'gezana_app:menu_list' %}?category=dessert"
+       class="category-card {% if category == 'dessert' %}active{% endif %}">
+      Dessert
+    </a>
+
+    <a href="{% url 'gezana_app:menu_list' %}?category=drink"
+       class="category-card {% if category == 'drink' %}active{% endif %}">
+      Drink
+    </a>
+
+  </div>
+
 </section>
 
 
-{% if recommended %}
+
+{% if recommended and not category and not search %}
 <section class="card recommend-wrap">
   <div class="recommend-head">
     <div>

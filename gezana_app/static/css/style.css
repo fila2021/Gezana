@@ -957,3 +957,40 @@ footer{
     flex-direction: column;
   }
 }
+
+/* ============================
+   CATEGORY FILTER CARDS
+============================ */
+.menu-category-bar{
+  margin-top: 14px;
+}
+
+.category-cards{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.category-card{
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 0.9rem;
+  color: var(--brand);
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  transition: all .15s ease;
+}
+
+.category-card:hover{
+  transform: translateY(-1px);
+  background: rgba(140,60,28,0.06);
+}
+
+.category-card.active{
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 10px 22px rgba(140,60,28,0.22);
+}
