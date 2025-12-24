@@ -1,10 +1,3 @@
-/* ============================
-   GEZANA — CLEAN STYLESHEET (refactored)
-   - keeps current look
-   - reduces repetition
-   - improves consistency + grouping
-============================ */
-
 /* ---------- Design tokens ---------- */
 :root{
   --bg:#fbf7f2;
