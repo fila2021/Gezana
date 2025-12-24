@@ -120,34 +120,40 @@ header h1{
   flex-wrap: wrap;
 }
 
-.navbar a{
-  color: #fff;
-  font-weight: 800;
-  font-size: 0.98rem;
-  padding: 10px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.20);
-  backdrop-filter: blur(8px);
-  transition: transform .15s ease, background .15s ease;
-}
-
-.navbar a:hover{
-  transform: translateY(-1px);
-  background: rgba(255,255,255,0.18);
-}
-
-.navbar a.active{
-  background: rgba(255,255,255,0.25);
-  border-color: rgba(255,255,255,0.30);
-}
-
 @media (max-width: 768px){
-  .navbar ul{
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+  .navbar{
+    padding: 10px 0 12px;
   }
+
+  .navbar ul{
+    flex-direction: row;              /* ✅ stop stacking */
+    justify-content: flex-start;      /* ✅ start aligned */
+    flex-wrap: nowrap;                /* ✅ single row */
+    overflow-x: auto;                 /* ✅ scroll */
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+    padding: 0 14px;                  /* breathing room */
+    scrollbar-width: none;            /* Firefox hide scrollbar */
+  }
+
+  .navbar ul::-webkit-scrollbar{
+    display: none;                    /* Chrome/Safari hide scrollbar */
+  }
+
+  .navbar a{
+    flex: 0 0 auto;                   /* ✅ prevent shrink */
+    white-space: nowrap;
+    font-size: 0.95rem;
+    padding: 10px 14px;
+    border-radius: 999px;
+  }
+}
+
+/* ✅ Active page highlight (works when template adds .active) */
+.navbar a.active{
+  background: rgba(255,255,255,0.28);
+  border-color: rgba(255,255,255,0.34);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 /* ---------- Common UI ---------- */

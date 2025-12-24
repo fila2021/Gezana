@@ -184,3 +184,7 @@ STORAGES = {
 # If Cloudinary is configured, store uploaded media there
 if CLOUDINARY_URL:
     STORAGES["default"] = {"BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage"}
+
+TEMPLATES[0]["OPTIONS"]["context_processors"] += [
+    "django.template.context_processors.request",
+]
