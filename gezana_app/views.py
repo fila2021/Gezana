@@ -24,8 +24,8 @@ def contact(request):
 
 
 def menu_list(request):
-    category = request.GET.get("category") or ""
-    search = request.GET.get("search") or ""
+    category = request.GET.get("category")
+    search = request.GET.get("search")
 
     items = MenuItem.objects.all()
 
@@ -34,15 +34,19 @@ def menu_list(request):
 
     if search:
         items = items.filter(
-            Q(name__icontains=search) | Q(ingredients__icontains=search)
+            Q(name__icontains=search) |
+            Q(description__icontains=search) |
+            Q(ingredients__icontains=search)
         )
 
-    # ✅ show top picks only when user is NOT filtering
+    # ✅ Show top picks ONLY when user is NOT filtering
     recommended = None
     if not category and not search:
-        recommended = MenuItem.objects.filter(
-            Q(is_chef_choice=True) | Q(is_popular=True) | Q(is_new=True)
-        ).order_by("-is_chef_choice", "-is_popular", "-is_new")[:6]
+        recommended = (
+            MenuItem.objects
+            .filter(Q(is_chef_choice=True) | Q(is_popular=True) | Q(is_new=True))
+            .order_by("-is_chef_choice", "-is_popular", "-is_new")[:3]
+        )
 
     return render(request, "gezana_app/menu_list.html", {
         "items": items,
@@ -50,6 +54,9 @@ def menu_list(request):
         "category": category,
         "search": search,
     })
+
+
+
 
 
 

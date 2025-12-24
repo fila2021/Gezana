@@ -868,3 +868,54 @@ footer{
   margin-top:34px;
   box-shadow:0 -10px 26px rgba(0,0,0,.08);
 }
+
+
+.recommend-compact .recommend-grid{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 900px){
+  .recommend-compact .recommend-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* shrink card */
+.recommend-compact .recommend-card{
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+}
+
+/* smaller image */
+.recommend-compact .recommend-media{
+  height: 120px;
+}
+
+/* smaller price badge */
+.recommend-compact .recommend-price{
+  padding: 5px 9px;
+  font-size: 0.85rem;
+}
+
+/* tighter content */
+.recommend-compact .recommend-body{
+  padding: 10px;
+  gap: 6px;
+}
+
+/* smaller title */
+.recommend-compact .recommend-title{
+  font-size: 0.95rem;
+}
+
+/* hide long descriptions */
+.recommend-compact .recommend-desc{
+  display: none;
+}
+
+/* smaller button */
+.recommend-compact .button{
+  padding: 8px 10px;
+  font-size: 0.85rem;
+}
