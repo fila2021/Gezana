@@ -501,51 +501,52 @@ Security and configuration best practices were followed throughout development:
 
 ## 22. Reflection
 
-This project was a valuable learning experience that strengthened both backend development and deployment skills.
-
-Key learnings include:
-- Building a full CRUD system with Django models, forms, views, and templates  
-- Implementing real-world validation logic such as date/time checks and double-booking prevention  
-- Understanding the importance of environment-specific configuration  
-- Deploying a Django application to Heroku and resolving production-only issues  
-- Handling media files correctly in a cloud environment using Cloudinary  
-- Debugging application crashes using Heroku logs  
-
-Challenges such as database migrations, image handling on Heroku, and configuration conflicts helped develop strong problem-solving and debugging skills. The project demonstrates a complete full-stack workflow from planning and wireframing through development, testing, deployment, and refinement.
-
----
-## 23. Reflection
+This project has been a comprehensive learning experience that strengthened my backend development, frontend design, and deployment skills. It allowed me to build a full-featured Django application while addressing real-world usability and production challenges.
 
 ### What Went Well
-- Building the booking system helped me develop a strong understanding of Django models, forms, and server-side validation.
-- Implementing table assignment logic improved my ability to think through real-world constraints such as seating capacity and time slots.
-- Using the Django messages framework significantly improved user experience by providing clear success and error feedback.
+- Built a complete CRUD system using Django models, forms, views, and templates.
+- Implemented real-world booking logic, including past date/time prevention, seating capacity checks, and double-booking avoidance.
+- Developed a clear and user-friendly booking flow enhanced with Django’s messages framework.
+- Designed a responsive menu system with category-based filtering and recommended items.
+- Improved overall UI consistency across desktop and mobile through iterative refinement.
+- Successfully deployed the application to Heroku with stable production behaviour.
 
 ### Challenges Faced
-- Deployment issues arose when uploaded media files were not persistent on Heroku.
-- Template block and formatting issues occurred when files auto-collapsed into a single line due to editor formatting.
-- GitHub and Heroku push errors happened when large files (screen recordings) were accidentally committed.
+- Menu filtering initially returned all items due to mismatched category values between models and templates.
+- A text-based search input appeared functional but did not filter results correctly.
+- Mobile navigation styling broke during UI refactoring and lacked an active-page indicator.
+- Recommended menu items displayed even when filters were applied, causing confusion.
+- Media files were not persistent on Heroku, leading to missing images in production.
+- GitHub and Heroku push errors occurred when large files were accidentally committed.
+- CSS grew complex over time, causing layout conflicts and inconsistent styling.
 
 ### How I Solved Them
-- Removed large files from Git history and ensured media files were excluded using `.gitignore`.
-- Fixed template inheritance issues by ensuring all `{% block %}` tags were properly opened and closed.
-- Switched media storage to Cloudinary to ensure reliable image handling in production.
-- Added fallback images and additional validation checks to prevent runtime errors.
+- Simplified menu filtering by removing the non-functional text search and filtering by category only.
+- Replaced dropdown filters with category card buttons to improve clarity and usability.
+- Updated view logic so recommended items only appear when no filters are active.
+- Fixed mobile navigation layout and added a visible active state for the current page.
+- Refactored and cleaned the CSS to remove duplication and maintain a consistent design system.
+- Switched media storage to Cloudinary to ensure persistent image handling in production.
+- Removed large files from Git history and added proper `.gitignore` rules.
+- Debugged deployment issues effectively using `heroku logs --tail`.
 
 ### What I Learned
-- The importance of correct environment variable management and storage configuration in production.
-- How to debug deployment issues effectively using `heroku logs --tail`.
-- Best practices for Django deployment, including PostgreSQL usage, static file handling, and secret management.
-- The value of small, incremental commits to make debugging and rollbacks easier.
+- Small inconsistencies between frontend templates and backend logic can silently break core features.
+- Simplifying functionality often leads to better reliability and user experience.
+- Mobile-first testing is essential, as many issues only appear on smaller screens.
+- Clean, maintainable CSS is critical as a project grows.
+- Incremental commits make debugging, rollbacks, and deployment far easier.
+- Proper environment configuration and media storage are essential for production-ready Django apps.
 
 ### Next Steps
-- Add user accounts to allow customers to view booking history.
-- Implement a cart/order system for future expansion.
-- Add automated tests for forms and views to improve reliability and maintainability.
-
+- Add user accounts so customers can view and manage their bookings.
+- Introduce pagination or lazy loading for larger menus.
+- Add automated tests for booking validation and menu filtering.
+- Further improve accessibility (ARIA labels, keyboard navigation).
+- Explore online ordering functionality for future expansion.
 ---
 
-## 24. Recent Updates (Media & Deployment Improvements)
+## 23. Recent Updates (Media & Deployment Improvements)
 
 During the final deployment phase, the following improvements were implemented:
 
@@ -555,11 +556,19 @@ During the final deployment phase, the following improvements were implemented:
 - Added favicon support to eliminate production 404 requests.
 - Removed large files that were blocking GitHub pushes.
 - Updated deployment settings and verified application stability using Heroku logs.
-
+- Fixed menu category filtering to ensure only relevant items are displayed.
+- Removed the non-functional text search bar and simplified filtering to category selection only.
+- Replaced dropdown filters with clear, clickable category cards.
+- Ensured recommended menu items only appear when no category filter is active.
+- Improved mobile navigation layout and added a visible active-page indicator.
+- Refined booking page layout to improve form spacing and usability on mobile.
+- Cleaned and refactored CSS to remove duplication and resolve layout conflicts.
+- Restored a simpler, cleaner home page design while keeping consistent styling.
+- Verified all changes across desktop and mobile to ensure responsive behaviour.
 
 ---
 
-## 25. Credits
+## 24. Credits
 
 - Code Institute  
 - Django Documentation  
