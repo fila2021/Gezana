@@ -117,16 +117,31 @@
     <h3>Need to cancel?</h3>
     <p class="muted">Enter your reference code below or visit the cancel page.</p>
 
-    <form action="{% url 'gezana_app:cancel_booking' %}" method="post" class="inline-cancel-form">
-      {% csrf_token %}
-      <input type="text" name="reference" placeholder="Enter reference code" required />
-      <button type="submit" class="button danger">
-        <i class="fa-solid fa-ban"></i> Cancel booking
-      </button>
-      <a class="button ghost" href="{% url 'gezana_app:cancel_booking' %}">
-        <i class="fa-solid fa-arrow-right"></i> Cancel page
-      </a>
-    </form>
+    <form action="{% url 'gezana_app:cancel_booking' %}" method="post" class="cancel-form">
+  {% csrf_token %}
+
+  <!-- Reference input (full width, above buttons) -->
+  <div class="field-block">
+    <input
+      type="text"
+      name="reference"
+      placeholder="Enter reference code"
+      required
+    />
+  </div>
+
+  <!-- Buttons -->
+  <div class="cancel-actions">
+    <button type="submit" class="button danger">
+      <i class="fa-solid fa-ban"></i> Cancel booking
+    </button>
+
+    <a class="button ghost" href="{% url 'gezana_app:cancel_booking' %}">
+      <i class="fa-solid fa-arrow-right"></i> Cancel page
+    </a>
+  </div>
+</form>
+
   </aside>
 </div>
 

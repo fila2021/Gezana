@@ -930,3 +930,30 @@ footer{
 @media (max-width: 760px){
   .home-cta-actions{ width: 100%; justify-content: flex-start; }
 }
+/* ============================
+   CANCEL BOOKING FORM 
+============================ */
+.cancel-form{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cancel-form input{
+  width: 100%;
+  padding-left: 12px; /* no icon here */
+}
+
+/* Buttons row */
+.cancel-actions{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Mobile: stack buttons */
+@media (max-width: 520px){
+  .cancel-actions{
+    flex-direction: column;
+  }
+}
