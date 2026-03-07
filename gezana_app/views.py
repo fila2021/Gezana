@@ -243,3 +243,37 @@ def _send_cancellation_confirmation(booking):
     )
     email.attach_alternative(html_body, "text/html")
     email.send(fail_silently=True)
+def edit_booking(request, reference):
+
+    booking = get_object_or_404(Booking, reference=reference)
+
+    if request.method == "POST":
+        form = BookingForm(request.POST, instance=booking)
+
+        if form.is_valid():
+            updated_booking = form.save(commit=False)
+
+            table = getattr(form, "available_table", None)
+
+            if table is None:
+                table = find_available_table(
+                    updated_booking.date,
+                    updated_booking.time,
+                    updated_booking.guests,
+                    exclude_booking_id=booking.pk
+                )
+
+            updated_booking.table = table
+            updated_booking.save()
+
+            messages.success(request, "Your booking has been updated successfully.")
+
+            return redirect("gezana_app:booking_detail", reference=booking.reference)
+
+    else:
+        form = BookingForm(instance=booking)
+
+    return render(request, "gezana_app/edit_booking.html", {
+        "form": form,
+        "booking": booking
+    })
