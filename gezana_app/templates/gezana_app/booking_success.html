@@ -19,14 +19,40 @@
         <p><strong>Reference:</strong> {{ booking.reference }}</p>
       </div>
 
-      <div class="booking-actions">
-        <a href="{% url 'gezana_app:manage_booking' %}" class="btn-primary">
-          Manage This Booking
-        </a>
-        <a href="{% url 'gezana_app:home' %}" class="btn-secondary">
-          Back to Home
-        </a>
-      </div>
+      <section class="post-booking-help">
+        <h3>Need to cancel?</h3>
+        <p>Enter your reference code below or visit the cancel page.</p>
+
+        <form method="post" action="{% url 'gezana_app:cancel_booking' %}" class="inline-cancel-form">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="reference"
+            placeholder="Enter reference code"
+            value="{{ booking.reference }}"
+            required
+          >
+
+          <div class="action-buttons">
+            <button type="submit" class="btn-primary">
+              <i class="fa-solid fa-ban"></i> Cancel booking
+            </button>
+
+            <a href="{% url 'gezana_app:cancel_booking' %}" class="btn-secondary">
+              → Cancel page
+            </a>
+          </div>
+        </form>
+
+        <div class="manage-booking-box">
+          <h3>Need to manage your booking?</h3>
+          <p>You can update the date, time, or number of guests.</p>
+
+          <a href="{% url 'gezana_app:manage_booking' %}" class="btn-secondary">
+            → Manage booking
+          </a>
+        </div>
+      </section>
     {% else %}
       <div class="booking-actions">
         <a href="{% url 'gezana_app:manage_booking' %}" class="btn-primary">
