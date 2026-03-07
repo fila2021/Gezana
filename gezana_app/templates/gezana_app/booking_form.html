@@ -6,9 +6,11 @@
   <div>
     <p class="eyebrow">Reserve Your Table</p>
     <h2>Book a cozy spot for friends, family, or coffee ceremony</h2>
-    <p class="lede">Choose your date and time, and we will find the best table.</p>
+    <p class="lede">
+      Choose your date and time, and we will find the best table. We welcome
+      small gatherings and celebrations.
+    </p>
   </div>
-
   <div class="booking-hero-badge">
     <p class="mini">Hours</p>
     <p class="callout">12:00 PM — 7:00 PM</p>
@@ -17,185 +19,185 @@
 </section>
 
 {% if form.non_field_errors %}
-  <div class="alert alert-error" role="alert">
-    {% for error in form.non_field_errors %}
-      <p>{{ error }}</p>
-    {% endfor %}
-  </div>
+<div class="form-errors card">
+  {% for error in form.non_field_errors %}
+    <p>{{ error }}</p>
+  {% endfor %}
+</div>
 {% endif %}
 
 <div class="booking-layout">
   <div class="booking-card card">
-    <div class="card-head">
-      <h3>Booking Details</h3>
-      <p class="muted">Provide an email or phone number so we can confirm your booking.</p>
-    </div>
+    <h3>Booking Details</h3>
 
-    <form method="post" novalidate>
+    <form method="post" class="booking-form">
       {% csrf_token %}
 
-      <div class="field-block">
-        <label class="field-label" for="{{ form.name.id_for_label }}">Name</label>
-        <div class="input-group">
-          <i class="fa-solid fa-user"></i>
-          {{ form.name }}
-        </div>
-        {% for e in form.name.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+      <div class="form-group">
+        <label for="{{ form.name.id_for_label }}">Name</label>
+        {{ form.name }}
+        {{ form.name.errors }}
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="{{ form.email.id_for_label }}">Email (optional)</label>
-        <div class="input-group">
-          <i class="fa-solid fa-envelope"></i>
-          {{ form.email }}
-        </div>
-        {% for e in form.email.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
-        <p class="hint">Provide <strong>email or phone</strong> (at least one).</p>
+      <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">Email (optional)</label>
+        {{ form.email }}
+        {{ form.email.errors }}
+        <p class="field-hint">Provide email or phone (at least one).</p>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="{{ form.phone.id_for_label }}">Phone (optional)</label>
-        <div class="input-group">
-          <i class="fa-solid fa-phone"></i>
-          {{ form.phone }}
-        </div>
-        {% for e in form.phone.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+      <div class="form-group">
+        <label for="{{ form.phone.id_for_label }}">Phone (optional)</label>
+        {{ form.phone }}
+        {{ form.phone.errors }}
       </div>
 
-      <div class="field-grid">
-        <div class="field-block">
-          <label class="field-label" for="{{ form.guests.id_for_label }}">Guests</label>
-          <div class="input-group">
-            <i class="fa-solid fa-users"></i>
-            {{ form.guests }}
-          </div>
-          {% for e in form.guests.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
-        </div>
-
-        <div class="field-block">
-          <label class="field-label" for="{{ form.date.id_for_label }}">Date</label>
-          <div class="input-group">
-            <i class="fa-solid fa-calendar-days"></i>
-            {{ form.date }}
-          </div>
-          {% for e in form.date.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
-          <p class="hint">Past dates are not allowed.</p>
-        </div>
+      <div class="form-group">
+        <label for="{{ form.guests.id_for_label }}">Guests</label>
+        {{ form.guests }}
+        {{ form.guests.errors }}
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="{{ form.time.id_for_label }}">Time</label>
-        <div class="input-group">
-          <i class="fa-solid fa-clock"></i>
-          {{ form.time }}
-        </div>
-        {% for e in form.time.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
-        <p class="hint">Booking hours: 12:00–19:00 (30-minute slots).</p>
-
-        <!-- Optional UX hint when today is selected -->
-        <p id="timeHelp" class="hint hint-strong" style="display:none;">
-          Some times are hidden because they already passed today.
-        </p>
+      <div class="form-group">
+        <label for="{{ form.date.id_for_label }}">Date</label>
+        {{ form.date }}
+        {{ form.date.errors }}
+        <p class="field-hint">Past dates are not allowed.</p>
       </div>
 
-      <button type="submit" class="button primary full">
+      <div class="form-group">
+        <label for="{{ form.time.id_for_label }}">Time</label>
+        {{ form.time }}
+        {{ form.time.errors }}
+        <p class="field-hint">Booking hours: 12:00–19:00 (30-minute slots).</p>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-wide">
         <i class="fa-solid fa-check"></i> Confirm Booking
       </button>
     </form>
   </div>
 
   <aside class="booking-side card">
-    <h3>Good to Know</h3>
-    <ul class="bullet-list">
-      <li><strong>Hours:</strong> 12:00 PM – 7:00 PM.</li>
+    <h3>Reservation Notes</h3>
+    <ul class="booking-notes">
       <li>We seat you at the best available table for your party size.</li>
       <li>We hold tables for <strong>15 minutes</strong> if you’re running late.</li>
     </ul>
 
-    <div class="divider"></div>
+    <section class="booking-help-tabs">
+      <div class="booking-tab-buttons" role="tablist" aria-label="Booking help tabs">
+        <button
+          type="button"
+          class="booking-tab-button active"
+          id="manage-booking-tab"
+          onclick="switchBookingHelpTab('manage')"
+          aria-controls="manage-booking-panel"
+          aria-selected="true"
+        >
+          Manage Booking
+        </button>
 
-    <h3>Need to cancel?</h3>
-    <p class="muted">Enter your reference code below or visit the cancel page.</p>
+        <button
+          type="button"
+          class="booking-tab-button"
+          id="cancel-booking-tab"
+          onclick="switchBookingHelpTab('cancel')"
+          aria-controls="cancel-booking-panel"
+          aria-selected="false"
+        >
+          Need to Cancel?
+        </button>
+      </div>
 
-    <form action="{% url 'gezana_app:cancel_booking' %}" method="post" class="cancel-form">
-  {% csrf_token %}
+      <div
+        id="manage-booking-panel"
+        class="booking-tab-panel"
+        role="tabpanel"
+        aria-labelledby="manage-booking-tab"
+      >
+        <h3>Manage your booking</h3>
+        <p>
+          Enter your booking reference and either your email or phone number to
+          view or update your reservation.
+        </p>
 
-  <!-- Reference input (full width, above buttons) -->
-  <div class="field-block">
-    <input
-      type="text"
-      name="reference"
-      placeholder="Enter reference code"
-      required
-    />
-  </div>
+        <form method="post" action="{% url 'gezana_app:manage_booking' %}" class="booking-form booking-help-form">
+          {% csrf_token %}
 
-  <!-- Buttons -->
-  <div class="cancel-actions">
-    <button type="submit" class="button danger">
-      <i class="fa-solid fa-ban"></i> Cancel booking
-    </button>
+          <div class="form-group">
+            <label for="manage-reference">Booking Reference</label>
+            <input
+              type="text"
+              id="manage-reference"
+              name="reference"
+              placeholder="Enter booking reference"
+              required
+            >
+          </div>
 
-    <a class="button ghost" href="{% url 'gezana_app:cancel_booking' %}">
-      <i class="fa-solid fa-arrow-right"></i> Cancel page
-    </a>
-  </div>
-</form>
+          <div class="form-group">
+            <label for="manage-email">Email Address</label>
+            <input
+              type="email"
+              id="manage-email"
+              name="email"
+              placeholder="Enter your email address"
+            >
+          </div>
 
+          <div class="form-group">
+            <label for="manage-phone">Phone Number</label>
+            <input
+              type="text"
+              id="manage-phone"
+              name="phone"
+              placeholder="Enter your phone number"
+            >
+          </div>
+
+          <button type="submit" class="btn btn-secondary btn-wide">
+            Find Booking
+          </button>
+        </form>
+      </div>
+
+      <div
+        id="cancel-booking-panel"
+        class="booking-tab-panel"
+        role="tabpanel"
+        aria-labelledby="cancel-booking-tab"
+        hidden
+      >
+        <h3>Need to cancel?</h3>
+        <p>Enter your reference code below or visit the cancel page.</p>
+
+        <form method="post" action="{% url 'gezana_app:cancel_booking' %}" class="booking-form booking-help-form">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label for="cancel-reference">Booking Reference</label>
+            <input
+              type="text"
+              id="cancel-reference"
+              name="reference"
+              placeholder="Enter reference code"
+              required
+            >
+          </div>
+
+          <div class="action-buttons">
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-ban"></i> Cancel booking
+            </button>
+
+            <a href="{% url 'gezana_app:cancel_booking' %}" class="btn btn-secondary">
+              → Cancel page
+            </a>
+          </div>
+        </form>
+      </div>
+    </section>
   </aside>
 </div>
-
-<script>
-(function () {
-  const dateInput = document.querySelector('input[name="date"]');
-  const timeSelect = document.querySelector('select[name="time"]');
-  const timeHelp = document.getElementById('timeHelp');
-  if (!dateInput || !timeSelect) return;
-
-  function todayISO() {
-    const d = new Date();
-    d.setHours(0,0,0,0);
-    return d.toISOString().slice(0,10);
-  }
-
-  function minsFromHHMM(v) {
-    const [h, m] = v.split(":").map(Number);
-    return h * 60 + m;
-  }
-
-  function refreshTimes() {
-    const chosenDate = dateInput.value;
-    const isToday = chosenDate && chosenDate === todayISO();
-    const now = new Date();
-    const nowMin = now.getHours() * 60 + now.getMinutes();
-
-    let hiddenCount = 0;
-
-    [...timeSelect.options].forEach(opt => {
-      if (!opt.value) return;
-      opt.disabled = false;
-      opt.hidden = false;
-
-      if (isToday) {
-        const tMin = minsFromHHMM(opt.value);
-        if (tMin <= nowMin) {
-          opt.disabled = true;
-          opt.hidden = true;
-          hiddenCount++;
-        }
-      }
-    });
-
-    const sel = timeSelect.options[timeSelect.selectedIndex];
-    if (sel && sel.disabled) timeSelect.value = "";
-
-    if (timeHelp) {
-      timeHelp.style.display = (isToday && hiddenCount > 0) ? "block" : "none";
-    }
-  }
-
-  dateInput.addEventListener("change", refreshTimes);
-  refreshTimes();
-})();
-</script>
 {% endblock %}
