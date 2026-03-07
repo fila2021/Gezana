@@ -122,7 +122,14 @@ class BookingForm(forms.ModelForm):
             raise ValidationError("No tables can accommodate that party size. Please reduce guests.")
 
         # availability check
-        table = find_available_table(booking_date, booking_time, guests)
+        exclude_booking_id = self.instance.pk if self.instance and self.instance.pk else None
+
+table = find_available_table(
+    booking_date,
+    booking_time,
+    guests,
+    exclude_booking_id=exclude_booking_id
+)
         if table is None:
             raise ValidationError("We are fully booked for that date and time. Please choose another slot.")
 
