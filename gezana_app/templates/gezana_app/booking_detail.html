@@ -1,3 +1,68 @@
-<a href="{% url 'gezana_app:edit_booking' booking.reference %}">
-Edit Booking
-</a>
+{% extends "gezana_app/base.html" %}
+
+{% block title %}Booking Details | Gezana{% endblock %}
+
+{% block content %}
+
+<section class="booking-container">
+  <div class="booking-card">
+
+    <h2>Your Booking Details</h2>
+    <p class="booking-intro">
+      Below are the details of your reservation at Gezana Restaurant.
+    </p>
+
+    <div class="booking-details">
+
+      <p><strong>Name:</strong> {{ booking.name }}</p>
+
+      <p><strong>Email:</strong>
+        {% if booking.email %}
+          {{ booking.email }}
+        {% else %}
+          Not provided
+        {% endif %}
+      </p>
+
+      <p><strong>Phone:</strong>
+        {% if booking.phone %}
+          {{ booking.phone }}
+        {% else %}
+          Not provided
+        {% endif %}
+      </p>
+
+      <p><strong>Guests:</strong> {{ booking.guests }}</p>
+
+      <p><strong>Date:</strong> {{ booking.date }}</p>
+
+      <p><strong>Time:</strong> {{ booking.time }}</p>
+
+      <p><strong>Reference:</strong> {{ booking.reference }}</p>
+
+      <p><strong>Table:</strong>
+        {% if booking.table %}
+          {{ booking.table }}
+        {% else %}
+          Assigned on arrival
+        {% endif %}
+      </p>
+
+    </div>
+
+    <div class="booking-actions">
+
+      <a href="{% url 'gezana_app:edit_booking' booking.reference %}" class="btn-primary">
+        Edit Booking
+      </a>
+
+      <a href="{% url 'gezana_app:cancel_booking' %}" class="btn-secondary">
+        Cancel Booking
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
