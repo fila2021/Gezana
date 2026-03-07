@@ -76,12 +76,46 @@
 
     <script>
       function openModal(imgUrl) {
-        document.getElementById("modalImage").src = imgUrl;
-        document.getElementById("imageModal").style.display = "block";
+        const modalImage = document.getElementById("modalImage");
+        const imageModal = document.getElementById("imageModal");
+        if (modalImage && imageModal) {
+          modalImage.src = imgUrl;
+          imageModal.style.display = "block";
+        }
       }
 
       function closeModal() {
-        document.getElementById("imageModal").style.display = "none";
+        const imageModal = document.getElementById("imageModal");
+        if (imageModal) {
+          imageModal.style.display = "none";
+        }
+      }
+
+      function switchBookingHelpTab(tabName) {
+        const manageTab = document.getElementById("manage-booking-tab");
+        const cancelTab = document.getElementById("cancel-booking-tab");
+        const managePanel = document.getElementById("manage-booking-panel");
+        const cancelPanel = document.getElementById("cancel-booking-panel");
+
+        if (!manageTab || !cancelTab || !managePanel || !cancelPanel) {
+          return;
+        }
+
+        if (tabName === "manage") {
+          manageTab.classList.add("active");
+          cancelTab.classList.remove("active");
+          manageTab.setAttribute("aria-selected", "true");
+          cancelTab.setAttribute("aria-selected", "false");
+          managePanel.hidden = false;
+          cancelPanel.hidden = true;
+        } else {
+          cancelTab.classList.add("active");
+          manageTab.classList.remove("active");
+          cancelTab.setAttribute("aria-selected", "true");
+          manageTab.setAttribute("aria-selected", "false");
+          cancelPanel.hidden = false;
+          managePanel.hidden = true;
+        }
       }
     </script>
   </body>
