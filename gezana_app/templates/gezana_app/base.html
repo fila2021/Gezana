@@ -9,86 +9,86 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-
-
   </head>
   <body>
     <header>
-    <div class="header-container">
+      <div class="header-container">
         <img src="{% static 'images/gezana_logo.png' %}" alt="Gezana Logo" class="logo">
         <h1>Gezana Restaurant</h1>
-    </div>
+      </div>
 
-    <nav class="navbar">
-  <ul>
-    <li>
-      <a href="{% url 'gezana_app:home' %}"
-         class="{% if request.path == '/' %}active{% endif %}">
-        Home
-      </a>
-    </li>
-    <li>
-      <a href="{% url 'gezana_app:menu_list' %}"
-         class="{% if '/menu' in request.path %}active{% endif %}">
-        Menu
-      </a>
-    </li>
-    <li>
-      <a href="{% url 'gezana_app:make_booking' %}"
-         class="{% if '/book' in request.path %}active{% endif %}">
-        Book
-      </a>
-    </li>
-    <li>
-      <a href="{% url 'gezana_app:about' %}"
-         class="{% if '/about' in request.path %}active{% endif %}">
-        About
-      </a>
-    </li>
-    <li>
-      <a href="{% url 'gezana_app:contact' %}"
-         class="{% if '/contact' in request.path %}active{% endif %}">
-        Contact
-      </a>
-    </li>
-    <li>
-      <a href="/admin/" target="_blank">Admin</a>
-    </li>
-  </ul>
-</nav>
-
-
-
-</header>
-
+      <nav class="navbar">
+        <ul>
+          <li>
+            <a href="{% url 'gezana_app:home' %}"
+               class="{% if request.path == '/' %}active{% endif %}">
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'gezana_app:menu_list' %}"
+               class="{% if '/menu' in request.path %}active{% endif %}">
+              Menu
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'gezana_app:make_booking' %}"
+               class="{% if '/book' in request.path %}active{% endif %}">
+              Book
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'gezana_app:manage_booking' %}"
+               class="{% if '/booking/manage' in request.path or '/booking/' in request.path %}active{% endif %}">
+              Manage Booking
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'gezana_app:about' %}"
+               class="{% if '/about' in request.path %}active{% endif %}">
+              About
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'gezana_app:contact' %}"
+               class="{% if '/contact' in request.path %}active{% endif %}">
+              Contact
+            </a>
+          </li>
+          <li>
+            <a href="/admin/" target="_blank" rel="noopener noreferrer">Admin</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
     <main class="site-main">
-  {% if messages %}
-    <div class="messages">
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags|default:'info' }}" role="alert">
-          {{ message }}
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags|default:'info' }}" role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
         </div>
-      {% endfor %}
-    </div>
-  {% endif %}
+      {% endif %}
 
-  {% block content %}{% endblock %}
-</main>
-
+      {% block content %}{% endblock %}
+    </main>
 
     <footer>
       <p>&copy; {% now "Y" %} Gezana Restaurant</p>
     </footer>
+
+    <script>
+      function openModal(imgUrl) {
+        document.getElementById("modalImage").src = imgUrl;
+        document.getElementById("imageModal").style.display = "block";
+      }
+
+      function closeModal() {
+        document.getElementById("imageModal").style.display = "none";
+      }
+    </script>
   </body>
 </html>
-<script>
-function openModal(imgUrl) {
-    document.getElementById("modalImage").src = imgUrl;
-    document.getElementById("imageModal").style.display = "block";
-}
-
-function closeModal() {
-    document.getElementById("imageModal").style.display = "none";
-}
-</script>
