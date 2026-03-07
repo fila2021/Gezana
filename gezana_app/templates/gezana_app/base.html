@@ -38,12 +38,6 @@
             </a>
           </li>
           <li>
-            <a href="{% url 'gezana_app:manage_booking' %}"
-               class="{% if '/booking/manage' in request.path or '/booking/' in request.path %}active{% endif %}">
-              Manage Booking
-            </a>
-          </li>
-          <li>
             <a href="{% url 'gezana_app:about' %}"
                class="{% if '/about' in request.path %}active{% endif %}">
               About
