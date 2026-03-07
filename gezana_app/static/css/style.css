@@ -919,3 +919,118 @@ footer{
   padding: 8px 10px;
   font-size: 0.85rem;
 }
+/* ---------- Booking help tabs ---------- */
+.booking-help-tabs {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.booking-tab-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.booking-tab-button {
+  appearance: none;
+  border: 1px solid rgba(140, 60, 28, 0.18);
+  background: #fff;
+  color: var(--brand);
+  padding: 0.9rem 1.2rem;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.booking-tab-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(140, 60, 28, 0.32);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.booking-tab-button.active {
+  background: var(--grad-brand);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 10px 22px rgba(140, 60, 28, 0.22);
+}
+
+.booking-tab-panel {
+  padding-top: 0.5rem;
+}
+
+.booking-tab-panel[hidden] {
+  display: none;
+}
+
+.booking-help-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.booking-help-form input {
+  width: 100%;
+  padding-left: 12px;
+}
+
+.booking-notes {
+  margin: 0 0 1.5rem;
+  padding-left: 1.2rem;
+  color: var(--muted);
+}
+
+.booking-notes li {
+  margin-bottom: 0.7rem;
+}
+
+.field-hint {
+  margin-top: 0.45rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.btn-wide {
+  width: 100%;
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.booking-side .btn,
+.booking-side .btn-primary,
+.booking-side .btn-secondary,
+.booking-side button,
+.booking-side .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 560px) {
+  .booking-tab-buttons,
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .booking-tab-button,
+  .action-buttons a,
+  .action-buttons button {
+    width: 100%;
+  }
+}
