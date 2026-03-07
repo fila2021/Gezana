@@ -18,51 +18,182 @@
         <p><strong>Guests:</strong> {{ booking.guests }}</p>
         <p><strong>Reference:</strong> {{ booking.reference }}</p>
       </div>
-
-      <section class="post-booking-help">
-        <h3>Need to cancel?</h3>
-        <p>Enter your reference code below or visit the cancel page.</p>
-
-        <form method="post" action="{% url 'gezana_app:cancel_booking' %}" class="inline-cancel-form">
-          {% csrf_token %}
-          <input
-            type="text"
-            name="reference"
-            placeholder="Enter reference code"
-            value="{{ booking.reference }}"
-            required
-          >
-
-          <div class="action-buttons">
-            <button type="submit" class="btn-primary">
-              <i class="fa-solid fa-ban"></i> Cancel booking
-            </button>
-
-            <a href="{% url 'gezana_app:cancel_booking' %}" class="btn-secondary">
-              → Cancel page
-            </a>
-          </div>
-        </form>
-
-        <div class="manage-booking-box">
-          <h3>Need to manage your booking?</h3>
-          <p>You can update the date, time, or number of guests.</p>
-
-          <a href="{% url 'gezana_app:manage_booking' %}" class="btn-secondary">
-            → Manage booking
-          </a>
-        </div>
-      </section>
     {% else %}
-      <div class="booking-actions">
-        <a href="{% url 'gezana_app:manage_booking' %}" class="btn-primary">
-          Manage Booking
-        </a>
-        <a href="{% url 'gezana_app:home' %}" class="btn-secondary">
-          Back to Home
-        </a>
+      <div class="booking-details">
+        <p>Your booking has been created successfully.</p>
       </div>
     {% endif %}
+
+    <section class="post-booking-help">
+      <div class="booking-tabs" role="tablist" aria-label="Booking actions">
+        <button
+          type="button"
+          class="tab-button active"
+          id="manage-tab"
+          onclick="showBookingTab('manage')"
+          aria-controls="manage-panel"
+          aria-selected="true"
+        >
+          Manage Booking
+        </button>
+
+        <button
+          type="button"
+          class="tab-button"
+          id="cancel-tab"
+          onclick="showBookingTab('cancel')"
+          aria-controls="cancel-panel"
+          aria-selected="false"
+        >
+          Need to Cancel?
+        </button>
+      </div>
+
+      <div
+        id="manage-panel"
+        class="tab-panel active"
+        role="tabpanel"
+        aria-labelledby="manage-tab"
+      >
+        <h3>Manage Your Booking</h3>
+        <p>View or update your booking using your reference and either your email or phone number.</p>
+
+        <form method="post" action="{% url 'gezana_app:manage_booking' %}" class="booking-form">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label for="manage-reference">Booking Reference</label>
+            <input
+              type="text"
+              id="manage-reference"
+              name="reference"
+              value="{% if booking %}{{ booking.reference }}{% endif %}"
+              placeholder="Enter booking reference"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="manage-email">Email Address</label>
+            <input
+              type="email"
+              id="manage-email"
+              name="email"
+              value="{% if booking and booking.email %}{{ booking.email }}{% endif %}"
+              placeholder="Enter your email address"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="manage-phone">Phone Number</label>
+            <input
+              type="text"
+              id="manage-phone"
+              name="phone"
+              value="{% if booking and booking.phone %}{{ booking.phone }}{% endif %}"
+              placeholder="Enter your phone number"
+            >
+          </div>
+
+          <button type="submit" class="btn-primary">Find Booking</button>
+        </form>
+      </div>
+
+      <div
+        id="cancel-panel"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="cancel-tab"
+        hidden
+      >
+        <h3>Cancel Your Booking</h3>
+        <p>Enter your booking reference below if you need to cancel your reservation.</p>
+
+        <form method="post" action="{% url 'gezana_app:cancel_booking' %}" class="booking-form">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label for="cancel-reference">Booking Reference</label>
+            <input
+              type="text"
+              id="cancel-reference"
+              name="reference"
+              value="{% if booking %}{{ booking.reference }}{% endif %}"
+              placeholder="Enter booking reference"
+              required
+            >
+          </div>
+
+          <button type="submit" class="btn-primary">
+            <i class="fa-solid fa-ban"></i> Cancel Booking
+          </button>
+        </form>
+      </div>
+    </section>
   </div>
 </section>
+
+<style>
+  .booking-tabs {
+    display: flex;
+    gap: 0.75rem;
+    margin: 1.5rem 0 1rem;
+    flex-wrap: wrap;
+  }
+
+  .tab-button {
+    border: none;
+    padding: 0.85rem 1.2rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+    background: #efe7dd;
+    color: #4b2e22;
+    transition: all 0.2s ease;
+  }
+
+  .tab-button.active {
+    background: #8c3c1c;
+    color: #ffffff;
+  }
+
+  .tab-panel {
+    margin-top: 1rem;
+    padding: 1.25rem;
+    border: 1px solid #eadfce;
+    border-radius: 16px;
+    background: #fffaf5;
+  }
+</style>
+
+<script>
+  function showBookingTab(tabName) {
+    const manageTab = document.getElementById("manage-tab");
+    const cancelTab = document.getElementById("cancel-tab");
+    const managePanel = document.getElementById("manage-panel");
+    const cancelPanel = document.getElementById("cancel-panel");
+
+    if (tabName === "manage") {
+      manageTab.classList.add("active");
+      cancelTab.classList.remove("active");
+      manageTab.setAttribute("aria-selected", "true");
+      cancelTab.setAttribute("aria-selected", "false");
+
+      managePanel.classList.add("active");
+      managePanel.hidden = false;
+      cancelPanel.classList.remove("active");
+      cancelPanel.hidden = true;
+    } else {
+      cancelTab.classList.add("active");
+      manageTab.classList.remove("active");
+      cancelTab.setAttribute("aria-selected", "true");
+      manageTab.setAttribute("aria-selected", "false");
+
+      cancelPanel.classList.add("active");
+      cancelPanel.hidden = false;
+      managePanel.classList.remove("active");
+      managePanel.hidden = true;
+    }
+  }
+</script>
 {% endblock %}
