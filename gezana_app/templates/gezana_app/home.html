@@ -1,78 +1,91 @@
 {% extends "gezana_app/base.html" %}
-{% load static %}
-
-{% block title %}Home — Gezana{% endblock %}
+{% block title %}Home | Gezana Restaurant{% endblock %}
 
 {% block content %}
 
-<!-- HERO (simple + premium) -->
-<section class="home-hero card">
+<section class="home-hero">
   <div>
-    <p class="eyebrow">Habesha Kitchen</p>
-    <h1>Share injera, spice, and coffee traditions in Dublin</h1>
+    <p class="eyebrow">Welcome</p>
+
+    <h1>Gezana Restaurant</h1>
+
     <p class="lede">
-      Freshly baked injera, slow-simmered stews, and a warm welcome.
-      Book a table or browse the menu to start your journey.
+      Share Ethiopian flavours with friends and family. Enjoy authentic dishes,
+      warm hospitality, and the tradition of Ethiopian coffee culture.
     </p>
 
     <div class="hero-actions">
       <a href="{% url 'gezana_app:make_booking' %}" class="button primary">
         Book a Table
       </a>
+
       <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">
         View Menu
       </a>
     </div>
   </div>
 
-  <div class="home-hours-card">
-    <p class="mini">Today’s hours</p>
-    <p class="callout">12:00 PM – 7:00 PM</p>
-    <p class="muted" style="margin:0;">Walk-ins welcome • Bookings recommended</p>
+  <div class="home-hero-card">
+    <p class="mini">Today's Experience</p>
+    <p class="callout">Authentic Ethiopian Cuisine</p>
+    <p class="muted">
+      Enjoy injera, stews, and fresh ingredients prepared using traditional
+      recipes.
+    </p>
   </div>
 </section>
 
-<!-- FEATURE CARDS (this replaces the plain text blocks) -->
+
 <section class="home-feature-grid">
-  <article class="home-feature-card card">
-    <h3>Traditional Plates</h3>
-    <p class="muted">
-      Doro wat, tibs, shiro, and veggie sides on soft, tangy injera—made to share.
-    </p>
-    <a class="button ghost full" href="{% url 'gezana_app:menu_list' %}">Explore dishes</a>
-  </article>
+
+  <h2 class="section-title">Restaurant Highlights</h2>
 
   <article class="home-feature-card card">
-    <h3>Coffee Ceremony</h3>
-    <p class="muted">
-      Hand-roasted beans, brewed in a jebena clay pot, poured in three rounds for blessings.
+    <h3>Traditional Ethiopian Cuisine</h3>
+    <p>
+      Taste authentic Ethiopian dishes prepared with traditional spices,
+      injera, and fresh ingredients.
     </p>
-    <a class="button ghost full" href="{% url 'gezana_app:about' %}">Learn the ritual</a>
   </article>
 
   <article class="home-feature-card card">
     <h3>Warm Hospitality</h3>
-    <p class="muted">
-      We seat you at the right table, serve generously, and welcome you like family.
+    <p>
+      Experience the welcoming atmosphere of Ethiopian dining and the famous
+      coffee ceremony culture.
     </p>
-    <a class="button ghost full" href="{% url 'gezana_app:make_booking' %}">Reserve now</a>
   </article>
+
+  <article class="home-feature-card card">
+    <h3>Fresh Ingredients</h3>
+    <p>
+      Our meals are prepared daily using quality ingredients and authentic
+      recipes.
+    </p>
+  </article>
+
 </section>
 
-<!-- CTA -->
+
 <section class="home-cta card">
-  <div>
-    <p class="eyebrow">Plan your visit</p>
-    <h2 style="margin:6px 0 10px;">Ready for a Habesha feast?</h2>
-    <p class="muted" style="margin:0;">
-      Reserve ahead for celebrations or bring friends for a casual meal and coffee.
-    </p>
-  </div>
+
+  <h2>Plan Your Visit</h2>
+
+  <p>
+    Reserve a table for friends, family, or special celebrations and enjoy a
+    memorable dining experience at Gezana Restaurant.
+  </p>
 
   <div class="hero-actions home-cta-actions">
-    <a href="{% url 'gezana_app:make_booking' %}" class="button primary">Reserve now</a>
-    <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">See dishes</a>
+    <a href="{% url 'gezana_app:make_booking' %}" class="button primary">
+      Book Your Table
+    </a>
+
+    <a href="{% url 'gezana_app:contact' %}" class="button ghost">
+      Contact Us
+    </a>
   </div>
+
 </section>
 
 {% endblock %}
