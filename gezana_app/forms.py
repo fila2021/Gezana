@@ -41,15 +41,15 @@ class BookingForm(forms.ModelForm):
             "email": "Email address (optional)",
             "phone": "Phone number (optional)",
             "guests": "Number of guests",
-            "date": "Booking date",
-            "time": "Booking time",
         }
 
         for field_name, field in self.fields.items():
-            field.widget.attrs.setdefault(
-                "placeholder", placeholders.get(field_name, "")
-            )
             field.widget.attrs.setdefault("class", "input-with-icon")
+
+            if field_name in placeholders:
+                field.widget.attrs.setdefault(
+                    "placeholder", placeholders[field_name]
+                )
 
         self.fields["date"].widget.input_type = "date"
         self.fields["date"].widget.attrs["min"] = date.today().isoformat()
@@ -107,7 +107,7 @@ class BookingForm(forms.ModelForm):
         booking_time = cleaned_data.get("time")
         guests = cleaned_data.get("guests")
         email = (cleaned_data.get("email") or "").strip()
-        phone = (self.cleaned_data.get("phone") or "").strip()
+        phone = (cleaned_data.get("phone") or "").strip()
 
         if not booking_date or not booking_time or not guests:
             return cleaned_data
