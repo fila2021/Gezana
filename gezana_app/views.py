@@ -306,3 +306,4 @@ def _send_cancellation_confirmation(booking):
     )
     email.attach_alternative(html_body, "text/html")
     email.send(fail_silently=True)
+    
