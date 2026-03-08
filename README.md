@@ -1,591 +1,706 @@
-# Gezana – Habesha Restaurant Booking System  
-*A full-stack Django project for restaurant bookings, menu display, cancellations, and customer interaction.*
+# Gezana – Habesha Restaurant Booking System
+
+A full-stack Django web application that allows customers to browse a restaurant menu, book tables online, manage reservations, and cancel bookings using a unique reference code.
+
+This project was developed as part of the **Data Centric Development (Full Stack Frameworks with Django)** assessment.
 
 ---
 
-## 1. Overview
+# Table of Contents
 
-Gezana is a full-stack Django web application for a Habesha (Ethiopian & Eritrean) restaurant based in Dublin.  
-It provides:
-
-- Online table booking with validation and automated table assignment  
-- Double-booking prevention and duplicate-contact checks  
-- Booking cancellation using a unique reference code  
-- Menu display by category with dietary badges and detail pages  
-- About, Contact (with map embed), and stylistic homepage sections  
-- Admin management for menu items, tables, and bookings  
-
-This project targets the assessment criteria for Back End Development (Level 5) by delivering a fully functional, database-backed, full-stack Django app with CRUD, validation, testing, and deployment documentation.
-
----
-
-## 2. Project Goals
-
-### External User Goals
-- Browse the restaurant’s menu  
-- Book a table quickly and easily  
-- Receive confirmation and a unique cancellation code  
-- Cancel bookings using their reference code  
-- Learn more about Gezana and how to contact us  
-
-### Site Owner Goals
-- Receive accurate booking information  
-- Prevent double bookings for the same table/time  
-- Manage menu items without editing code  
-- Allow customers to reach the restaurant easily  
-- Organize tables, menu items, and bookings via Django admin  
-
-### Rationale & Audience
-- Audience: diners seeking Habesha cuisine in Dublin; staff managing tables and menu content.  
-- Purpose: provide an intuitive booking flow, clear feedback, and operational control via Django admin.  
-- UX approach: consistent layout, responsive grid, high contrast buttons, alt text on images, clear form labels/placeholders, and immediate messaging for success/error states.
+1. Overview  
+2. Live Project  
+3. UX & Design  
+4. User Stories  
+5. Features  
+6. Database Design  
+7. Technologies Used  
+8. Installation & Local Setup  
+9. Deployment  
+10. Testing  
+11. Bugs & Fixes  
+12. Future Enhancements  
+13. Security Considerations  
+14. Reflection  
+15. Credits  
 
 ---
 
-## 3. Features
+# 1. Overview
 
-### ✔ Homepage
-- Hero with CTAs to book or view menu  
-- Highlights for cuisine, coffee ceremony, hospitality, and visit planning  
-- “Plan your visit” CTA with supporting image  
+Gezana is a web application designed for a Habesha (Ethiopian & Eritrean) restaurant in Dublin.
 
-### ✔ Menu Page
-- Menu grid with badges (Veg/New/Popular/Chef) and price tags  
-- Individual dish detail page  
-- Uses uploaded images with graceful fallback  
-- All items editable via Django admin  
+The system allows customers to:
 
-### ✔ Booking System
-- Name, email, phone, guests, date, time  
-- Prevents past date bookings  
-- Ensures valid opening hours  
-- Allocates appropriate table automatically  
-- Avoids double bookings  
-- Shows success message  
-- Generates unique booking reference code  
-- Sends styled email confirmations (booking and cancellation)  
+- Browse available menu items
+- Book tables online
+- Receive booking confirmations
+- Manage existing bookings
+- Cancel bookings using a reference code
 
-### ✔ Cancellation System
-- Enter reference code to cancel booking  
-- Booking removed from database  
-- Error message for invalid code  
+The application automatically assigns tables based on party size and prevents double bookings for the same time slot.
 
-### ✔ About Page
-- Restaurant story  
-- Cultural background  
-- Mission  
-
-### ✔ Contact Page
-- Location, email, phone  
-- Opening times  
-
-### ✔ Admin Area
-- Add/edit/delete menu items  
-- Create tables and set capacities  
-- View and manage bookings  
-- Filters, search, ordering  
+The admin interface allows restaurant staff to manage menu items, bookings, and table capacities without modifying code.
 
 ---
 
-## 4. Final Design Screenshots
-Place your captured screenshots in `docs/screenshots/` and update the filenames below if needed.
+# 2. Live Project
 
-![Home](docs/screenshots/home.png)  
-![Menu](docs/screenshots/menu.png)  
-![Menu1](docs/screenshots/menu1.png) 
-![Menu2](docs/screenshots/menu2.png)  
-![Menu3](docs/screenshots/menu3.png) 
-![Menu4](docs/screenshots/menu4.png)   
-![Menu5](docs/screenshots/menu5.png)   
-![Booking](docs/screenshots/booking.png)  
-![Cancellation](docs/screenshots/cancellation.png)  
-![About](docs/screenshots/about.png)  
-![Contact](docs/screenshots/contact.png) 
+Live Application  
+https://gezana.herokuapp.com
 
-
-### Admin Page
-![Bookings](docs/screenshots/admin-booking.png)  
-![Menu Items](docs/screenshots/menu-items.png)  
-![Tables](docs/screenshots/tables.png)  
+GitHub Repository  
+https://github.com/fila2021/Gezana
 
 ---
 
-## 5. Wireframe
-Place the wireframe image in `docs/wireframes/` (update the filename if different).
+# 3. UX & Design
 
-![Site Wireframe](docs/wireframes/gezana-wireframe.png)
+## Target Users
 
----
+The main users of this system are:
 
-## 6. Technologies Used
+- Customers who want to book tables
+- Customers browsing menu options
+- Restaurant staff managing reservations
 
-### Languages
-- Python  
-- HTML  
-- CSS  
+The design prioritizes:
 
-### Frameworks & Libraries
-- Django  
-- Django Messages Framework  
-
-### Tools
-- Git & GitHub  
-- VS Code  
-- Heroku  
-- PostgreSQL  
-- Cloudinary  
-- WhiteNoise  
+- Simplicity
+- Fast booking process
+- Clear feedback messages
+- Mobile responsiveness
 
 ---
 
-## 7. User Stories
+## Design Principles
 
-### As a user:
-- I want to view the menu to see what dishes are available.  
-- I want to book a table for a specific date/time.  
-- I want to receive confirmation that my booking is successful.  
-- I want to cancel my booking if my plans change.  
-- I want to see clear feedback if a booking fails.  
-- I want to read about the restaurant.  
-- I want to find contact information.  
+The interface was designed to ensure:
 
-### As a site owner:
-- I want to manage menu items easily.  
-- I want to avoid double bookings.  
-- I want customers to book online without calling.  
-- I want users to cancel their own bookings.  
-- I want access to all booking data in admin.  
+- Simple navigation
+- Clear form labels
+- Accessible colour contrast
+- Responsive layout across devices
+- Minimal steps required to complete bookings
 
 ---
 
-## 8. Database Schema
+## Wireframe
 
-### Table Model
-| Field        | Type              | Notes |
-|--------------|-------------------|-------|
-| table_number | CharField (uniq)  | Human-friendly ID |
-| capacity     | PositiveInteger   | Seats per table |
+The initial wireframe was created to plan page structure and layout.
 
-### MenuItem Model
-| Field          | Type         | Notes |
-|----------------|--------------|-------|
-| name           | CharField    | Dish name |
-| description    | TextField    | Dish summary |
-| ingredients    | TextField    | Defaults to placeholder |
-| price          | DecimalField | max_digits=6, decimal_places=2 |
-| category       | ChoiceField  | starter, main, side, dessert, drink |
-| is_vegetarian  | Boolean      | Veg badge |
-| is_popular     | Boolean      | Popular badge |
-| is_new         | Boolean      | New badge |
-| is_chef_choice | Boolean      | Chef badge |
-| image          | ImageField   | Optional upload |
-
-### Booking Model
-| Field     | Type         | Notes |
-|-----------|--------------|-------|
-| name      | CharField    | Guest name |
-| email     | EmailField   | Used to prevent duplicate same-day bookings |
-| phone     | CharField    | Optional, also used for duplicate checks |
-| guests    | PositiveInt  | Party size |
-| date      | DateField    | Date picker |
-| time      | TimeField    | Validated 12:00–19:00 |
-| table     | ForeignKey   | Assigned table or null |
-| reference | CharField    | Unique 8-char code, auto-generated |
+![Wireframe](docs/wireframes/gezana-wireframe.png)
 
 ---
 
-## 9. CRUD & Data Operations
-- **Create**: Booking form creates bookings with validation and auto table assignment; admin can create menu items, tables, and bookings.  
-- **Read**: Public menu list/detail; bookings read internally for availability checks; admin list views.  
-- **Update**: Admin edits menu items, tables, bookings.  
-- **Delete**: Cancel booking form deletes by reference; admin can delete any model.  
-- **Immediate feedback**: Django messages show success/error; form-level validation for time window, past dates, duplicate contact on same date, and slot availability.
+# 4. User Stories
+
+## As a User
+
+- I want to view the menu so I can decide what to order.
+- I want to book a table online so I don't need to call the restaurant.
+- I want to receive confirmation that my booking succeeded.
+- I want to cancel a booking if my plans change.
+- I want to see clear error messages if something goes wrong.
+- I want to find contact details for the restaurant.
 
 ---
 
-## 10. UX, Accessibility & Styling
-- Responsive layout (grid/flex) across home, menu, booking, about, contact.  
-- High-contrast primary buttons; ghost variants for secondary actions.  
-- Semantic headings, alt text on images (including menu fallback), and clear labels/placeholders.  
-- Form validation with inline error messages for blocking conditions.  
-- Keyboard focusable links/buttons; no hover-only critical actions.  
-- Contact page includes map embed; About and Menu use descriptive sectioning.  
-- Home and Menu heroes use gradients; cards with consistent spacing to avoid overlap.
+## As a Restaurant Owner
+
+- I want to prevent double bookings.
+- I want tables to be assigned automatically.
+- I want to manage menu items easily.
+- I want customers to cancel bookings themselves.
+- I want access to booking data via admin.
 
 ---
 
-## 11. Testing
+# 5. Features
 
-### Manual Testing Summary
+## Homepage
 
-| Feature          | Test Performed                               | Result |
-|------------------|-----------------------------------------------|--------|
-| Booking          | Prevent past date                            | Pass   |
-| Booking          | Prevent double booking                       | Pass   |
-| Booking          | Valid bookings show success message          | Pass   |
-| Cancellation     | Valid reference cancels booking              | Pass   |
-| Cancellation     | Invalid reference shows error                | Pass   |
-| Navigation       | All links route correctly                    | Pass   |
-| Templates        | All extend base.html correctly               | Pass   |
-| Form Validation  | Guests/date/time validated                   | Pass   |
-
-## Booking System Tests
-
-### 1. Valid Booking
-**Input:** Valid name, email, guests, date, time  
-**Expected:** Booking confirmation + reference code  
-**Result:** Pass  
-
-### 2. Double Booking Prevention
-**Scenario:** Two users try to book same table/time  
-**Expected:** Second user gets error  
-**Result:** Pass  
-
-### 3. Invalid Date
-| Input | Expected | Result |
-|-------|----------|--------|
-| Past date | Error message | Pass |
-| 31/11/2025 | Validation error | Pass |
-
-### 4. Invalid Time
-| Time | Expected | Result |
-|------|----------|--------|
-| 05:00 | “Invalid time” | Pass |
-| 23:30 | Out-of-hours error | Pass |
+- Hero section with call-to-action buttons
+- Quick navigation to menu and booking pages
+- Information about the restaurant experience
 
 ---
 
-## Cancellation Tests
+## Menu Page
 
-### 1. Valid Reference
-**Input:** Real reference code  
-**Expected:** Booking deleted, success message  
-**Result:** Pass  
+- Displays menu items with images
+- Badges for:
+  - Vegetarian
+  - New
+  - Popular
+  - Chef’s choice
+- Price tags and descriptions
+- Individual dish detail pages
 
-### 2. Invalid Reference
-**Input:** Random letters  
-**Expected:** “Invalid cancellation code.”  
-**Result:** Pass  
-
----
-
-## Menu Page Testing
-
-| Test | Expected | Result |
-|------|----------|--------|
-| Menu items display | All items visible | Pass |
-| Category field | Human-readable format | Pass |
-| “Vegetarian” tag | Correctly shown | Pass |
-| Item details | Correct info loads | Pass |
+Menu items are managed through Django Admin.
 
 ---
 
-## Template Testing
+## Booking System
 
-| Template | Inherits from base.html? | Pass |
-|----------|---------------------------|------|
-| home.html | Yes | ✔ |
-| menu_list.html | Yes | ✔ |
-| menu_detail.html | Yes | ✔ |
-| booking_success.html | Yes | ✔ |
-| cancel_booking.html | Yes | ✔ |
+Customers can:
 
----
+- Enter name, email, phone number
+- Select date and time
+- Choose number of guests
 
-## Python Code Testing (PEP8)
-Checked using: pycodestyle .
+Validation ensures:
 
-| File | Errors Found | Status |
-|------|--------------|--------|
-| views.py | 0 | Pass |
-| models.py | 0 | Pass |
-| forms.py | 0 | Pass |
-| urls.py | 0 | Pass |
+- Past dates cannot be selected
+- Time slots must be within opening hours
+- Tables have enough capacity
+- Duplicate bookings are prevented
+
+When booking is successful:
+
+- A unique reference code is generated
+- Confirmation message is displayed
 
 ---
 
-## Browser Compatibility
-| Browser | Result |
-|---------|--------|
-| Chrome | Pass |
-| Safari | Pass |
-| Firefox | Pass |
-| Mobile iOS Safari | Pass |
-| Mobile Android Chrome | Pass |
+## Manage Booking
+
+Customers can locate their booking by entering:
+
+- Booking reference
+- Email or phone number
+
+They can then modify the reservation details.
 
 ---
 
-## Final Result
+## Cancel Booking
 
-All core functionalities passed manual and validator testing.
+Customers can cancel bookings using their reference code.
 
-### Validators
-- HTML — W3C validator  
-- CSS — Jigsaw validator  
-- Python — PEP8 compliant  
+If the code is valid:
 
----
+- Booking is deleted
+- Confirmation message appears
 
-### Validators
-- HTML — W3C validator  
-- CSS — Jigsaw validator  
-- Python — PEP8 compliant  
+If the code is invalid:
+
+- Error message appears
 
 ---
 
-## 12. Deployment (Heroku)
+## About Page
 
-### Required environment variables
-Copy `.env.example` to `.env` (for local) and set the same keys in Heroku Config Vars:
-
-- `SECRET_KEY` — unique per deployment  
-- `DEBUG` — `False` in production  
-- `ALLOWED_HOSTS` — comma-separated list of domains  
-- `DATABASE_URL` — automatically provided by Heroku Postgres add-on  
-- `CLOUDINARY_URL` — provided by Cloudinary dashboard  
-
-### Steps
-1. Push code to GitHub.  
-2. Create a Heroku app.  
-3. Add **Heroku Postgres** add-on.  
-4. Set Config Vars (`SECRET_KEY`, `DEBUG`, `ALLOWED_HOSTS`, `CLOUDINARY_URL`).  
-5. Deploy using `git push heroku main`.  
-6. Run migrations: `heroku run python manage.py migrate`.  
-7. Create a superuser: `heroku run python manage.py createsuperuser`.  
-8. Open the site: `heroku open`.
+Provides background information about the restaurant and its cultural heritage.
 
 ---
 
-## 13. Running Locally
+## Contact Page
 
-```bash
+Displays:
+
+- Address
+- Email
+- Phone number
+- Opening hours
+- Embedded Google map
+
+---
+
+## Admin Dashboard
+
+Restaurant staff can:
+
+- Add/edit/delete menu items
+- Create and manage tables
+- View all bookings
+- Search and filter booking data
+
+---
+
+# 6. Database Design
+
+## Table Model
+
+| Field | Type | Description |
+|------|------|-------------|
+| name | CharField | Table identifier |
+| capacity | Integer | Number of seats |
+
+---
+
+## MenuItem Model
+
+| Field | Type |
+|------|------|
+| name | CharField |
+| description | TextField |
+| ingredients | TextField |
+| price | DecimalField |
+| category | ChoiceField |
+| is_vegetarian | Boolean |
+| is_popular | Boolean |
+| is_new | Boolean |
+| is_chef_choice | Boolean |
+| image | ImageField |
+
+---
+
+## Booking Model
+
+| Field | Type |
+|------|------|
+| name | CharField |
+| email | EmailField |
+| phone | CharField |
+| guests | Integer |
+| date | DateField |
+| time | TimeField |
+| table | ForeignKey |
+| reference | CharField |
+
+Reference codes are automatically generated.
+
+---
+
+## ERD Diagram
+
+![ERD](docs/diagrams/erd.png)
+
+---
+
+# 7. Technologies Used
+
+## Languages
+
+- Python
+- HTML
+- CSS
+
+---
+
+## Frameworks
+
+- Django
+- Django ORM
+- Django Messages Framework
+
+---
+
+## Tools
+
+- Git
+- GitHub
+- VS Code
+- Heroku
+- PostgreSQL
+- Cloudinary
+- WhiteNoise
+
+---
+
+# 8. Installation & Local Setup
+
+Clone repository
+
+```
 git clone https://github.com/fila2021/Gezana.git
+```
+
+Navigate into project
+
+```
 cd Gezana
+```
+
+Create virtual environment
+
+```
 python3 -m venv venv
+```
+
+Activate environment
+
+```
 source venv/bin/activate
+```
+
+Install dependencies
+
+```
 pip install -r requirements.txt
-python3 manage.py migrate
-python3 manage.py runserver
+```
+
+Create `.env` file
+
+```
+SECRET_KEY=your-secret-key
+DEBUG=True
+DATABASE_URL=your-database-url
+CLOUDINARY_URL=your-cloudinary-url
+```
+
+Run migrations
+
+```
+python manage.py migrate
+```
+
+Start server
+
+```
+python manage.py runserver
 ```
 
 ---
-## 14. MoSCoW Prioritisation
 
-The MoSCoW method was used to prioritise features based on importance and project scope.
+# 9. Deployment
 
-### Must Have
-These features are essential for the application to meet its core purpose:
-- Users can view the menu  
-- Users can book a table  
-- Double-booking is prevented  
-- Users receive a booking confirmation  
-- Users can cancel a booking using a reference code  
-- Admin can manage menu items, tables, and bookings  
+The application is deployed on **Heroku**.
 
-### Should Have
-These features significantly improve usability and user experience:
-- Clear success and error messages  
-- Responsive layout across devices  
-- Contact details page  
+Steps:
 
-### Could Have
-These features are desirable but not critical for the current release:
-- Customer reviews  
-- Online payment integration  
+1. Create Heroku app
+2. Add PostgreSQL add-on
+3. Configure environment variables
+4. Push project to Heroku
+5. Run migrations
+6. Create admin user
 
-### Won’t Have (for now)
-These features are outside the current project scope:
-- Food delivery system  
-- Multi-language support  
+Commands:
+
+```
+git push heroku main
+heroku run python manage.py migrate
+heroku run python manage.py createsuperuser
+```
 
 ---
 
-## 15. Full User Story Table
+# 10. Testing
 
-| ID | As a… | I want to… | So I can… |
-|----|--------|-------------|------------|
-| 1 | User | View the menu | Decide what to eat |
-| 2 | User | Book a table online | Reserve a spot easily |
-| 3 | User | See booking confirmation | Know my booking succeeded |
-| 4 | User | Cancel my booking | Change plans easily |
-| 5 | User | Learn about the restaurant | Understand its background |
-| 6 | User | Find contact information | Call/email the restaurant |
-| 7 | Owner | Prevent double bookings | Avoid conflicts |
-| 8 | Owner | Manage menu items via admin | Update dishes easily |
-| 9 | Owner | Assign tables automatically | Reduce mistakes |
-| 10 | Owner | Receive accurate customer details | Contact customers if needed |
+Testing was carried out throughout development to ensure all features function correctly and the application behaves as expected.
+
+Testing included:
+
+- Manual functional testing
+- Validation testing
+- Browser compatibility testing
+- Code validation using Flake8
+- HTML and CSS validation
+- User experience testing
 
 ---
 
-## 16. Features Overview
+# Manual Feature Testing
 
-### Implemented Features
-
-#### ✔ Menu System
-- Menu list with badges (vegetarian, new, popular, chef’s choice) and price tags  
-- Dish detail page  
-- Image support with fallback for missing images  
-- Fully admin-controlled content  
-
-#### ✔ Booking System
-- Booking form with validation  
-- Date and time validation  
-- Automatic table assignment based on capacity  
-- Double-booking prevention  
-- Success message after booking  
-- Unique reference code generation  
-
-#### ✔ Cancellation System
-- Cancellation via reference code  
-- Booking removal from database  
-- Error handling for invalid references  
-
-#### ✔ Static Pages
-- About page  
-- Contact page  
-
-#### ✔ Admin Management
-- Manage tables  
-- Manage menu items  
-- Manage bookings  
+| Feature | Test Performed | Expected Result | Result |
+|--------|---------------|----------------|--------|
+| Homepage | Load homepage | Page loads without errors | Pass |
+| Navigation | Click all navigation links | Correct pages load | Pass |
+| Menu Page | View menu items | Items display correctly | Pass |
+| Menu Detail | Click dish | Detail page opens | Pass |
+| Booking Form | Submit valid booking | Booking created with reference | Pass |
+| Booking Validation | Submit past date | Error message shown | Pass |
+| Booking Validation | Submit invalid time | Error message shown | Pass |
+| Booking Validation | Duplicate booking attempt | Booking rejected | Pass |
+| Manage Booking | Enter valid reference | Booking details retrieved | Pass |
+| Manage Booking | Edit booking details | Booking updated | Pass |
+| Cancel Booking | Enter valid reference | Booking removed | Pass |
+| Cancel Booking | Enter invalid reference | Error message displayed | Pass |
+| Admin Dashboard | Login as admin | Admin dashboard loads | Pass |
+| Admin Menu Management | Add/edit menu item | Item saved correctly | Pass |
+| Admin Table Management | Create table | Table saved | Pass |
+| Admin Booking Management | View bookings | Booking list displayed | Pass |
 
 ---
 
-## 17. Flowchart – Booking & Cancellation
+# Booking System Testing
 
-![Booking Flowchart](docs/diagrams/booking-flowchart.png)
+### Test 1: Valid Booking
 
-## 18. ERD – Database Structure
+**Input**
 
-![Database ERD](docs/diagrams/erd.png)
+- Valid name
+- Valid email
+- Valid date and time
+- Valid number of guests
 
-## 19. Bugs & Fixes
+**Expected Result**
 
-Throughout development and deployment, several issues were encountered and resolved. These fixes improved stability, usability, and production readiness.
+Booking confirmation appears and a reference code is generated.
 
-| Bug | Cause | Fix |
-|-----|-------|-----|
-| Templates collapsing into one line | VS Code auto-formatting | Disabled formatters and added workspace settings |
-| Unclosed tag errors | Template minification | Rewrote templates with correct block structure |
-| Date validation error | Incorrect user input | Added date picker widget and server-side validation |
-| Booking success message missing | Messages block missing | Added Django messages to `base.html` |
-| Menu detail page returning 404 | Menu item not created | Added test data via Django admin |
-| Cancel booking always invalid | Reference case mismatch | Normalised reference input using `.upper()` |
-| Menu images missing on Heroku | Ephemeral file system | Integrated Cloudinary for media storage |
-| App crash on startup | Conflicting storage settings | Removed `DEFAULT_FILE_STORAGE` when using `STORAGES` |
-| Admin errors after deploy | Migrations not applied | Ran migrations on Heroku production database |
+**Result**
+
+Pass
 
 ---
 
-## 20. Future Enhancements
+### Test 2: Duplicate Booking Prevention
 
-Planned improvements to extend functionality and enhance user experience include:
+**Scenario**
 
-1. User authentication with booking history  
-2. Automated email notifications for bookings and cancellations  
-3. Online payment integration for reservations  
-4. Customer review and rating system  
-5. Visual table layout / floor plan  
-6. Analytics dashboard for admin users  
-7. Multi-language support for broader accessibility  
+Two bookings attempted for the same table and time.
 
----
+**Expected Result**
 
-## 21. Security & Configuration
+Second booking rejected.
 
-Security and configuration best practices were followed throughout development:
+**Result**
 
-- Sensitive data is managed using environment variables and excluded from version control  
-- `DEBUG` is set to `False` in production  
-- `ALLOWED_HOSTS` configured appropriately for deployment environments  
-- Django admin protected by authentication and staff permissions  
-- CSRF protection enabled on all forms  
-- Django ORM used to prevent SQL injection  
-- Media handling configured safely using Cloudinary in production  
+Pass
 
 ---
 
-## 22. Reflection
+### Test 3: Invalid Date
 
-This project has been a comprehensive learning experience that strengthened my backend development, frontend design, and deployment skills. It allowed me to build a full-featured Django application while addressing real-world usability and production challenges.
-
-### What Went Well
-- Built a complete CRUD system using Django models, forms, views, and templates.
-- Implemented real-world booking logic, including past date/time prevention, seating capacity checks, and double-booking avoidance.
-- Developed a clear and user-friendly booking flow enhanced with Django’s messages framework.
-- Designed a responsive menu system with category-based filtering and recommended items.
-- Improved overall UI consistency across desktop and mobile through iterative refinement.
-- Successfully deployed the application to Heroku with stable production behaviour.
-
-### Challenges Faced
-- Menu filtering initially returned all items due to mismatched category values between models and templates.
-- A text-based search input appeared functional but did not filter results correctly.
-- Mobile navigation styling broke during UI refactoring and lacked an active-page indicator.
-- Recommended menu items displayed even when filters were applied, causing confusion.
-- Media files were not persistent on Heroku, leading to missing images in production.
-- GitHub and Heroku push errors occurred when large files were accidentally committed.
-- CSS grew complex over time, causing layout conflicts and inconsistent styling.
-
-### How I Solved Them
-- Simplified menu filtering by removing the non-functional text search and filtering by category only.
-- Replaced dropdown filters with category card buttons to improve clarity and usability.
-- Updated view logic so recommended items only appear when no filters are active.
-- Fixed mobile navigation layout and added a visible active state for the current page.
-- Refactored and cleaned the CSS to remove duplication and maintain a consistent design system.
-- Switched media storage to Cloudinary to ensure persistent image handling in production.
-- Removed large files from Git history and added proper `.gitignore` rules.
-- Debugged deployment issues effectively using `heroku logs --tail`.
-
-### What I Learned
-- Small inconsistencies between frontend templates and backend logic can silently break core features.
-- Simplifying functionality often leads to better reliability and user experience.
-- Mobile-first testing is essential, as many issues only appear on smaller screens.
-- Clean, maintainable CSS is critical as a project grows.
-- Incremental commits make debugging, rollbacks, and deployment far easier.
-- Proper environment configuration and media storage are essential for production-ready Django apps.
-
-### Next Steps
-- Add user accounts so customers can view and manage their bookings.
-- Introduce pagination or lazy loading for larger menus.
-- Add automated tests for booking validation and menu filtering.
-- Further improve accessibility (ARIA labels, keyboard navigation).
-- Explore online ordering functionality for future expansion.
----
-
-## 23. Recent Updates (Media & Deployment Improvements)
-
-During the final deployment phase, the following improvements were implemented:
-
-- Integrated Cloudinary for persistent menu image uploads on Heroku.
-- Fixed `DEFAULT_FILE_STORAGE` vs `STORAGES` conflicts that caused application crashes.
-- Added graceful fallback images for menu items without uploaded photos.
-- Added favicon support to eliminate production 404 requests.
-- Removed large files that were blocking GitHub pushes.
-- Updated deployment settings and verified application stability using Heroku logs.
-- Fixed menu category filtering to ensure only relevant items are displayed.
-- Removed the non-functional text search bar and simplified filtering to category selection only.
-- Replaced dropdown filters with clear, clickable category cards.
-- Ensured recommended menu items only appear when no category filter is active.
-- Improved mobile navigation layout and added a visible active-page indicator.
-- Refined booking page layout to improve form spacing and usability on mobile.
-- Cleaned and refactored CSS to remove duplication and resolve layout conflicts.
-- Restored a simpler, cleaner home page design while keeping consistent styling.
-- Verified all changes across desktop and mobile to ensure responsive behaviour.
+| Input | Expected Result | Result |
+|------|----------------|--------|
+| Past date | Error message | Pass |
+| Invalid calendar date | Validation error | Pass |
 
 ---
 
-## 24. Credits
+### Test 4: Invalid Time
 
-- Code Institute  
-- Django Documentation  
-- Heroku Documentation  
-- Cloudinary Documentation  
-- Royalty-free images sourced from open-license platforms  
-- All content, design, and development by the project author 
-- AI-generated images( Logo, Menu Items) created using ChatGPT
+| Time Input | Expected Result | Result |
+|-----------|----------------|--------|
+| 05:00 | Out-of-hours error | Pass |
+| 23:00 | Out-of-hours error | Pass |
 
 ---
 
-# ✨ Thank You For Visiting Gezana!
+# Cancellation System Testing
 
-Proudly sharing Habesha culture through food and technology.
+### Test 1: Valid Reference
+
+**Input**
+
+Valid booking reference code
+
+**Expected Result**
+
+Booking deleted and confirmation message displayed.
+
+**Result**
+
+Pass
+
+---
+
+### Test 2: Invalid Reference
+
+**Input**
+
+Random reference code
+
+**Expected Result**
+
+Error message displayed.
+
+**Result**
+
+Pass
+
+---
+
+# Menu Page Testing
+
+| Test | Expected Result | Result |
+|------|----------------|--------|
+| Menu items display | All menu items visible | Pass |
+| Vegetarian badge | Correctly displayed | Pass |
+| Popular badge | Correctly displayed | Pass |
+| Dish detail page | Loads correct item information | Pass |
+
+---
+
+# Template Testing
+
+All templates were checked to ensure they extend the base template and load correctly.
+
+| Template | Inherits base.html | Result |
+|---------|-------------------|--------|
+| home.html | Yes | Pass |
+| menu_list.html | Yes | Pass |
+| menu_detail.html | Yes | Pass |
+| booking_form.html | Yes | Pass |
+| booking_success.html | Yes | Pass |
+| cancel_booking.html | Yes | Pass |
+| about.html | Yes | Pass |
+| contact.html | Yes | Pass |
+
+---
+
+# Browser Compatibility Testing
+
+The application was tested on multiple browsers and devices.
+
+| Browser | Result |
+|-------|--------|
+| Google Chrome | Pass |
+| Mozilla Firefox | Pass |
+| Safari | Pass |
+| Mobile Safari (iOS) | Pass |
+| Chrome (Android) | Pass |
+
+---
+
+# Validator Testing
+
+## HTML Validation
+
+All HTML files were validated using the **W3C HTML Validator**.
+
+Result: No errors.
+
+Example validation screenshot:
+
+![HTML Validator](docs/validators/html-validator.png)
+
+---
+
+## CSS Validation
+
+All CSS was validated using the **W3C Jigsaw CSS Validator**.
+
+Result: No errors.
+
+Example validation screenshot:
+
+![CSS Validator](docs/validators/css-validator.png)
+
+---
+
+## Python Code Validation
+
+Python code was checked using **Flake8** to ensure compliance with PEP8 standards.
+
+Command used:
+
+```
+flake8 gezana_app
+```
+
+Result: No errors.
+
+Example output screenshot:
+
+![Flake8 Validation](docs/validators/flake8.png)
+
+---
+
+# Accessibility Testing
+
+Accessibility was considered during development to ensure the website is usable by all users.
+
+Measures implemented include:
+
+- Semantic HTML headings
+- Alt text for images
+- Form labels for inputs
+- Clear error messages
+- High contrast buttons
+- Keyboard accessible navigation
+
+Accessibility was tested using browser developer tools and manual inspection.
+
+---
+
+# Performance Testing
+
+Performance was reviewed using browser developer tools.
+
+Key observations:
+
+- Pages load quickly due to lightweight templates.
+- Static files are served efficiently using WhiteNoise.
+- Images are optimized through Cloudinary.
+
+---
+
+# Testing Summary
+
+All core application features were tested successfully.
+
+The booking system, menu system, cancellation process, and admin functionality operate as intended across multiple browsers and devices.
+
+The project passed HTML, CSS, and Python validation checks, ensuring clean and maintainable code.
+
+---
+
+# 11. Bugs & Fixes
+
+| Issue | Cause | Fix |
+|-----|-----|-----|
+| Booking reference mismatch | Case sensitivity | Converted to uppercase |
+| Menu images missing | Heroku ephemeral storage | Integrated Cloudinary |
+| Duplicate bookings allowed | Missing validation | Added table availability logic |
+| Booking success message missing | Messages block missing | Added messages framework |
+
+---
+
+# 12. Future Enhancements
+
+Planned improvements:
+
+- User accounts
+- Booking history
+- Online ordering
+- Payment integration
+- Customer reviews
+- Multi-language support
+
+---
+
+# 13. Security Considerations
+
+Security practices implemented:
+
+- Environment variables used for sensitive data
+- Django ORM prevents SQL injection
+- CSRF protection enabled
+- DEBUG disabled in production
+- Admin access restricted
+
+---
+
+# 14. Reflection
+
+This project provided valuable experience in building a complete Django web application from design through deployment.
+
+### Key Learning Outcomes
+
+- Designing database-driven applications
+- Implementing complex validation logic
+- Managing media files in production
+- Deploying Django applications to Heroku
+- Debugging deployment issues
+
+### Challenges
+
+- Handling table availability logic
+- Managing media storage on Heroku
+- Debugging CSS layout conflicts
+
+Each issue strengthened my debugging and development workflow.
+
+---
+
+# 15. Credits
+
+Resources used:
+
+- Django Documentation
+- Code Institute learning materials
+- Heroku Documentation
+- Cloudinary Documentation
+
+Images and content used for educational purposes.
+
+Project developed by the author as part of the backend development assessment.
+
+---
+
+# Thank You for Visiting Gezana
+Sharing Habesha culture through food and technology.

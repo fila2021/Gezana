@@ -5,15 +5,29 @@ from .models import Booking, MenuItem, Table
 
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ("name", "category", "price", "is_available")
-    list_filter = ("category", "is_available", "is_popular", "is_new")
+    list_display = (
+        "name",
+        "category",
+        "price",
+        "is_vegetarian",
+        "is_popular",
+        "is_new",
+        "is_chef_choice",
+    )
+    list_filter = (
+        "category",
+        "is_vegetarian",
+        "is_popular",
+        "is_new",
+        "is_chef_choice",
+    )
     search_fields = ("name", "description", "ingredients")
 
 
 @admin.register(Table)
 class TableAdmin(admin.ModelAdmin):
-    list_display = ("name", "capacity")
-    search_fields = ("name",)
+    list_display = ("table_number", "capacity")
+    search_fields = ("table_number",)
 
 
 @admin.register(Booking)
