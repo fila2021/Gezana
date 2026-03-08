@@ -1051,3 +1051,18 @@ footer{
   overflow:hidden;
   clip:rect(0 0 0 0);
 }
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.map-embed iframe {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: 0;
+  border-radius: 14px;
+}
