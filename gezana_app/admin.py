@@ -1,21 +1,23 @@
 from django.contrib import admin
-from .models import MenuItem
+
+from .models import Booking, MenuItem, Table
+
 
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ("name", "category", "price", "is_vegetarian")
-    list_filter = ("category", "is_vegetarian")
-    search_fields = ("name", "description")
+    list_display = ("name", "category", "price", "is_available")
+    list_filter = ("category", "is_available", "is_popular", "is_new")
+    search_fields = ("name", "description", "ingredients")
 
-from .models import Table, Booking
 
 @admin.register(Table)
 class TableAdmin(admin.ModelAdmin):
-    list_display = ("table_number", "capacity")
-    list_filter = ("capacity",)
+    list_display = ("name", "capacity")
+    search_fields = ("name",)
 
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ("name", "date", "time", "guests", "table")
+    list_display = ("name", "date", "time", "guests", "reference", "table")
     list_filter = ("date", "time", "table")
+    search_fields = ("name", "email", "phone", "reference")
