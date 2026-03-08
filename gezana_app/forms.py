@@ -48,7 +48,8 @@ class BookingForm(forms.ModelForm):
 
             if field_name in placeholders:
                 field.widget.attrs.setdefault(
-                    "placeholder", placeholders[field_name]
+                    "placeholder",
+                    placeholders[field_name],
                 )
 
         self.fields["date"].widget.input_type = "date"
