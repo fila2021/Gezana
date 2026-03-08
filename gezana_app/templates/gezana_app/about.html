@@ -1,106 +1,65 @@
 {% extends "gezana_app/base.html" %}
-
-{% block title %}About Us — Gezana{% endblock %}
+{% block title %}About | Gezana Restaurant{% endblock %}
 
 {% block content %}
 
-<!-- =========================
-     ABOUT HERO (Premium)
-========================== -->
-<section class="page-hero card">
-  <div class="page-hero-left">
-    <p class="eyebrow">Our Story</p>
-    <h2>Gezana brings Habesha warmth and flavor to Dublin</h2>
-    <p class="lede">
-      We serve the dishes we grew up with: feasts built on injera, slow-simmered stews,
-      and coffee poured in three rounds for blessings and conversation.
-    </p>
-
-    <div class="hero-actions">
-      <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">
-        <i class="fa-solid fa-utensils"></i> Browse Menu
-      </a>
-      <a href="{% url 'gezana_app:make_booking' %}" class="button primary">
-        <i class="fa-solid fa-calendar-check"></i> Book a Table
-      </a>
-    </div>
-  </div>
-
-  <aside class="page-hero-right">
-    <div class="highlight-card">
-      <p class="mini">Signature Ritual</p>
-      <p class="callout">Traditional Coffee Ceremony</p>
-      <p class="muted" style="margin:0;">
-        Roast • Grind • Brew in a jebena • Share three rounds: abol, tona, baraka.
-      </p>
-    </div>
-
-    <div class="pill-row">
-      <span class="pill popular"><i class="fa-solid fa-fire"></i> Popular plates</span>
-      <span class="pill chef"><i class="fa-solid fa-star"></i> Chef’s picks</span>
-      <span class="pill veg"><i class="fa-solid fa-leaf"></i> Veg friendly</span>
-    </div>
-  </aside>
-</section>
-
-<!-- =========================
-     ABOUT GRID
-========================== -->
-<section class="info-grid">
-  <article class="info-card card">
-    <div class="home-card-icon"><i class="fa-solid fa-bowl-food"></i></div>
-    <h3>Our Cuisine</h3>
-    <p class="muted">
-      Soft, tangy injera is the heart of the table, with doro wat, tibs, shiro,
-      and veggie sides served family-style. Berbere and mitmita add warmth and depth.
-    </p>
-  </article>
-
-  <article class="info-card card">
-    <div class="home-card-icon"><i class="fa-solid fa-mug-saucer"></i></div>
-    <h3>Coffee Ceremony</h3>
-    <p class="muted">
-      We hand-roast beans until glossy, grind them fresh, and brew in a clay jebena.
-      The aroma fills the room as we pour three rounds for friendship and good fortune.
-    </p>
-  </article>
-
-  <article class="info-card card">
-    <div class="home-card-icon"><i class="fa-solid fa-people-group"></i></div>
-    <h3>Hospitality</h3>
-    <p class="muted">
-      We welcome you like family: generous portions, injera for scooping,
-      and stories of home. Whether it’s your first time or a familiar craving—welcome.
-    </p>
-  </article>
-
-  <article class="info-card card">
-    <div class="home-card-icon"><i class="fa-solid fa-heart"></i></div>
-    <h3>Our Promise</h3>
-    <p class="muted">
-      Fresh ingredients, traditional methods, and a table set for sharing.
-      Bring friends, family, or colleagues—Gezana is your home for Habesha food and culture.
-    </p>
-  </article>
-</section>
-
-<!-- =========================
-     CTA STRIP
-========================== -->
-<section class="page-cta card">
+<section class="about-hero">
   <div>
-    <p class="eyebrow" style="margin:0;">Come hungry</p>
-    <h2 style="margin:6px 0 10px;">Ready to taste Habesha tradition?</h2>
-    <p class="muted" style="margin:0;">Reserve now, or browse the menu first.</p>
+    <p class="eyebrow">About Us</p>
+
+    <h2>Our Story</h2>
+
+    <p class="lede">
+      Gezana Restaurant brings the warmth and tradition of Ethiopian cuisine
+      to our community. Our dishes are prepared with care using authentic
+      recipes passed down through generations.
+    </p>
+
+    <p>
+      Ethiopian food is more than just a meal. It is a shared experience where
+      friends and family gather around a plate of injera and delicious stews,
+      celebrating culture and hospitality.
+    </p>
   </div>
-  <div class="hero-actions" style="justify-content:flex-end;">
-    <a href="{% url 'gezana_app:make_booking' %}" class="button primary">
-      <i class="fa-solid fa-calendar-check"></i> Reserve a Table
-    </a>
-    <a href="{% url 'gezana_app:menu_list' %}" class="button ghost">
-      <i class="fa-solid fa-utensils"></i> View Menu
-    </a>
+
+  <div class="about-highlight">
+    <p class="mini">Our Promise</p>
+    <p class="callout">Authentic Ethiopian Dining</p>
+    <p class="muted">
+      Fresh ingredients, traditional spices, and a welcoming atmosphere.
+    </p>
   </div>
+</section>
+
+
+<section class="info-grid">
+
+  <h2 class="visually-hidden">Restaurant Information</h2>
+
+  <article class="info-card card">
+    <h3>Traditional Recipes</h3>
+    <p>
+      Our menu features authentic Ethiopian recipes made with traditional
+      ingredients and spices that capture the true flavour of Ethiopian cuisine.
+    </p>
+  </article>
+
+  <article class="info-card card">
+    <h3>Fresh Ingredients</h3>
+    <p>
+      We carefully select fresh vegetables, meats, and spices to ensure every
+      dish is prepared with the highest quality ingredients.
+    </p>
+  </article>
+
+  <article class="info-card card">
+    <h3>Coffee Ceremony</h3>
+    <p>
+      Experience Ethiopia's famous coffee ceremony, a cultural tradition where
+      freshly roasted coffee beans are brewed and shared with guests.
+    </p>
+  </article>
+
 </section>
 
 {% endblock %}
